@@ -17,6 +17,7 @@ const app = Fastify({
     redact: ['req.headers.authorization', 'req.headers.cookie', '*.text', '*.verbatim_quote'],
   },
   bodyLimit: 25 * 1024 * 1024,
+  trustProxy: env.TRUST_PROXY === 'true',
 });
 
 await app.register(cors, { origin: false });
@@ -57,4 +58,4 @@ const shutdown = async (): Promise<void> => {
 process.on('SIGTERM', shutdown);
 process.on('SIGINT', shutdown);
 
-await app.listen({ port: env.PORT, host: '127.0.0.1' });
+await app.listen({ port: env.PORT, host: env.HOST });

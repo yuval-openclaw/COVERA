@@ -3,11 +3,19 @@ import { z } from 'zod';
 const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
   PORT: z.coerce.number().int().positive().default(3000),
+  // 127.0.0.1 on a laptop; a container must listen on 0.0.0.0 to be reachable.
+  HOST: z.string().min(1).default('127.0.0.1'),
+  // Behind a hosting provider's proxy every request arrives from the proxy, so
+  // per-address rate limits would treat all users as one. "true" trusts the
+  // X-Forwarded-For header; set it only when a proxy is actually in front.
+  TRUST_PROXY: z.enum(['true', 'false']).default('false'),
   DATABASE_URL: z.string().min(1),
   STORAGE_DRIVER: z.enum(['local', 's3']).default('local'),
   STORAGE_LOCAL_PATH: z.string().default('./storage'),
   S3_BUCKET: z.string().optional(),
   S3_REGION: z.string().optional(),
+  // For S3-compatible storage (Cloudflare R2, Backblaze B2 and others).
+  S3_ENDPOINT: z.string().url().optional(),
   // Deliberately not GEMINI_API_KEY: that name is frequently already exported by
   // developer tools, and Node's --env-file will not override an existing var —
   // the .env value would be silently ignored.
