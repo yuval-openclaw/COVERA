@@ -18,6 +18,15 @@ This is enforced structurally, not by prompt wording:
 - `api/src/ingestion/verify.ts` — checks the quote actually appears on the cited page, and
   that every number in a value appears in its own supporting quote. Catches a real quote
   paired with an invented figure.
+- `api/src/ingestion/snap.ts` runs just before it: when a quote has every figure and nearly
+  all the words of a page passage but in a different order (Hebrew text layers store runs
+  out of printed order), the quote is replaced with the exact page text. It never changes a
+  figure and never decides anything; the verifier still does.
+- A field still unproven after the last attempt becomes `unverified` (no figure; "check your
+  policy or ask your insurer") rather than failing the whole document — never for exclusions,
+  claim steps or required documents, never for more than a quarter of fields, and never set
+  by the model (`ingestion/unverified.ts`). `not_stated` still means only "the document is
+  silent".
 - `api/src/guidance/verify-steps.ts` — the same gate on the way out. A step may assert a
   figure only if its own citation contains it; an uncited step may carry no figure at all,
   including inside the question it tells the user to ask; and prose (`summary`, `conflicts`,
@@ -188,8 +197,11 @@ use submitted content to improve its products, which breaks the promise in onboa
   bullets, Dynamic Type throughout, no success styling anywhere. Visually checked on the
   simulator at default text size only; large Dynamic Type sizes, VoiceOver and RTL
   (Hebrew) have not been run yet.
-- **Phase 6 — documented, not submittable.** `docs/APP_STORE.md` and `docs/PRIVACY.md`.
-  Blocked on a Developer Program account, real app icon, legal review and real auth.
+- **Phase 6 — documented, not submittable.** `docs/APP_STORE.md`, `docs/app-store/LISTING.md`
+  (listing text, English and Hebrew), `docs/app-store/screenshots/` (6.9", regenerate with
+  `-CoveraDemo -CoveraShot <screen>` and `ios/scripts/make_store_screenshots.swift`), app icon
+  (`ios/scripts/make_app_icon.swift`), `docs/DEPLOY.md` (API not yet hosted). Blocked on a
+  Developer Program account, hosting, and legal review.
 
 ## Known weak points
 
@@ -198,6 +210,9 @@ use submitted content to improve its products, which breaks the promise in onboa
   the paid routes per account per day. Sessions slide while used; an hourly sweep in `server.ts`
   deletes expired sessions and guest accounts nobody can reach any more (`account/delete.ts`). **Sign in with Apple is required
   before App Store submission** once Google sign-in is offered (Guideline 4.8).
+- **Hebrew policies.** Page text is rebuilt from positioned runs (`ingestion/pdf.ts`), since
+  many Hebrew PDFs store no space characters. A fictional two-page Hebrew policy now extracts
+  with every figure correct; a real insurer's Hebrew policy has not been re-tested since.
 - **Live AI verified on one fictional policy only.** A made-up 2-page text PDF went through
   upload → Gemini extraction → verifier → embeddings → `/guidance` → `/chat`, with correct
   page citations and honest "not stated" answers. Still unexercised live: scanned PDFs (the OCR
