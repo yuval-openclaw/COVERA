@@ -16,6 +16,7 @@ struct HomeView: View {
 
     @State private var importMethod: ImportMethod?
     @State private var selected: PolicyDocument?
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @State private var showingCallLog = false
 
     var body: some View {
@@ -128,14 +129,19 @@ struct HomeView: View {
         let done = plan.steps.filter { guidance.completedSteps.contains($0.order) }.count
 
         return VStack(alignment: .leading, spacing: Theme.Spacing.block) {
-            HStack {
-                Eyebrow(text: String(localized: "Your current plan"))
-                Spacer()
-                Text(String(localized: "\(done) of \(total) done"))
-                    .font(.caption.weight(.medium).monospacedDigit())
-                    .foregroundStyle(Theme.Palette.secondaryInk)
-                    .contentTransition(.numericText())
-                    .animation(Theme.Motion.pop, value: done)
+            // Side by side when it fits; stacked at large text sizes, where
+            // squeezing them together hyphenates the eyebrow mid-word.
+            ViewThatFits(in: .horizontal) {
+                HStack {
+                    Eyebrow(text: String(localized: "Your current plan"))
+                        .fixedSize()
+                    Spacer()
+                    progressLabel(done: done, total: total)
+                }
+                VStack(alignment: .leading, spacing: Theme.Spacing.tight) {
+                    Eyebrow(text: String(localized: "Your current plan"))
+                    progressLabel(done: done, total: total)
+                }
             }
 
             VStack(alignment: .leading, spacing: Theme.Spacing.tight) {
@@ -152,7 +158,7 @@ struct HomeView: View {
                         Text(next.action)
                             .font(.subheadline)
                             .foregroundStyle(Theme.Palette.secondaryInk)
-                            .lineLimit(2)
+                            .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 2)
                     }
                 }
             }
@@ -178,12 +184,24 @@ struct HomeView: View {
         .coveraLuxury()
     }
 
+    private func progressLabel(done: Int, total: Int) -> some View {
+        Text(String(localized: "\(done) of \(total) done"))
+            .font(.caption.weight(.medium).monospacedDigit())
+            .foregroundStyle(Theme.Palette.secondaryInk)
+            .contentTransition(.numericText())
+            .animation(Theme.Motion.pop, value: done)
+    }
+
     private var quickActions: some View {
         VStack(alignment: .leading, spacing: Theme.Spacing.step) {
             Eyebrow(text: String(localized: "Quick actions"))
 
             LazyVGrid(
-                columns: [GridItem(.flexible(), spacing: Theme.Spacing.step), GridItem(.flexible(), spacing: Theme.Spacing.step)],
+                // One column at accessibility text sizes, so titles are never
+                // cut to "Uploa…".
+                columns: dynamicTypeSize.isAccessibilitySize
+                    ? [GridItem(.flexible())]
+                    : [GridItem(.flexible(), spacing: Theme.Spacing.step), GridItem(.flexible(), spacing: Theme.Spacing.step)],
                 spacing: Theme.Spacing.step
             ) {
                 Menu {
@@ -325,6 +343,7 @@ private struct ActionTileLabel: View {
     let title: String
     let subtitle: String
     @Environment(\.isEnabled) private var isEnabled
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -333,12 +352,12 @@ private struct ActionTileLabel: View {
                 Text(title)
                     .font(.subheadline.weight(.semibold))
                     .foregroundStyle(Theme.Palette.ink)
-                    .lineLimit(1)
+                    .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 1)
                     .minimumScaleFactor(0.85)
                 Text(subtitle)
                     .font(.caption)
                     .foregroundStyle(Theme.Palette.tertiaryInk)
-                    .lineLimit(1)
+                    .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 1)
                     .padding(.top, 2)
             }
             .padding(Theme.Spacing.block - 4)

@@ -41,15 +41,16 @@ struct DocumentsView: View {
                         EmptyLibraryCard(method: $importMethod)
                             .padding(.top, Theme.Spacing.step)
                     } else if !model.documents.isEmpty {
-                        HStack {
-                            Eyebrow(text: String(localized: "Stored"))
-                            Spacer()
-                            Text(model.documents.count == 1
-                                 ? String(localized: "1 document")
-                                 : String(localized: "\(model.documents.count) documents"))
-                                .font(.caption.weight(.medium).monospacedDigit())
-                                .foregroundStyle(Theme.Palette.tertiaryInk)
-                                .contentTransition(.numericText())
+                        ViewThatFits(in: .horizontal) {
+                            HStack {
+                                Eyebrow(text: String(localized: "Stored")).fixedSize()
+                                Spacer()
+                                documentCount.fixedSize()
+                            }
+                            VStack(alignment: .leading, spacing: 4) {
+                                Eyebrow(text: String(localized: "Stored"))
+                                documentCount
+                            }
                         }
                         .padding(.top, Theme.Spacing.tight)
 
@@ -86,6 +87,17 @@ struct DocumentsView: View {
     }
 }
 
+extension DocumentsView {
+    fileprivate var documentCount: some View {
+        Text(model.documents.count == 1
+             ? String(localized: "1 document")
+             : String(localized: "\(model.documents.count) documents"))
+            .font(.caption.weight(.medium).monospacedDigit())
+            .foregroundStyle(Theme.Palette.tertiaryInk)
+            .contentTransition(.numericText())
+    }
+}
+
 // MARK: - The wallet
 
 /// Policies sit like cards in a wallet: overlapped, newest on top, with only
@@ -96,20 +108,25 @@ private struct WalletStack: View {
     let onOpen: (PolicyDocument) -> Void
     @State private var fanned = false
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
+    /// Overlapped cards assume a card's height; at accessibility text sizes the
+    /// cards grow, so they are simply listed, as with Reduce Motion.
+    private var listed: Bool { reduceMotion || dynamicTypeSize.isAccessibilitySize }
 
     private let cardHeight: CGFloat = 168
     // How much of a card stays visible under the one above it.
     private let peek: CGFloat = 64
 
     private var spacing: CGFloat {
-        reduceMotion || fanned ? Theme.Spacing.step : peek - cardHeight
+        listed || fanned ? Theme.Spacing.step : peek - cardHeight
     }
 
     var body: some View {
         VStack(spacing: spacing) {
             ForEach(Array(documents.enumerated()), id: \.element.id) { position, document in
                 Button {
-                    if reduceMotion || fanned {
+                    if listed || fanned {
                         onOpen(document)
                     } else {
                         fanned = true
@@ -119,10 +136,10 @@ private struct WalletStack: View {
                         // Tucked-in cards sit slightly back, so the stack reads
                         // as depth rather than as a misaligned list.
                         .scaleEffect(scale(position), anchor: .top)
-                        .brightness(fanned || reduceMotion ? 0 : -0.04 * Double(depth(position)))
+                        .brightness(fanned || listed ? 0 : -0.04 * Double(depth(position)))
                 }
                 .buttonStyle(PressableStyle())
-                .accessibilityHint(fanned || reduceMotion
+                .accessibilityHint(fanned || listed
                     ? String(localized: "Opens details and the original document")
                     : String(localized: "Opens the wallet"))
                 .appearIn(position + 1)
@@ -132,7 +149,7 @@ private struct WalletStack: View {
         .animation(Theme.Motion.expand, value: fanned)
         .animation(Theme.Motion.appear, value: documents.count)
         .overlay(alignment: .bottom) {
-            if !fanned && !reduceMotion && documents.count > 1 {
+            if !fanned && !listed && documents.count > 1 {
                 Text(String(localized: "Tap to open the wallet"))
                     .font(.caption)
                     .foregroundStyle(Theme.Palette.tertiaryInk)
@@ -140,7 +157,7 @@ private struct WalletStack: View {
                     .transition(.opacity)
             }
         }
-        .padding(.bottom, !fanned && !reduceMotion && documents.count > 1 ? 34 : 0)
+        .padding(.bottom, !fanned && !listed && documents.count > 1 ? 34 : 0)
     }
 
     private func depth(_ position: Int) -> Int {
@@ -148,7 +165,7 @@ private struct WalletStack: View {
     }
 
     private func scale(_ position: Int) -> CGFloat {
-        fanned || reduceMotion ? 1 : 1 - 0.02 * CGFloat(depth(position))
+        fanned || listed ? 1 : 1 - 0.02 * CGFloat(depth(position))
     }
 }
 
@@ -251,6 +268,7 @@ struct PolicyCard: View {
     let document: PolicyDocument
     var height: CGFloat = 168
     var sheenDelay: Double = 0
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     private var statusTint: Color {
         switch document.status {
@@ -264,15 +282,16 @@ struct PolicyCard: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            HStack(alignment: .center) {
-                Wordmark(size: .subheadline)
-                Spacer()
-                HStack(spacing: 6) {
-                    StatusDot(tint: statusTint, pulsing: document.status == "extracting" || document.status == "uploaded")
-                    Text(document.statusDescription)
-                        .foregroundStyle(statusTint)
+            ViewThatFits(in: .horizontal) {
+                HStack(alignment: .center) {
+                    Wordmark(size: .subheadline)
+                    Spacer()
+                    status.fixedSize()
                 }
-                .font(.caption.weight(.semibold))
+                VStack(alignment: .leading, spacing: Theme.Spacing.tight) {
+                    Wordmark(size: .subheadline)
+                    status
+                }
             }
 
             Spacer(minLength: Theme.Spacing.step)
@@ -281,7 +300,7 @@ struct PolicyCard: View {
                 .font(Theme.Typeface.display(.title3))
                 .foregroundStyle(Theme.Palette.ink)
                 .multilineTextAlignment(.leading)
-                .lineLimit(2)
+                .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 2)
                 .fixedSize(horizontal: false, vertical: true)
 
             HStack {
@@ -300,6 +319,15 @@ struct PolicyCard: View {
         .coveraLuxury()
         .modifier(Sheen(delay: sheenDelay))
         .accessibilityElement(children: .combine)
+    }
+
+    private var status: some View {
+        HStack(spacing: 6) {
+            StatusDot(tint: statusTint, pulsing: document.status == "extracting" || document.status == "uploaded")
+            Text(document.statusDescription)
+                .foregroundStyle(statusTint)
+        }
+        .font(.caption.weight(.semibold))
     }
 }
 

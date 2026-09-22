@@ -380,6 +380,9 @@ struct Wordmark: View {
         let stop = Text(verbatim: ".").foregroundStyle(Theme.Palette.cited)
         Text("\(name)\(stop)")
             .font(Theme.Typeface.display(size).weight(.semibold))
+            // A name is never broken across lines ("Cov-era.").
+            .lineLimit(1)
+            .fixedSize()
             .accessibilityLabel("Covera")
     }
 }
