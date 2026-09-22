@@ -763,6 +763,64 @@
         }
       }
     },
+    "A guest account has no password, so signing out deletes it, with every policy in it. To keep your policies, export them first or create an account.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حساب الضيف ليس له كلمة مرور، لذا فإن تسجيل الخروج يحذفه مع كل وثيقة تأمين فيه. للاحتفاظ بوثائقك، قم بتصديرها أولاً أو أنشئ حسابًا."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ein Gastkonto hat kein Passwort, daher wird es beim Abmelden gelöscht, mit allen darin enthaltenen Policen. Um Ihre Policen zu behalten, exportieren Sie diese zuerst oder erstellen Sie ein Konto."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Una cuenta de invitado no tiene contraseña, por lo que cerrar sesión la elimina, con todas las pólizas que contiene. Para conservar sus pólizas, expórtelas primero o cree una cuenta."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un compte invité n'a pas de mot de passe. La déconnexion le supprime, ainsi que toutes ses polices. Pour les conserver, exportez-les d'abord ou créez un compte."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "לחשבון אורח אין סיסמה, לכן יציאה מוחקת אותו ואת כל הפוליסות שבו. כדי לשמור את הפוליסות שלך, ייצא אותן קודם או צור חשבון."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अतिथि खाते का कोई पासवर्ड नहीं होता, इसलिए साइन आउट करने से यह इसमें मौजूद हर पॉलिसी के साथ हट जाएगा। अपनी पॉलिसियों को रखने के लिए, पहले उन्हें निर्यात करें या एक खाता बनाएँ।"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ゲストアカウントにはパスワードがありません。サインアウトすると、含まれるすべての保険証券とともに削除されます。保険証券を保持するには、まずエクスポートするか、アカウントを作成してください。"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uma conta de convidado não tem senha, então sair a exclui, com todas as apólices nela. Para manter suas apólices, exporte-as primeiro ou crie uma conta."
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "บัญชีผู้เยี่ยมชมไม่มีรหัสผ่าน การออกจากระบบจะลบบัญชีและกรมธรรม์ทั้งหมดในนั้น หากต้องการเก็บกรมธรรม์ของคุณไว้ โปรดส่งออกก่อนหรือสร้างบัญชี"
+          }
+        }
+      }
+    },
     "A guest can't sign back in after signing out.": {
       "localizations": {
         "ar": {
@@ -4243,6 +4301,64 @@
         }
       }
     },
+    "Delete and sign out": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DELETE وتسجيل الخروج"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Löschen und abmelden"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eliminar y cerrar sesión"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DELETE et se déconnecter"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DELETE וצא/י"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DELETE और साइन आउट करें"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "削除してサインアウト"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DELETE e sair"
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ลบและออกจากระบบ"
+          }
+        }
+      }
+    },
     "Delete everything?": {
       "localizations": {
         "ar": {
@@ -5983,60 +6099,60 @@
         }
       }
     },
-    "Google sign-in isn’t set up yet. Use email for now.": {
+    "Guest account": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "لم يتم إعداد تسجيل الدخول باستخدام Google بعد. استخدم البريد الإلكتروني الآن."
+            "value": "حساب الضيف"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Google-Anmeldung ist noch nicht eingerichtet. Verwenden Sie vorerst E-Mail."
+            "value": "Gastkonto"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "El inicio con Google aún no está configurado. Use el correo."
+            "value": "Cuenta de invitado"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "La connexion Google n’est pas encore configurée. Utilisez l’e-mail."
+            "value": "Compte invité"
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "הכניסה באמצעות גוגל עדיין לא הוגדרה. השתמש באימייל לעת עתה."
+            "value": "חשבון אורח"
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Google साइन-इन अभी तक सेट अप नहीं हुआ है। अभी के लिए ईमेल का उपयोग करें।"
+            "value": "अतिथि खाता"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Googleサインインはまだ設定されていません。今はメールをご利用ください。"
+            "value": "ゲストアカウント"
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "O início de sessão com o Google ainda não está configurado. Use o e-mail por enquanto."
+            "value": "Conta de convidado"
           }
         },
         "th": {
           "stringUnit": {
             "state": "translated",
-            "value": "การลงชื่อเข้าใช้ด้วย Google ยังไม่ได้ตั้งค่า โปรดใช้อีเมลไปก่อน"
+            "value": "บัญชีผู้เยี่ยมชม"
           }
         }
       }
@@ -11257,6 +11373,64 @@
           "stringUnit": {
             "state": "translated",
             "value": "ออกจากระบบ"
+          }
+        }
+      }
+    },
+    "Sign out of a guest account?": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تسجيل الخروج من حساب ضيف؟"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Von einem Gastkonto abmelden?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Cerrar sesión de una cuenta de invitado?"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Se déconnecter d'un compte invité ?"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "לצאת מחשבון אורח?"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अतिथि खाते से साइन आउट करें?"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ゲストアカウントからサインアウトしますか？"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sair de uma conta de convidado?"
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ออกจากระบบบัญชีผู้เยี่ยมชมหรือไม่?"
           }
         }
       }

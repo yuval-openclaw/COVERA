@@ -36,17 +36,23 @@ struct LoginView: View {
                 .padding(.top, Theme.Spacing.block)
                 .appearIn(1)
 
-                googleButton.appearIn(2)
+                // Shown only once a Google client is configured. A button that
+                // cannot work is an App Review rejection (Guideline 2.1), and
+                // offering Google sign-in also makes Sign in with Apple required
+                // (4.8), so until then the screen offers email and guest only.
+                if GoogleAuth.isConfigured {
+                    googleButton.appearIn(2)
 
-                HStack(spacing: Theme.Spacing.step) {
-                    Rectangle().fill(Theme.Palette.hairline).frame(height: 0.5)
-                    Text(String(localized: "or"))
-                        .font(.caption.weight(.medium))
-                        .foregroundStyle(Theme.Palette.tertiaryInk)
-                    Rectangle().fill(Theme.Palette.hairline).frame(height: 0.5)
+                    HStack(spacing: Theme.Spacing.step) {
+                        Rectangle().fill(Theme.Palette.hairline).frame(height: 0.5)
+                        Text(String(localized: "or"))
+                            .font(.caption.weight(.medium))
+                            .foregroundStyle(Theme.Palette.tertiaryInk)
+                        Rectangle().fill(Theme.Palette.hairline).frame(height: 0.5)
+                    }
+                    .accessibilityHidden(true)
+                    .appearIn(3)
                 }
-                .accessibilityHidden(true)
-                .appearIn(3)
 
                 VStack(spacing: Theme.Spacing.tight + 2) {
                     field(isFocused: focus == .email) {
@@ -158,11 +164,6 @@ struct LoginView: View {
             .buttonStyle(SecondaryButtonStyle(fullWidth: true))
             .disabled(!GoogleAuth.isConfigured || model.isWorking)
 
-            if !GoogleAuth.isConfigured {
-                Text(String(localized: "Google sign-in isn’t set up yet. Use email for now."))
-                    .font(.caption)
-                    .foregroundStyle(Theme.Palette.tertiaryInk)
-            }
         }
     }
 

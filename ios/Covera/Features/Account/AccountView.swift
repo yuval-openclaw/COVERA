@@ -12,6 +12,7 @@ struct AccountView: View {
     @State private var showingDeleteConfirmation = false
     @State private var confirmationText = ""
     @State private var exportFile: ExportFile?
+    @State private var showingGuestSignOut = false
     @AppStorage(AppLanguage.storageKey) private var language = AppLanguage.en.rawValue
 
     private var deleteConfirmed: Bool {
@@ -82,7 +83,7 @@ struct AccountView: View {
                 Text(String(localized: "Signed in"))
                     .font(.headline)
                     .foregroundStyle(Theme.Palette.ink)
-                Text(model.email ?? "placeholder@example.com")
+                Text(model.isGuest ? String(localized: "Guest account") : (model.email ?? "placeholder@example.com"))
                     .font(.footnote)
                     .foregroundStyle(Theme.Palette.tertiaryInk)
                     .lineLimit(1)
@@ -91,11 +92,27 @@ struct AccountView: View {
             }
             Spacer(minLength: 0)
             Button(String(localized: "Sign out")) {
-                Task { await model.signOut() }
+                // A guest has no password: signing out is final, so it is
+                // confirmed first. Anyone else can simply sign back in.
+                if model.isGuest {
+                    showingGuestSignOut = true
+                } else {
+                    Task { await model.signOut() }
+                }
             }
             .buttonStyle(SecondaryButtonStyle())
         }
         .coveraCard()
+        .alert(String(localized: "Sign out of a guest account?"), isPresented: $showingGuestSignOut) {
+            Button(String(localized: "Cancel"), role: .cancel) {}
+            // Nobody could open the account again, so it is deleted now rather
+            // than left on the server until the cleanup finds it.
+            Button(String(localized: "Delete and sign out"), role: .destructive) {
+                Task { await model.deleteAccount() }
+            }
+        } message: {
+            Text(String(localized: "A guest account has no password, so signing out deletes it, with every policy in it. To keep your policies, export them first or create an account."))
+        }
     }
 
     private var languageCard: some View {
@@ -282,6 +299,10 @@ final class AccountModel {
     let disclaimer = String(localized: "Covera is not a doctor and not a licensed insurance agent. This is a reading of your own documents, not medical advice and not a coverage decision. Your insurer decides what is covered.")
 
     private(set) var email: String?
+
+    /// Guest accounts are created with an address on a reserved domain that
+    /// can never receive mail.
+    var isGuest: Bool { email?.hasSuffix("@guest.covera.invalid") ?? false }
     private(set) var isWorking = false
     private(set) var errorMessage: String?
 

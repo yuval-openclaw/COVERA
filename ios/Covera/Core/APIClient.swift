@@ -61,7 +61,13 @@ actor APIClient {
            let url = URL(string: override) {
             return url
         }
+        #if DEBUG
         return URL(string: "http://localhost:3000")!
+        #else
+        // A release build without a configured API must not quietly talk to
+        // whatever is listening on the device.
+        return URL(string: "https://api.covera.invalid")!
+        #endif
     }
 
     // MARK: - Requests

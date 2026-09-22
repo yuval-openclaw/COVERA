@@ -333,7 +333,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COVERA_GOOGLE_CLIENT_ID = "";
 				CURRENT_PROJECT_VERSION = 1;
-				CoveraAPIBaseURL = "http://localhost:3000";
+				CoveraAPIBaseURL = "https://api.covera.invalid";
 				CoveraLegalBaseURL = "https://covera-legal.vercel.app";
 				INFOPLIST_FILE = Covera/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
