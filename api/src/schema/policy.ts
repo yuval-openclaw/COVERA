@@ -51,10 +51,24 @@ const ambiguousSchema = z.object({
   note: z.string().nullable(),
 });
 
+/**
+ * The document does address this, but the figure read from it could not be
+ * proved against the page, so none is kept. Set only by Covera after the
+ * extractor's last attempt, never by the extractor itself: it exists so that
+ * one misread field does not throw away a whole policy, without pretending the
+ * document is silent (that is not_stated) and without keeping an unproven
+ * figure. Shown to the user as "check your policy or ask your insurer".
+ */
+const unverifiedSchema = z.object({
+  status: z.literal('unverified'),
+  note: z.string(),
+});
+
 export const policyFieldSchema = z.discriminatedUnion('status', [
   statedSchema,
   notStatedSchema,
   ambiguousSchema,
+  unverifiedSchema,
 ]);
 export type PolicyField = z.infer<typeof policyFieldSchema>;
 

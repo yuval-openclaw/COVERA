@@ -14,6 +14,19 @@ export interface CitationViolation {
   document_id: string;
   page: number;
   detail: string;
+  /**
+   * The single field this came from, when it came from one. List entries
+   * (exclusions, claim steps, required documents) have no target: dropping
+   * one silently would hide a restriction, so they are never downgraded.
+   */
+  target?: FieldTarget | undefined;
+}
+
+/** Where a field lives, so it can be replaced in place. */
+export interface FieldTarget {
+  owner: Record<string, unknown>;
+  key: string;
+  label: string;
 }
 
 /** Page text keyed by document id, then 1-based page number. */
@@ -73,6 +86,7 @@ interface CitedText {
   text: string;
   citation: SourceCitation;
   label: string;
+  target?: FieldTarget | undefined;
 }
 
 export function verifyPolicyCitations(
@@ -82,7 +96,7 @@ export function verifyPolicyCitations(
   const violations: CitationViolation[] = [];
   const cited = collectCitedText(policy);
 
-  for (const { text, citation, label } of cited) {
+  for (const { text, citation, label, target } of cited) {
     const pageText = pages.get(citation.document_id)?.get(citation.page);
 
     if (pageText === undefined) {
@@ -90,6 +104,7 @@ export function verifyPolicyCitations(
         kind: 'missing_page',
         document_id: citation.document_id,
         page: citation.page,
+        target,
         detail: `${label} cites page ${citation.page} of ${citation.document_id}, which was not ingested.`,
       });
       continue;
@@ -100,6 +115,7 @@ export function verifyPolicyCitations(
         kind: 'quote_not_found',
         document_id: citation.document_id,
         page: citation.page,
+        target,
         detail: `${label}: quoted text does not appear on the cited page: "${citation.verbatim_quote}"`,
       });
       continue;
@@ -113,6 +129,7 @@ export function verifyPolicyCitations(
         kind: 'value_not_in_quote',
         document_id: citation.document_id,
         page: citation.page,
+        target,
         detail: `${label}: "${text}" contains ${unsupported.join(', ')}, which the supporting quote does not contain. Quote the figure exactly as printed, including how it is punctuated.`,
       });
     }
@@ -129,9 +146,11 @@ export function verifyPolicyCitations(
 function collectCitedText(policy: ExtractedPolicy): CitedText[] {
   const out: CitedText[] = [];
 
-  const field = (label: string, f: PolicyField): void => {
+  const field = (label: string, owner: object, key: string): void => {
+    const f = (owner as Record<string, PolicyField>)[key]!;
+    const target: FieldTarget = { owner: owner as Record<string, unknown>, key, label };
     if (f.status === 'stated') {
-      out.push({ text: f.value, citation: f.source_citation, label });
+      out.push({ text: f.value, citation: f.source_citation, label, target });
       // The normalized amount drives deadline arithmetic, so it is held to the
       // same standard as the displayed value rather than trusted alongside it.
       if (f.normalized !== null) {
@@ -139,29 +158,30 @@ function collectCitedText(policy: ExtractedPolicy): CitedText[] {
           text: String(f.normalized.amount),
           citation: f.source_citation,
           label: `${label} (normalized)`,
+          target,
         });
       }
     } else if (f.status === 'ambiguous') {
       f.competing_readings.forEach((reading, i) => {
-        out.push({ text: reading, citation: f.source_citation, label: `${label} reading ${i + 1}` });
+        out.push({ text: reading, citation: f.source_citation, label: `${label} reading ${i + 1}`, target });
       });
     }
   };
 
-  field('insurer_name', policy.insurer_name);
-  field('policy_number', policy.policy_number);
-  field('effective_date', policy.effective_date);
-  field('renewal_date', policy.renewal_date);
+  field('insurer_name', policy, 'insurer_name');
+  field('policy_number', policy, 'policy_number');
+  field('effective_date', policy, 'effective_date');
+  field('renewal_date', policy, 'renewal_date');
 
   policy.coverage_items.forEach((item, index) => {
     const at = `coverage_items[${index}] (${item.category})`;
-    field(`${at}.coverage_percentage_or_amount`, item.coverage_percentage_or_amount);
-    field(`${at}.annual_limit`, item.annual_limit);
-    field(`${at}.per_event_limit`, item.per_event_limit);
-    field(`${at}.deductible_or_copay`, item.deductible_or_copay);
-    field(`${at}.waiting_period_days`, item.waiting_period_days);
-    field(`${at}.requires_preauthorization`, item.requires_preauthorization);
-    field(`${at}.network_restriction`, item.network_restriction);
+    field(`${at}.coverage_percentage_or_amount`, item, 'coverage_percentage_or_amount');
+    field(`${at}.annual_limit`, item, 'annual_limit');
+    field(`${at}.per_event_limit`, item, 'per_event_limit');
+    field(`${at}.deductible_or_copay`, item, 'deductible_or_copay');
+    field(`${at}.waiting_period_days`, item, 'waiting_period_days');
+    field(`${at}.requires_preauthorization`, item, 'requires_preauthorization');
+    field(`${at}.network_restriction`, item, 'network_restriction');
     item.exclusions.forEach((exclusion, i) => {
       out.push({
         text: exclusion.text,
@@ -172,10 +192,10 @@ function collectCitedText(policy: ExtractedPolicy): CitedText[] {
   });
 
   const claims = policy.claims_process;
-  field('claims_process.submission_deadline_days', claims.submission_deadline_days);
-  field('claims_process.contact.phone', claims.contact.phone);
-  field('claims_process.contact.email', claims.contact.email);
-  field('claims_process.contact.portal_url', claims.contact.portal_url);
+  field('claims_process.submission_deadline_days', claims, 'submission_deadline_days');
+  field('claims_process.contact.phone', claims.contact, 'phone');
+  field('claims_process.contact.email', claims.contact, 'email');
+  field('claims_process.contact.portal_url', claims.contact, 'portal_url');
 
   claims.steps.forEach((step, i) => {
     out.push({

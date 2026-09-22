@@ -14,6 +14,8 @@ import {
   type ExtractedPolicy,
 } from '../schema/policy.js';
 import type { PageText } from './pdf.js';
+import { snapQuotesToPages } from './snap.js';
+import { downgradeUnproven, usesUnverified, withoutUnverified } from './unverified.js';
 import { verifyPolicyCitations, type CitationViolation, type PageIndex } from './verify.js';
 
 /** The model never authors the policy's own id; it is assigned by the caller. */
@@ -37,6 +39,8 @@ export interface ExtractionResult {
   policy: ExtractedPolicy;
   violations: CitationViolation[];
   attempts: number;
+  /** Fields kept as "unverified" after the last attempt (labels), if any. */
+  unverified?: string[];
 }
 
 export async function extractPolicy(params: {
@@ -51,7 +55,9 @@ export async function extractPolicy(params: {
     [documentId, new Map(pages.map((p) => [p.page, p.text]))],
   ]);
 
-  const schema = jsonSchemaFor(outputSchema);
+  // "unverified" is Covera's verdict on a field, never the extractor's to give,
+  // so it is removed from the structure the model is shown.
+  const schema = withoutUnverified(jsonSchemaFor(outputSchema));
   const contents: Content[] = [
     userTurn(
       pdfPart(pdf),
@@ -71,6 +77,7 @@ export async function extractPolicy(params: {
   const MAX_ATTEMPTS = 3;
   let lastViolations: CitationViolation[] = [];
   let lastSchemaIssues: string[] = [];
+  let lastCandidate: ExtractedPolicy | null = null;
 
   for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
     const { raw, value } = await generateJson({
@@ -105,6 +112,21 @@ export async function extractPolicy(params: {
       continue;
     }
 
+    if (usesUnverified(parsed.data)) {
+      lastSchemaIssues = ['status "unverified" is not allowed; use stated, not_stated or ambiguous'];
+      contents.push(
+        modelTurn(raw),
+        userTurn(textPart(`The structure was rejected:\n- ${lastSchemaIssues[0]}\nReturn the complete corrected JSON.`)),
+      );
+      continue;
+    }
+
+    // Quotes the model reproduced with the right words and figures in a
+    // different order (common for Hebrew text layers) are replaced with the
+    // exact page text before checking. See snap.ts for why this cannot turn a
+    // wrong figure into a verified one.
+    snapQuotesToPages(parsed.data, pageIndex);
+
     const foreign = collectCitations(parsed.data).filter((c) => c.document_id !== documentId);
     const violations = [
       ...verifyPolicyCitations(parsed.data, pageIndex),
@@ -124,6 +146,7 @@ export async function extractPolicy(params: {
 
     lastViolations = violations;
     lastSchemaIssues = [];
+    lastCandidate = parsed.data;
     contents.push(
       modelTurn(raw),
       userTurn(
@@ -136,6 +159,16 @@ export async function extractPolicy(params: {
         ),
       ),
     );
+  }
+
+  // Every attempt left some citations unproven. If they are all single fields
+  // and few, keep the policy and mark just those fields unverified: they carry
+  // no figure, and the user is told to check the document or ask the insurer.
+  // Anything else — a failed exclusion or claim step, or many failures, which
+  // points to a bad document — is rejected whole, as before.
+  if (lastCandidate) {
+    const kept = downgradeUnproven(lastCandidate, lastViolations, pageIndex);
+    if (kept) return { policy: kept.policy, violations: [], attempts: MAX_ATTEMPTS, unverified: kept.labels };
   }
 
   throw new ExtractionFailedError(lastViolations, lastSchemaIssues);

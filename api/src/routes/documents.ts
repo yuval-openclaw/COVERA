@@ -52,6 +52,9 @@ export async function documentRoutes(app: FastifyInstance): Promise<void> {
         // Pages read by transcription rather than an embedded text layer.
         // Citations on these pages are verified against our transcription.
         transcribed_pages: result.ocrPageNumbers,
+        // Fields Covera found but could not prove against the page; they carry
+        // no figure. The app says so rather than implying the policy is silent.
+        unverified_fields: result.unverifiedFields,
       });
     } catch (error) {
       if (error instanceof ExtractionFailedError) {

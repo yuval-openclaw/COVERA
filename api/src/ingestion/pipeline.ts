@@ -19,6 +19,8 @@ export interface IngestResult {
   changes: FieldChange[];
   ocrPageNumbers: number[];
   alreadyIngested: boolean;
+  /** How many fields were kept as "unverified" rather than with a figure. */
+  unverifiedFields: number;
 }
 
 export async function ingestPolicyDocument(params: {
@@ -57,6 +59,7 @@ export async function ingestPolicyDocument(params: {
       changes: [],
       ocrPageNumbers: found.ocr_pages,
       alreadyIngested: true,
+      unverifiedFields: 0,
     };
   }
 
@@ -78,7 +81,7 @@ export async function ingestPolicyDocument(params: {
     const resolved = mergePages(pages, transcribed);
 
     const policyId = randomUUID();
-    const { policy } = await extractPolicy({ policyId, documentId, pdf: file, pages: resolved });
+    const { policy, unverified } = await extractPolicy({ policyId, documentId, pdf: file, pages: resolved });
 
     const chunks = chunkPages(resolved);
     const embeddings = await embedDocuments(chunks.map((c) => c.text));
@@ -127,6 +130,7 @@ export async function ingestPolicyDocument(params: {
       changes,
       ocrPageNumbers: transcribed.map((p) => p.page),
       alreadyIngested: false,
+      unverifiedFields: unverified?.length ?? 0,
     };
   } catch (error) {
     // The transaction rolls back pages, chunks and the policy row, so nothing
