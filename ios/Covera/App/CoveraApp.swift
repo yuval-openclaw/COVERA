@@ -157,6 +157,16 @@ struct RootView: View {
         }
         .animation(Theme.Motion.appear, value: documents.isUploading)
         .task { await recordConsentIfNeeded() }
+        #if DEBUG
+        .onAppear {
+            switch PreviewData.shot {
+            case "plan": showingGuidance = true
+            case "policies": tab = .policies
+            case "ask": tab = .ask
+            default: break
+            }
+        }
+        #endif
     }
 
     /// Consent is given on the device before sign-in, so the server learns of

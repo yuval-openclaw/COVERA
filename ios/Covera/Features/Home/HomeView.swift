@@ -35,6 +35,9 @@ struct HomeView: View {
             .coveraScreen()
             .toolbar(.hidden, for: .navigationBar)
             .policyImport($importMethod, model: documents, onFinished: onShowPolicies)
+            #if DEBUG
+            .onAppear { if PreviewData.shot == "calllog" { showingCallLog = true } }
+            #endif
             .sheet(isPresented: $showingCallLog) {
                 CallLogView(store: callLog, onClose: { showingCallLog = false })
             }

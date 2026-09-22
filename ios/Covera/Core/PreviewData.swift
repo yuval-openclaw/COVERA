@@ -15,6 +15,12 @@ enum PreviewData {
         ProcessInfo.processInfo.arguments.contains("-CoveraDemo")
     }
 
+    /// The screen a demo launch opens on, for App Store screenshots:
+    /// `-CoveraDemo -CoveraShot plan` (home, plan, policies, ask, calllog).
+    static var shot: String? {
+        isDemo ? UserDefaults.standard.string(forKey: "CoveraShot") : nil
+    }
+
     /// A plan in progress: the intake answered, the first step marked done.
     @MainActor
     static func guidanceModel() -> GuidanceModel {
