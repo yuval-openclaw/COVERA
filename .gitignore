@@ -4,8 +4,10 @@ dist/
 .env.local
 *.log
 
-# Never commit user policy documents or extracted text.
-storage/
+# Never commit user policy documents or extracted text. Anchored to the
+# upload folder only: a bare "storage/" also hid api/src/storage/, the
+# encryption source code.
+/api/storage/
 uploads/
 *.pdf
 !docs/**/*.pdf
