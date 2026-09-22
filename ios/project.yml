@@ -1,0 +1,57 @@
+# XcodeGen spec. The .xcodeproj is generated rather than committed:
+#   brew install xcodegen && cd ios && xcodegen generate
+# A generated project keeps build settings reviewable as text — an entitlement or
+# a usage string going missing shows up in a diff instead of inside a binary plist.
+name: Covera
+options:
+  bundleIdPrefix: com.covera
+  deploymentTarget:
+    iOS: "17.0"
+  createIntermediateGroups: true
+
+settings:
+  base:
+    SWIFT_VERSION: "5.9"
+    SWIFT_STRICT_CONCURRENCY: complete
+    ENABLE_USER_SCRIPT_SANDBOXING: YES
+    # Health documents on a lost device: the default protection class already
+    # locks files while the device is locked, and this makes it explicit.
+    IPHONEOS_DEPLOYMENT_TARGET: "17.0"
+
+targets:
+  Covera:
+    type: application
+    platform: iOS
+    sources:
+      - path: Covera
+        # Both are referenced by build settings; they must not also be copied
+        # into the bundle as loose resources.
+        excludes:
+          - "Info.plist"
+          - "Covera.entitlements"
+    settings:
+      base:
+        INFOPLIST_FILE: Covera/Info.plist
+        CODE_SIGN_ENTITLEMENTS: Covera/Covera.entitlements
+        PRODUCT_BUNDLE_IDENTIFIER: com.covera.app
+        MARKETING_VERSION: "1.0"
+        CURRENT_PROJECT_VERSION: "1"
+        TARGETED_DEVICE_FAMILY: "1,2"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        SUPPORTS_MACCATALYST: NO
+        # Lets the build list every String(localized:) key for translation.
+        SWIFT_EMIT_LOC_STRINGS: YES
+        # Point the client at a real API before archiving.
+        CoveraAPIBaseURL: http://localhost:3000
+        CoveraLegalBaseURL: https://covera-legal.vercel.app
+        # From Google Cloud Console → Credentials → OAuth client (iOS). The server's
+        # GOOGLE_IOS_CLIENT_ID must match. Empty leaves Google sign-in switched off.
+        COVERA_GOOGLE_CLIENT_ID: ""
+
+schemes:
+  Covera:
+    build:
+      targets:
+        Covera: all
+    run:
+      config: Debug

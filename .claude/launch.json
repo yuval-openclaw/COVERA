@@ -1,0 +1,44 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "covera-api",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "api",
+        "run",
+        "dev"
+      ],
+      "port": 3000
+    },
+    {
+      "name": "covera-site",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "4173", "--directory", "site"],
+      "port": 4173
+    },
+    {
+      "name": "clothing-library",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "clothing-library",
+        "run",
+        "dev"
+      ],
+      "port": 3100
+    },
+    {
+      "name": "clothing-library-public",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "clothing-library",
+        "run",
+        "serve"
+      ],
+      "port": 3100
+    }
+  ]
+}

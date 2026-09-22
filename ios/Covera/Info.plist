@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>CFBundleDevelopmentRegion</key>
+  <string>$(DEVELOPMENT_LANGUAGE)</string>
+  <key>CFBundleDisplayName</key>
+  <string>Covera</string>
+  <key>CFBundleExecutable</key>
+  <string>$(EXECUTABLE_NAME)</string>
+  <key>CFBundleIdentifier</key>
+  <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+  <key>CFBundleInfoDictionaryVersion</key>
+  <string>6.0</string>
+  <key>CFBundleLocalizations</key>
+  <array>
+    <string>en</string>
+    <string>fr</string>
+    <string>es</string>
+    <string>pt</string>
+    <string>de</string>
+    <string>he</string>
+    <string>ar</string>
+    <string>hi</string>
+    <string>th</string>
+    <string>ja</string>
+  </array>
+  <key>CFBundleName</key>
+  <string>$(PRODUCT_NAME)</string>
+  <key>CFBundlePackageType</key>
+  <string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
+  <key>CFBundleShortVersionString</key>
+  <string>$(MARKETING_VERSION)</string>
+  <key>CFBundleVersion</key>
+  <string>$(CURRENT_PROJECT_VERSION)</string>
+  <key>LSRequiresIPhoneOS</key>
+  <true/>
+
+  <!-- iOS OAuth client ID for "Continue with Google"; empty disables the button. -->
+  <key>CoveraGoogleClientID</key>
+  <string>$(COVERA_GOOGLE_CLIENT_ID)</string>
+
+  <!-- Set per configuration in project.yml so a debug build cannot silently
+       ship pointing at localhost. -->
+  <key>CoveraAPIBaseURL</key>
+  <string>$(CoveraAPIBaseURL)</string>
+  <key>CoveraLegalBaseURL</key>
+  <string>$(CoveraLegalBaseURL)</string>
+
+  <!-- Usage strings say what the app does with the access and why, because a
+       vague prompt on a health app reads as a reason to decline. -->
+  <key>NSCameraUsageDescription</key>
+  <string>To photograph a policy document or receipt so it can be read and stored in your account.</string>
+  <key>NSPhotoLibraryUsageDescription</key>
+  <string>To attach a policy document or receipt you have already saved to your photos.</string>
+  <key>NSFaceIDUsageDescription</key>
+  <string>To unlock your insurance documents. Only you should be able to open them on this device.</string>
+  <key>NSCalendarsUsageDescription</key>
+  <string>To add a claim deadline stated in your policy to your calendar, so you do not miss it.</string>
+
+  <!-- The API is local during development; production traffic is TLS-only. -->
+  <key>NSAppTransportSecurity</key>
+  <dict>
+    <key>NSAllowsArbitraryLoads</key>
+    <false/>
+    <key>NSExceptionDomains</key>
+    <dict>
+      <key>localhost</key>
+      <dict>
+        <key>NSExceptionAllowsInsecureHTTPLoads</key>
+        <true/>
+      </dict>
+    </dict>
+  </dict>
+
+  <!-- The palette is designed for black only; keep system chrome matching. -->
+  <key>UIUserInterfaceStyle</key>
+  <string>Dark</string>
+
+  <key>UILaunchScreen</key>
+  <dict>
+    <key>UIColorName</key>
+    <string>LaunchBackground</string>
+  </dict>
+  <key>UISupportedInterfaceOrientations</key>
+  <array>
+    <string>UIInterfaceOrientationPortrait</string>
+  </array>
+  <key>UISupportedInterfaceOrientations~ipad</key>
+  <array>
+    <string>UIInterfaceOrientationPortrait</string>
+    <string>UIInterfaceOrientationPortraitUpsideDown</string>
+    <string>UIInterfaceOrientationLandscapeLeft</string>
+    <string>UIInterfaceOrientationLandscapeRight</string>
+  </array>
+  <key>ITSAppUsesNonExemptEncryption</key>
+  <false/>
+</dict>
+</plist>

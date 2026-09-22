@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <!-- The session token lives in the Keychain, not UserDefaults. -->
+  <key>keychain-access-groups</key>
+  <array>
+    <string>$(AppIdentifierPrefix)com.covera.app</string>
+  </array>
+
+  <!-- Needed for password autofill and, later, universal links from an
+       insurer's confirmation email. Replace the domain before submission. -->
+  <key>com.apple.developer.associated-domains</key>
+  <array>
+    <string>applinks:covera.app</string>
+    <string>webcredentials:covera.app</string>
+  </array>
+</dict>
+</plist>

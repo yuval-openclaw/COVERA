@@ -1,0 +1,128 @@
+/* Covera legal site — the app's look: black, a serif for headings, plain
+   system type for reading. Every text colour clears WCAG AA on the background. */
+
+:root {
+  --bg: #000;
+  --surface: #0e0e10;
+  --ink: #f4f4f5;
+  --ink-2: #b8b8bf;      /* 10.6:1 on black */
+  --ink-3: #9a9aa3;      /* 7.4:1 on black */
+  --hairline: #26262b;
+  --accent: #8fb4ff;     /* links, 9.9:1 on black */
+  --placeholder-bg: #3a2a00;
+  --placeholder-ink: #ffd27a;
+  --serif: "New York", "Iowan Old Style", Georgia, "Times New Roman", serif;
+  --sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 17px/1.65 var(--sans);
+}
+
+a { color: var(--accent); text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.skip {
+  position: absolute; left: -9999px; top: 0;
+  background: var(--ink); color: var(--bg); padding: 10px 14px;
+}
+.skip:focus { left: 16px; top: 16px; z-index: 10; }
+
+header.site {
+  max-width: 760px; margin: 0 auto; padding: 28px 20px 0;
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 16px;
+}
+@media (max-width: 520px) {
+  header.site { flex-direction: column; align-items: flex-start; }
+}
+.wordmark {
+  font: 600 26px/1 var(--serif); color: var(--ink); text-decoration: none;
+}
+.wordmark span { color: var(--accent); }
+
+nav.site ul {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; flex-wrap: wrap; gap: 6px 18px;
+  font-size: 15px;
+}
+nav.site a { color: var(--ink-2); text-decoration: none; }
+nav.site a[aria-current="page"] { color: var(--ink); }
+nav.site a:hover { color: var(--ink); }
+
+main { max-width: 760px; margin: 0 auto; padding: 36px 20px 64px; }
+
+.eyebrow {
+  font-size: 13px; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--ink-3); margin: 0 0 10px;
+}
+h1 { font: 400 clamp(34px, 7vw, 48px)/1.12 var(--serif); margin: 0 0 14px; }
+h2 {
+  font: 400 26px/1.25 var(--serif); margin: 48px 0 12px;
+  padding-top: 20px; border-top: 1px solid var(--hairline);
+}
+h3 { font: 600 18px/1.4 var(--sans); margin: 28px 0 8px; }
+p, li { color: var(--ink-2); }
+strong { color: var(--ink); font-weight: 600; }
+.lede { font-size: 19px; color: var(--ink-2); margin: 0 0 8px; }
+.meta { font-size: 14px; color: var(--ink-3); }
+
+ul, ol { padding-left: 1.3em; }
+li + li { margin-top: 6px; }
+
+.card {
+  background: var(--surface); border: 1px solid var(--hairline);
+  border-radius: 18px; padding: 20px 22px; margin: 24px 0;
+}
+.card p:first-child { margin-top: 0; }
+.card p:last-child { margin-bottom: 0; }
+
+table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 15px; }
+th, td { text-align: left; vertical-align: top; padding: 10px 12px 10px 0; border-bottom: 1px solid var(--hairline); }
+th { color: var(--ink); font-weight: 600; }
+td { color: var(--ink-2); }
+.table-wrap { overflow-x: auto; }
+
+.toc { font-size: 15px; }
+.toc ol { margin: 8px 0 0; }
+
+/* A blank the owner must fill in before publishing. Loud on purpose:
+   check.sh refuses to deploy while any of these remain. */
+.fill {
+  background: var(--placeholder-bg); color: var(--placeholder-ink);
+  padding: 1px 6px; border-radius: 5px; font-weight: 600;
+}
+
+.links { display: grid; gap: 12px; margin: 28px 0 0; padding: 0; list-style: none; }
+.links a {
+  display: block; text-decoration: none; color: var(--ink);
+  background: var(--surface); border: 1px solid var(--hairline);
+  border-radius: 16px; padding: 16px 18px;
+}
+.links a:hover { border-color: #3a3a42; }
+.links span { display: block; color: var(--ink-3); font-size: 15px; margin-top: 2px; }
+
+footer.site {
+  max-width: 760px; margin: 0 auto; padding: 24px 20px 48px;
+  border-top: 1px solid var(--hairline); font-size: 14px; color: var(--ink-3);
+}
+footer.site a { color: var(--ink-2); }
+
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+/* True today, but must be replaced before release. `check.sh --launch`
+   fails while any remain. Styled as ordinary text: it is honest as written. */
+.prelaunch { color: var(--ink-2); }
