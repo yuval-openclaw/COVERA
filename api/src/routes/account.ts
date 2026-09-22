@@ -20,7 +20,8 @@ export async function accountRoutes(app: FastifyInstance): Promise<void> {
 
     const [account, members, documents, policies, chunks, claims] = await Promise.all([
       pool.query(
-        `SELECT id, email, created_at, health_consent_at, health_consent_version
+        `SELECT id, email, created_at, terms_accepted_at, terms_version,
+                health_consent_at, health_consent_version, not_advice_acknowledged_at
          FROM users WHERE id = $1 AND deleted_at IS NULL`,
         [userId],
       ),
@@ -77,22 +78,34 @@ export async function accountRoutes(app: FastifyInstance): Promise<void> {
       });
   });
 
-  // Records that this account agreed to the processing of health information
-  // described in the privacy policy, and which version it agreed to. Called by
-  // the app after the consent screen; repeating it with the same version is
-  // harmless, and a new version overwrites the old record.
+  // Records the three agreements the app asks for after sign-in: the Terms of
+  // Use (with the 18+ confirmation), consent to processing health information,
+  // and the acknowledgment that Covera is not advice. All three must be true;
+  // each is stored with its own time as evidence. Repeating it is harmless, and
+  // a new version overwrites the old record.
   app.post('/account/consent', async (request, reply) => {
     const userId = await requireUserId(request);
-    const version = (request.body as { version?: unknown } | undefined)?.version;
-    if (typeof version !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(version)) {
-      return reply.status(400).send({ error: 'version must be a date like 2026-09-21' });
+    const body = (request.body ?? {}) as {
+      version?: unknown;
+      accept_terms?: unknown;
+      health_consent?: unknown;
+      not_advice?: unknown;
+    };
+    if (typeof body.version !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(body.version)) {
+      return reply.status(400).send({ error: 'version must be a date like 2026-09-22' });
+    }
+    if (body.accept_terms !== true || body.health_consent !== true || body.not_advice !== true) {
+      return reply.status(400).send({ error: 'All three agreements are required.' });
     }
     await pool.query(
-      `UPDATE users SET health_consent_at = now(), health_consent_version = $1
+      `UPDATE users SET
+         terms_accepted_at = now(), terms_version = $1,
+         health_consent_at = now(), health_consent_version = $1,
+         not_advice_acknowledged_at = now()
        WHERE id = $2 AND deleted_at IS NULL`,
-      [version, userId],
+      [body.version, userId],
     );
-    return { recorded: true, version };
+    return { recorded: true, version: body.version };
   });
 
   app.delete('/account', async (request, reply) => {

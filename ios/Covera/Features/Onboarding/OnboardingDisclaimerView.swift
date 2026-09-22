@@ -8,11 +8,6 @@ import SwiftUI
 struct OnboardingDisclaimerView: View {
     let onAccept: () -> Void
 
-    /// Explicit consent, off until the user turns it on. Health information is
-    /// special-category data (GDPR Art. 9) and consumer health data under US
-    /// state law; both need an affirmative act, not a pre-ticked box.
-    @State private var agreed = false
-
     private let points: [(icon: String, title: String, body: String)] = [
         (
             "doc.text.magnifyingglass",
@@ -84,33 +79,12 @@ struct OnboardingDisclaimerView: View {
                 .frame(height: 28)
                 .allowsHitTesting(false)
 
-                VStack(alignment: .leading, spacing: Theme.Spacing.step) {
-                    Toggle(isOn: $agreed.animation(Theme.Motion.press)) {
-                        Text(String(localized: "I am 18 or older, and I agree that Covera may process the health information in my documents as described in the Privacy Policy."))
-                            .font(.footnote)
-                            .foregroundStyle(Theme.Palette.secondaryInk)
-                            .fixedSize(horizontal: false, vertical: true)
-                            // The sentence is the thing being agreed to, so it
-                            // is a target too, not only the small switch.
-                            .contentShape(Rectangle())
-                            .onTapGesture { withAnimation(Theme.Motion.press) { agreed.toggle() } }
-                    }
-                    .tint(Theme.Palette.cited)
-
-                    HStack(spacing: Theme.Spacing.block) {
-                        Link(String(localized: "Privacy Policy"), destination: Legal.privacy)
-                        Link(String(localized: "Terms of Use"), destination: Legal.terms)
-                    }
-                    .font(.footnote.weight(.semibold))
-                    .foregroundStyle(Theme.Palette.cited)
-
-                    Button(action: onAccept) {
-                        Text(String(localized: "Agree and continue"))
-                    }
-                    .buttonStyle(PrimaryButtonStyle())
-                    .disabled(!agreed)
-                    .opacity(agreed ? 1 : 0.45)
+                // Agreement happens after sign-in (ConsentView), where it is
+                // recorded against the account; this screen only explains.
+                Button(action: onAccept) {
+                    Text(String(localized: "Continue"))
                 }
+                .buttonStyle(PrimaryButtonStyle())
                 .padding(.horizontal, Theme.Spacing.screen + 4)
                 .padding(.bottom, Theme.Spacing.tight)
                 .background(Theme.Palette.background)

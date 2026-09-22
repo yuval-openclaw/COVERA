@@ -18,7 +18,14 @@ export async function extractPdfPages(file: Buffer): Promise<{
   pages: PageText[];
   needsOcr: number[];
 }> {
-  const pdf = await getDocumentProxy(new Uint8Array(file));
+  let pdf: Awaited<ReturnType<typeof getDocumentProxy>>;
+  try {
+    pdf = await getDocumentProxy(new Uint8Array(file));
+  } catch (error) {
+    // A damaged or password-protected file. Named, so the route can tell the
+    // user what went wrong instead of answering with a server error.
+    throw new UnreadablePdfError(error instanceof Error ? error.message : String(error));
+  }
 
   const pages: PageText[] = [];
   for (let number = 1; number <= pdf.numPages; number++) {
@@ -32,6 +39,13 @@ export async function extractPdfPages(file: Buffer): Promise<{
     .map((p) => p.page);
 
   return { pages, needsOcr };
+}
+
+export class UnreadablePdfError extends Error {
+  constructor(detail: string) {
+    super(`The PDF could not be opened: ${detail}`);
+    this.name = 'UnreadablePdfError';
+  }
 }
 
 interface TextItem {

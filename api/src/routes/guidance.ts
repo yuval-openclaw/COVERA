@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { buildGuidance } from '../guidance/guide.js';
 import { disclaimerFor } from '../guidance/schema.js';
 import { allow, DAY } from '../auth/rate-limit.js';
-import { requireUserId } from './auth.js';
+import { requireConsent, requireUserId } from './auth.js';
 
 const requestSchema = z.object({
   situation: z.string().min(3).max(2000),
@@ -14,6 +14,7 @@ const requestSchema = z.object({
 export async function guidanceRoutes(app: FastifyInstance): Promise<void> {
   app.post('/guidance', async (request, reply) => {
     const userId = await requireUserId(request);
+    await requireConsent(userId);
     // Each request here is paid for at the AI provider; a daily cap per
     // account keeps one account from running up the bill.
     if (!(await allow(`guidance:${userId}`, 30, DAY))) {

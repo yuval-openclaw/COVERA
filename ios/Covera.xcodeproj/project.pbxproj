@@ -22,6 +22,7 @@
 		6EA045FFA18D0C1BDAA30977 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4000DE77EFC653220AD23CE /* ChatView.swift */; };
 		760B83D986EBD8E23C7DFB1F /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFDF218B5A369EA43805561E /* Session.swift */; };
 		7684ADD63248B91F51543004 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53715E5CD760B048D718AFCC /* Models.swift */; };
+		793A121F08F8929C2FE4F2F9 /* ConsentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4D7FBD9101DC246A0B74B9 /* ConsentView.swift */; };
 		7995749BF744D57956C32660 /* DocumentScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D7B646651CEBFDE8EECCDE /* DocumentScanner.swift */; };
 		838C8C51EB16F3DE8FB13973 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 5044A9535ECB3FE2F93995CD /* Localizable.xcstrings */; };
 		9A6D7648142DEB7F6E258245 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = B6455914633CB9F857AE55B5 /* PrivacyInfo.xcprivacy */; };
@@ -43,6 +44,7 @@
 		4263AEC6BA3CFDE455FC2F67 /* DocumentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentsView.swift; sourceTree = "<group>"; };
 		46D7B646651CEBFDE8EECCDE /* DocumentScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentScanner.swift; sourceTree = "<group>"; };
 		479BD4E8F33AF25EBEE22987 /* CallLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallLog.swift; sourceTree = "<group>"; };
+		4B4D7FBD9101DC246A0B74B9 /* ConsentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsentView.swift; sourceTree = "<group>"; };
 		4FC07A45F27FCD4D79CCCFBC /* PlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanView.swift; sourceTree = "<group>"; };
 		5044A9535ECB3FE2F93995CD /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		53715E5CD760B048D718AFCC /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
@@ -122,6 +124,7 @@
 		45A3A6A74E92EE3F53F7BC4D /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
+				4B4D7FBD9101DC246A0B74B9 /* ConsentView.swift */,
 				B0A9F4253BFB67BC9FDAA56C /* OnboardingDisclaimerView.swift */,
 			);
 			path = Onboarding;
@@ -292,6 +295,7 @@
 				534736285BE8E8F3C3502BA3 /* CallLog.swift in Sources */,
 				0CAAD16C89A7B6B0EDD74FD9 /* CallLogView.swift in Sources */,
 				6EA045FFA18D0C1BDAA30977 /* ChatView.swift in Sources */,
+				793A121F08F8929C2FE4F2F9 /* ConsentView.swift in Sources */,
 				DD05861AC79C952294C5680A /* CoveraApp.swift in Sources */,
 				7995749BF744D57956C32660 /* DocumentScanner.swift in Sources */,
 				9B07CBB696844D8A4A8A2ED8 /* DocumentsView.swift in Sources */,

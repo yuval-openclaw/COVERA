@@ -9,7 +9,7 @@ enum Legal {
     /// The date of the privacy policy and terms the consent screen refers to.
     /// Bump it when either changes in a way that needs fresh consent: everyone
     /// sees the consent screen again, and the server records the new version.
-    static let version = "2026-09-21"
+    static let version = "2026-09-22"
 
     static var baseURL: URL {
         if let value = Bundle.main.object(forInfoDictionaryKey: "CoveraLegalBaseURL") as? String,

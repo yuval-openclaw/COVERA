@@ -9,12 +9,16 @@ publishing and `site/check.sh --launch` gates release.
 
 - Privacy Policy, Terms of Use, Consumer Health Data Privacy Policy and
   Accessibility Statement, written against what the code does (`site/`).
-- Explicit, off-by-default consent to health-data processing and an 18+
-  confirmation before first use (`OnboardingDisclaimerView`), shown again
-  whenever `Legal.version` changes.
-- Proof of consent: the server records when each account agreed and to which
-  version (`users.health_consent_at` / `health_consent_version`, migration 005,
-  `POST /account/consent`), and it is included in the user's export.
+- After sign-in, before anything else, three separate off-by-default
+  agreements (`ConsentView`): the Terms of Use with 18+ confirmation (makes the
+  liability limits enforceable), consent to health-data processing (kept
+  separate, as the GDPR requires), and acknowledgment that Covera is not advice.
+  Shown again whenever `Legal.version` changes.
+- The server refuses uploads, plans and chat from any account without all
+  three on record (`requireConsent`), so no old or modified client can skip it.
+- Proof: each agreement is stored with its own time and the version agreed to
+  (migrations 005 and 007, `POST /account/consent`), and appears in the user's
+  export.
 - In-app links to the Privacy Policy and Terms (onboarding and Account), as App
   Review requires. They previously pointed at `covera.app`, a domain not owned.
 - Policy text kept out of server logs (a rejected-extraction log line leaked

@@ -2,15 +2,17 @@ import type { FastifyInstance } from 'fastify';
 import { pool } from '../db/pool.js';
 import { ExtractionFailedError } from '../ingestion/extract.js';
 import { ingestPolicyDocument } from '../ingestion/pipeline.js';
+import { UnreadablePdfError } from '../ingestion/pdf.js';
 import { documentKey, documentStore } from '../storage/index.js';
 import { allow, DAY } from '../auth/rate-limit.js';
-import { requireUserId } from './auth.js';
+import { requireConsent, requireUserId } from './auth.js';
 
 const ACCEPTED_TYPES = new Set(['application/pdf']);
 
 export async function documentRoutes(app: FastifyInstance): Promise<void> {
   app.post('/documents', async (request, reply) => {
     const userId = await requireUserId(request);
+    await requireConsent(userId);
     // Each request here is paid for at the AI provider; a daily cap per
     // account keeps one account from running up the bill.
     if (!(await allow(`upload:${userId}`, 20, DAY))) {
@@ -57,6 +59,11 @@ export async function documentRoutes(app: FastifyInstance): Promise<void> {
         unverified_fields: result.unverifiedFields,
       });
     } catch (error) {
+      if (error instanceof UnreadablePdfError) {
+        return reply.status(422).send({
+          error: 'This PDF could not be opened. It may be damaged or password-protected. Try downloading it again from your insurer.',
+        });
+      }
       if (error instanceof ExtractionFailedError) {
         // The kind and page of each rejection is enough to see what went wrong.
         // The detail is not logged: it quotes the policy, and policy text is

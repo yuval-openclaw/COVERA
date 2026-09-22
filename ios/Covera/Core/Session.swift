@@ -72,13 +72,29 @@ final class AuthState {
     static let shared = AuthState()
 
     private(set) var isSignedIn: Bool
+    /// Whether the signed-in account has accepted the current agreements.
+    /// Nil until the server has been asked; reset on every sign-in and
+    /// sign-out, because agreement belongs to the account, not the device.
+    private(set) var hasAgreed: Bool?
 
     private init() {
         isSignedIn = Session.shared.hasToken
     }
 
-    func didSignIn() { isSignedIn = true }
-    func didSignOut() { isSignedIn = false }
+    func didSignIn() { isSignedIn = true; hasAgreed = nil }
+    func didSignOut() { isSignedIn = false; hasAgreed = nil }
+    func didAgree() { hasAgreed = true }
+
+    /// Asks the server whether this account has agreed to `version`.
+    func refreshAgreement(version: String) async {
+        do {
+            hasAgreed = try await APIClient.shared.consentVersion() == version
+        } catch {
+            // Offline or signed out: the agreement screen will ask, and
+            // recording the answer will surface the real problem.
+            hasAgreed = false
+        }
+    }
 }
 
 /// Face ID / Touch ID gate in front of stored documents.

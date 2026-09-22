@@ -132,8 +132,23 @@ actor APIClient {
     }
 
     private struct MeResponse: Decodable {
-        struct User: Decodable { let email: String }
+        struct User: Decodable {
+            let email: String
+            /// The version of the terms and consent this account agreed to, or
+            /// nil if it has not agreed to all three.
+            let consentVersion: String?
+
+            enum CodingKeys: String, CodingKey {
+                case email
+                case consentVersion = "consent_version"
+            }
+        }
         let user: User
+    }
+
+    /// Which version of the agreements the signed-in account accepted, if any.
+    func consentVersion() async throws -> String? {
+        try await send(path: "/auth/me", method: "GET", body: nil, as: MeResponse.self).user.consentVersion
     }
 
     func signIn(email: String, password: String, createAccount: Bool) async throws -> AuthResponse {
@@ -167,10 +182,15 @@ actor APIClient {
         try await raw(path: "/account/export", method: "GET", body: nil).0
     }
 
-    /// Records on the server that this account consented to the processing of
-    /// health information under the given version of the privacy policy.
+    /// Records all three agreements from the agreement screen. The server
+    /// refuses anything less, and stores each with its own time as evidence.
     func recordConsent(version: String) async throws {
-        let body = try JSONSerialization.data(withJSONObject: ["version": version])
+        let body = try JSONSerialization.data(withJSONObject: [
+            "version": version,
+            "accept_terms": true,
+            "health_consent": true,
+            "not_advice": true,
+        ])
         _ = try await raw(path: "/account/consent", method: "POST", body: body)
     }
 

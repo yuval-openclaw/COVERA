@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { answerQuestion, chatMessageSchema } from '../guidance/chat.js';
 import { disclaimerFor } from '../guidance/schema.js';
 import { allow, DAY } from '../auth/rate-limit.js';
-import { requireUserId } from './auth.js';
+import { requireConsent, requireUserId } from './auth.js';
 
 const requestSchema = z.object({
   messages: z.array(chatMessageSchema).min(1).max(20),
@@ -13,6 +13,7 @@ const requestSchema = z.object({
 export async function chatRoutes(app: FastifyInstance): Promise<void> {
   app.post('/chat', async (request, reply) => {
     const userId = await requireUserId(request);
+    await requireConsent(userId);
     // Each request here is paid for at the AI provider; a daily cap per
     // account keeps one account from running up the bill.
     if (!(await allow(`chat:${userId}`, 150, DAY))) {

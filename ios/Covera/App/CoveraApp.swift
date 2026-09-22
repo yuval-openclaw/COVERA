@@ -4,11 +4,9 @@ import SwiftUI
 struct CoveraApp: App {
     @State private var lock = AppLock()
     @State private var auth = AuthState.shared
-    // The version of the privacy policy and terms the user agreed to. A new
-    // version shows the consent screen again, so consent always matches the
-    // policy currently published.
-    @AppStorage("covera.consentVersion") private var consentVersion = ""
-    private var disclaimerAccepted: Bool { consentVersion == Legal.version }
+    // The first-launch explanation of what Covera is. Agreement to the terms is
+    // separate and per account (ConsentView, after sign-in).
+    @AppStorage("covera.onboardingSeen") private var disclaimerAccepted = false
     @Environment(\.scenePhase) private var scenePhase
     @AppStorage(AppLanguage.storageKey) private var language = AppLanguage.en.rawValue
 
@@ -18,13 +16,27 @@ struct CoveraApp: App {
                 if !disclaimerAccepted {
                     // Guideline 1.4.1 / 5.1.1: what this app is and is not, before
                     // anyone uploads a medical document.
-                    OnboardingDisclaimerView(onAccept: { consentVersion = Legal.version })
+                    OnboardingDisclaimerView(onAccept: { disclaimerAccepted = true })
                 } else if !auth.isSignedIn && !isDemo {
                     LoginView(onSignedIn: {
                         lock.grantAfterSignIn()
                         auth.didSignIn()
                     })
                     .transition(Theme.Motion.arrive)
+                } else if !isDemo && auth.hasAgreed != true {
+                    // After sign-in and before anything else: the three
+                    // agreements, recorded on the server. Returning users who
+                    // already agreed to this version pass straight through.
+                    if auth.hasAgreed == false {
+                        ConsentView(onAgreed: { auth.didAgree() })
+                            .transition(Theme.Motion.arrive)
+                    } else {
+                        ProgressView()
+                            .tint(Theme.Palette.ink)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .coveraScreen()
+                            .task { await auth.refreshAgreement(version: Legal.version) }
+                    }
                 } else {
                     RootView(lock: lock)
                 }
@@ -42,6 +54,7 @@ struct CoveraApp: App {
             .animation(Theme.Motion.appear, value: lock.state)
             .animation(Theme.Motion.appear, value: disclaimerAccepted)
             .animation(Theme.Motion.appear, value: auth.isSignedIn)
+            .animation(Theme.Motion.appear, value: auth.hasAgreed)
             .tint(Theme.Palette.cited)
             // One committed look. The palette is designed for black and is not
             // meant to be inverted, so system chrome — alerts, keyboards, share
@@ -156,7 +169,6 @@ struct RootView: View {
             }
         }
         .animation(Theme.Motion.appear, value: documents.isUploading)
-        .task { await recordConsentIfNeeded() }
         #if DEBUG
         .onAppear {
             switch PreviewData.shot {
@@ -167,23 +179,6 @@ struct RootView: View {
             }
         }
         #endif
-    }
-
-    /// Consent is given on the device before sign-in, so the server learns of
-    /// it here, once there is an account to attach it to. It is retried on the
-    /// next launch until the server confirms it.
-    private func recordConsentIfNeeded() async {
-        #if DEBUG
-        if PreviewData.isDemo { return }
-        #endif
-        let key = "covera.consentRecorded"
-        guard UserDefaults.standard.string(forKey: key) != Legal.version else { return }
-        do {
-            try await APIClient.shared.recordConsent(version: Legal.version)
-            UserDefaults.standard.set(Legal.version, forKey: key)
-        } catch {
-            // Offline or signed out: try again next time RootView appears.
-        }
     }
 }
 

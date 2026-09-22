@@ -6505,6 +6505,64 @@
         }
       }
     },
+    "I agree that Covera may process the health information in my documents to provide the service, as described in the Privacy Policy. I can withdraw this at any time by deleting my account.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أوافق على أن Covera قد تعالج المعلومات الصحية في مستنداتي لتقديم الخدمة، كما هو موضح في سياسة الخصوصية. يمكنني سحب هذا في أي وقت عن طريق DELETE حسابي."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ich stimme zu, dass Covera die Gesundheitsinformationen in meinen Dokumenten zur Bereitstellung des Dienstes verarbeiten darf, wie in der Datenschutzerklärung beschrieben. Ich kann dies jederzeit durch Löschen meines Kontos widerrufen."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Acepto que Covera puede procesar la información de salud en mis documentos para proporcionar el servicio, según se describe en la Política de Privacidad. Puedo retirar esto en cualquier momento eliminando mi cuenta."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "J'accepte que Covera puisse traiter les informations de santé contenues dans mes documents pour fournir le service, tel que décrit dans la Politique de confidentialité. Je peux retirer ce consentement à tout moment en DELETE mon compte."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אני מסכים/ה ש-Covera תעבד את מידע הבריאות במסמכים שלי כדי לספק את השירות, כמתואר במדיניות הפרטיות. אני יכול/ה לבטל זאת בכל עת על ידי DELETE חשבוני."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "मैं सहमत हूँ कि Covera सेवा प्रदान करने के लिए मेरे दस्तावेज़ों में स्वास्थ्य जानकारी को संसाधित कर सकता है, जैसा कि गोपनीयता नीति में वर्णित है। मैं किसी भी समय अपना खाता DELETE करके इसे वापस ले सकता हूँ।"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "プライバシーポリシーに記載されている通り、Coveraがサービス提供のため私の書類内の健康情報を処理することに同意します。アカウントを削除することで、いつでもこの同意を撤回できます。"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Concordo que a Covera pode processar as informações de saúde nos meus documentos para fornecer o serviço, conforme descrito na Política de Privacidade. Posso retirar este consentimento a qualquer momento, eliminando a minha conta."
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ฉันตกลงให้ Covera ประมวลผลข้อมูลสุขภาพในเอกสารของฉันเพื่อให้บริการ ตามที่ระบุไว้ในนโยบายความเป็นส่วนตัว ฉันสามารถถอนความยินยอมนี้ได้ทุกเมื่อโดยการ DELETE บัญชีของฉัน"
+          }
+        }
+      }
+    },
     "I am 18 or older, and I agree that Covera may process the health information in my documents as described in the Privacy Policy.": {
       "localizations": {
         "ar": {
@@ -6559,6 +6617,122 @@
           "stringUnit": {
             "state": "translated",
             "value": "ฉันมีอายุ 18 ปีขึ้นไป และฉันตกลงว่า Covera อาจประมวลผลข้อมูลสุขภาพในเอกสารของฉันตามที่ระบุไว้ในนโยบายความเป็นส่วนตัว"
+          }
+        }
+      }
+    },
+    "I am 18 or older, and I agree to the Terms of Use.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أبلغ 18 عامًا أو أكثر، وأوافق على شروط الاستخدام."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ich bin 18 Jahre oder älter und stimme den Nutzungsbedingungen zu."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tengo 18 años o más, y acepto los Términos de Uso."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "J'ai 18 ans ou plus, et j'accepte les Conditions d'utilisation."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אני בן/בת 18 ומעלה, ואני מסכים/ה לתנאי השימוש."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "मैं 18 वर्ष या उससे अधिक का हूँ, और मैं उपयोग की शर्तों से सहमत हूँ।"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "私は18歳以上であり、利用規約に同意します。"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tenho 18 anos ou mais e concordo com os Termos de Utilização."
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ฉันมีอายุ 18 ปีขึ้นไป และฉันยอมรับข้อกำหนดการใช้งาน"
+          }
+        }
+      }
+    },
+    "I understand that Covera is not medical, legal or insurance advice, that it can make mistakes, and that I will confirm anything important with my insurer before relying on it.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أتفهم أن Covera ليست نصيحة طبية أو قانونية أو تأمينية، وأنها قد ترتكب أخطاء، وأنني سأؤكد أي شيء مهم مع شركة التأمين الخاصة بي قبل الاعتماد عليها."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ich verstehe, dass Covera keine medizinische, rechtliche oder Versicherungsberatung ist, dass Fehler auftreten können und dass ich wichtige Informationen vor der Nutzung mit meinem Versicherer bestätigen werde."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Entiendo que Covera no es asesoramiento médico, legal o de seguros, que puede cometer errores, y que confirmaré cualquier cosa importante con mi aseguradora antes de confiar en ello."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Je comprends que Covera ne fournit pas de conseils médicaux, juridiques ou d'assurance, qu'il peut y avoir des erreurs, et que je confirmerai toute information importante auprès de mon assureur avant de m'y fier."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אני מבין/ה ש-Covera אינה ייעוץ רפואי, משפטי או ביטוחי, שהיא עלולה לטעות, ושאאשר כל דבר חשוב מול המבטח שלי לפני שאסתמך עליה."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "मैं समझता हूँ कि Covera चिकित्सीय, कानूनी या बीमा संबंधी सलाह नहीं है, कि यह गलतियाँ कर सकता है, और मैं इस पर भरोसा करने से पहले अपने बीमाकर्ता से किसी भी महत्वपूर्ण बात की पुष्टि करूँगा।"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Coveraは医療、法律、保険に関するアドバイスではなく、誤りがある可能性があること、および重要な事項については、Coveraに依拠する前に保険会社に確認することを理解しています。"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Compreendo que a Covera não é um aconselhamento médico, legal ou de seguros, que pode cometer erros e que confirmarei qualquer informação importante com a minha seguradora antes de confiar nela."
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ฉันเข้าใจว่า Covera ไม่ใช่คำแนะนำทางการแพทย์ กฎหมาย หรือประกันภัย ว่าอาจเกิดข้อผิดพลาดได้ และฉันจะยืนยันข้อมูลสำคัญใดๆ กับบริษัทประกันของฉันก่อนที่จะเชื่อถือ"
           }
         }
       }
@@ -8709,6 +8883,64 @@
         }
       }
     },
+    "One last step": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خطوة أخيرة"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ein letzter Schritt"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un último paso"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Une dernière étape"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "צעד אחרון"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "एक अंतिम चरण"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "あと一歩です"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Um último passo"
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ขั้นตอนสุดท้าย"
+          }
+        }
+      }
+    },
     "Open in Policies": {
       "localizations": {
         "ar": {
@@ -9405,6 +9637,64 @@
         }
       }
     },
+    "Please read and agree to each of these before adding a policy.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يرجى قراءة كل من هذه والموافقة عليها قبل إضافة بوليصة."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bitte lesen und stimmen Sie jedem Punkt zu, bevor Sie eine Police hinzufügen."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Por favor, lea y acepte cada uno de estos puntos antes de añadir una póliza."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Veuillez lire et accepter chacun de ces points avant d'ajouter une police."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אנא קרא/י והסכים/ה לכל אחד מאלה לפני הוספת פוליסה."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "पॉलिसी जोड़ने से पहले कृपया इनमें से प्रत्येक को पढ़ें और सहमत हों।"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保険証券を追加する前に、これらすべてを読み、同意してください。"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Por favor, leia e concorde com cada um destes pontos antes de adicionar uma apólice."
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "โปรดอ่านและยอมรับแต่ละข้อเหล่านี้ก่อนเพิ่มกรมธรรม์"
+          }
+        }
+      }
+    },
     "Policies": {
       "localizations": {
         "ar": {
@@ -10039,6 +10329,122 @@
           "stringUnit": {
             "state": "translated",
             "value": "อ่านและจัดเก็บแล้ว ทุกตัวเลขที่ Covera อ้างอิงจากกรมธรรม์นี้จะเชื่อมโยงกลับไปยังหน้าต้นฉบับ คุณจึงสามารถตรวจสอบถ้อยคำได้ด้วยตนเอง"
+          }
+        }
+      }
+    },
+    "Read the Privacy Policy": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "قراءة سياسة الخصوصية"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Datenschutzerklärung lesen"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Leer la Política de Privacidad"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lire la Politique de confidentialité"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "קרא/י את מדיניות הפרטיות"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "गोपनीयता नीति पढ़ें"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "プライバシーポリシーを読む"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ler a Política de Privacidade"
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "อ่านนโยบายความเป็นส่วนตัว"
+          }
+        }
+      }
+    },
+    "Read the Terms of Use": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "قراءة شروط الاستخدام"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nutzungsbedingungen lesen"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Leer los Términos de Uso"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lire les Conditions d'utilisation"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "קרא/י את תנאי השימוש"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "उपयोग की शर्तें पढ़ें"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "利用規約を読む"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ler os Termos de Utilização"
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "อ่านข้อกำหนดการใช้งาน"
           }
         }
       }
@@ -13403,6 +13809,64 @@
           "stringUnit": {
             "state": "translated",
             "value": "ลองถามดู"
+          }
+        }
+      }
+    },
+    "Turn on all three to continue": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "قم بتشغيل الثلاثة للمتابعة"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alle drei aktivieren, um fortzufahren"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Active los tres para continuar"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Activez les trois pour continuer"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הפעל/י את כל השלושה כדי להמשיך"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "जारी रखने के लिए तीनों चालू करें"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "続行するには、3つすべてをオンにしてください。"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ative os três para continuar"
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "เปิดใช้งานทั้งสามข้อเพื่อดำเนินการต่อ"
           }
         }
       }

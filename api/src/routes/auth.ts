@@ -26,6 +26,24 @@ function bearerToken(request: FastifyRequest): string | null {
 }
 
 /**
+ * Refuses to process health information for an account that has not agreed to
+ * the terms and consented to that processing. The app asks first; this makes
+ * sure no client, old or modified, can skip it. Export and deletion are not
+ * guarded: those rights hold regardless.
+ */
+export async function requireConsent(userId: string): Promise<void> {
+  const { rows } = await pool.query<{ ok: boolean }>(
+    `SELECT (terms_accepted_at IS NOT NULL AND health_consent_at IS NOT NULL
+             AND not_advice_acknowledged_at IS NOT NULL) AS ok
+     FROM users WHERE id = $1`,
+    [userId],
+  );
+  if (!rows[0]?.ok) {
+    throw httpError(403, 'Please accept the terms and consent in the app before adding or asking about policies.');
+  }
+}
+
+/**
  * The signed-in user for this request, from its bearer session token.
  * Every route that touches a user's data starts here.
  */
@@ -182,8 +200,17 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
 
   app.get('/auth/me', async (request) => {
     const userId = await requireUserId(request);
-    const { rows } = await pool.query<{ email: string; has_password: boolean; has_google: boolean }>(
-      `SELECT email, password_hash IS NOT NULL AS has_password, google_sub IS NOT NULL AS has_google
+    const { rows } = await pool.query<{
+      email: string;
+      has_password: boolean;
+      has_google: boolean;
+      consent_version: string | null;
+    }>(
+      // consent_version is set only when all three agreements were recorded
+      // for the same version; the app shows the agreement screen otherwise.
+      `SELECT email, password_hash IS NOT NULL AS has_password, google_sub IS NOT NULL AS has_google,
+              CASE WHEN terms_version = health_consent_version AND not_advice_acknowledged_at IS NOT NULL
+                   THEN terms_version END AS consent_version
        FROM users WHERE id = $1`,
       [userId],
     );
