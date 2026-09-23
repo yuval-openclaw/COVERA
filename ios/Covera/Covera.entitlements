@@ -8,6 +8,13 @@
     <string>$(AppIdentifierPrefix)com.covera.app</string>
   </array>
 
+  <!-- Sign in with Apple. Required by App Review wherever another social
+       sign-in is offered (Guideline 4.8). -->
+  <key>com.apple.developer.applesignin</key>
+  <array>
+    <string>Default</string>
+  </array>
+
   <!-- Needed for password autofill and, later, universal links from an
        insurer's confirmation email. Replace the domain before submission. -->
   <key>com.apple.developer.associated-domains</key>

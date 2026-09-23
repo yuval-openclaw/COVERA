@@ -74,7 +74,7 @@ Privacy Policy URL is https://covera-legal.vercel.app/privacy.html.
 9. **Security gaps the policy does not paper over.** No email verification, no
    password reset, in-memory login rate limit, Postgres RLS not enabled (see
    CLAUDE.md → Known weak points).
-10. **App Store.** Sign in with Apple (required once Google sign-in ships),
-    privacy label matching `PrivacyInfo.xcprivacy`, Medical-category review
+10. **App Store.** Sign in with Apple is built, but untested until the
+    Developer account exists (the entitlement needs a team). Privacy label matching `PrivacyInfo.xcprivacy`, Medical-category review
     notes (see `docs/APP_STORE.md`).
 11. **Hebrew versions** of the Privacy Policy and Terms for Israeli users.

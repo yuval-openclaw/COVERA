@@ -1,6 +1,7 @@
+import AuthenticationServices
 import SwiftUI
 
-/// Sign in or create an account: Google, or email and password.
+/// Sign in or create an account: Apple, Google, or email and password.
 ///
 /// Shown after the onboarding disclaimer and before the device lock. There is
 /// nothing to protect on the device until someone has signed in, and signing in
@@ -36,23 +37,27 @@ struct LoginView: View {
                 .padding(.top, Theme.Spacing.block)
                 .appearIn(1)
 
+                // Apple's own button, as their guidelines require, and first:
+                // where Sign in with Apple is offered it may not be shown below
+                // another provider. It needs no configuration, so unlike Google
+                // it is always available.
+                appleButton.appearIn(2)
+
                 // Shown only once a Google client is configured. A button that
-                // cannot work is an App Review rejection (Guideline 2.1), and
-                // offering Google sign-in also makes Sign in with Apple required
-                // (4.8), so until then the screen offers email and guest only.
+                // cannot work is an App Review rejection (Guideline 2.1).
                 if GoogleAuth.isConfigured {
                     googleButton.appearIn(2)
-
-                    HStack(spacing: Theme.Spacing.step) {
-                        Rectangle().fill(Theme.Palette.hairline).frame(height: 0.5)
-                        Text(String(localized: "or"))
-                            .font(.caption.weight(.medium))
-                            .foregroundStyle(Theme.Palette.tertiaryInk)
-                        Rectangle().fill(Theme.Palette.hairline).frame(height: 0.5)
-                    }
-                    .accessibilityHidden(true)
-                    .appearIn(3)
                 }
+
+                HStack(spacing: Theme.Spacing.step) {
+                    Rectangle().fill(Theme.Palette.hairline).frame(height: 0.5)
+                    Text(String(localized: "or"))
+                        .font(.caption.weight(.medium))
+                        .foregroundStyle(Theme.Palette.tertiaryInk)
+                    Rectangle().fill(Theme.Palette.hairline).frame(height: 0.5)
+                }
+                .accessibilityHidden(true)
+                .appearIn(3)
 
                 VStack(spacing: Theme.Spacing.tight + 2) {
                     field(isFocused: focus == .email) {
@@ -144,6 +149,25 @@ struct LoginView: View {
         .sensoryFeedback(.error, trigger: model.errorMessage) { _, new in new != nil }
     }
 
+    /// Apple's button, drawn by Apple. Its wording follows the device language
+    /// rather than the in-app setting — that is Apple's, and not ours to change.
+    private var appleButton: some View {
+        SignInWithAppleButton(.signIn) { request in
+            focus = nil
+            AppleAuth.prepare(request, nonce: model.startAppleNonce())
+        } onCompletion: { result in
+            Task { if await model.continueWithApple(result) { onSignedIn() } }
+        }
+        // Apple's guidance: a white button on a dark background. It is the
+        // most prominent thing on the screen, which for a new account it
+        // should be — it is the sign-in that hands over no address.
+        .signInWithAppleButtonStyle(.white)
+        .frame(height: 54)
+        .clipShape(Capsule())
+        .disabled(model.isWorking)
+        .opacity(model.isWorking ? 0.4 : 1)
+    }
+
     private var googleButton: some View {
         VStack(spacing: Theme.Spacing.tight) {
             Button {
@@ -232,6 +256,32 @@ final class LoginModel {
         do {
             try await Session.shared.signIn(token: try await APIClient.shared.signInAsGuest().token)
             return true
+        } catch {
+            errorMessage = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
+            return false
+        }
+    }
+
+    /// Kept from the moment the button is tapped until the token comes back:
+    /// the server checks that this sign-in is the one Apple signed.
+    private var appleNonce = ""
+
+    func startAppleNonce() -> String {
+        appleNonce = AppleAuth.newNonce()
+        return appleNonce
+    }
+
+    func continueWithApple(_ result: Result<ASAuthorization, Error>) async -> Bool {
+        isWorking = true
+        errorMessage = nil
+        defer { isWorking = false }
+        do {
+            let token = try AppleAuth.identityToken(from: result)
+            let response = try await APIClient.shared.signInWithApple(identityToken: token, nonce: appleNonce)
+            try await Session.shared.signIn(token: response.token)
+            return true
+        } catch AppleAuthError.cancelled {
+            return false
         } catch {
             errorMessage = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
             return false

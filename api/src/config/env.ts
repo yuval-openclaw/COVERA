@@ -25,6 +25,9 @@ const envSchema = z.object({
   GEMINI_FAST_MODEL: z.string().min(1).default('gemini-2.5-flash'),
   // The iOS OAuth client ID from Google Cloud. Unset means Google sign-in is off.
   GOOGLE_IOS_CLIENT_ID: z.string().optional(),
+  // The audience Apple puts in an identity token for a native app: the bundle
+  // identifier. Public, and fixed for this app, so it needs no setting.
+  APPLE_BUNDLE_ID: z.string().min(1).default('com.covera.app'),
   DOCUMENT_ENCRYPTION_KEY: z
     .string()
     .regex(/^[0-9a-f]{64}$/i, 'DOCUMENT_ENCRYPTION_KEY must be 32 bytes of hex'),

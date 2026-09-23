@@ -106,10 +106,16 @@ later launches the lock is real. Enrol simulated Face ID once with
 
 ## Authentication
 
-Email + password, and Google. `routes/auth.ts` issues a random session token; the server stores
+Email + password, Apple, and Google. `routes/auth.ts` issues a random session token; the server stores
 only its SHA-256 (`sessions`, migration 004) and passwords only as salted scrypt hashes
 (`auth/passwords.ts`). Every data route starts with `await requireUserId(request)`, which
 resolves the bearer token. The iOS app keeps the token in the Keychain; any 401 signs it out.
+
+Sign in with Apple needs no server configuration: Apple's identity token is verified against
+their published keys (`auth/apple.ts`, no JWT library), the audience is the bundle id
+(`APPLE_BUNDLE_ID`), and replay is blocked by a nonce the app generates and the server re-hashes.
+Apple may withhold the address, so `apple_sub` (migration 008) is the identity, as `google_sub` is.
+The button is Apple's own and must stay above any other provider's.
 
 Google sign-in is written but **off until configured**: create an iOS OAuth client in Google
 Cloud Console (bundle id `com.covera.app`), then set `COVERA_GOOGLE_CLIENT_ID` in
@@ -208,8 +214,8 @@ use submitted content to improve its products, which breaks the promise in onboa
 - **Authentication is basic.** No email verification and no password reset (both need an
   email provider). Rate limits are in Postgres (`auth/rate-limit.ts`, migration 006) and also cap
   the paid routes per account per day. Sessions slide while used; an hourly sweep in `server.ts`
-  deletes expired sessions and guest accounts nobody can reach any more (`account/delete.ts`). **Sign in with Apple is required
-  before App Store submission** once Google sign-in is offered (Guideline 4.8).
+  deletes expired sessions and guest accounts nobody can reach any more (`account/delete.ts`). **Sign in with Apple is implemented
+  (Guideline 4.8) but has never run against Apple: the entitlement needs a Developer account.
 - **Hebrew policies.** Page text is rebuilt from positioned runs (`ingestion/pdf.ts`), since
   many Hebrew PDFs store no space characters. A fictional two-page Hebrew policy now extracts
   with every figure correct; a real insurer's Hebrew policy has not been re-tested since.

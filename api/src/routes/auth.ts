@@ -1,6 +1,7 @@
 import { randomBytes } from 'node:crypto';
 import type { FastifyInstance, FastifyRequest } from 'fastify';
 import { z } from 'zod';
+import { verifyAppleIdentityToken } from '../auth/apple.js';
 import { verifyGoogleIdToken } from '../auth/google.js';
 import {
   hashPassword,
@@ -181,6 +182,57 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
     return reply.send(await startSession(user.id, identity.email));
   });
 
+  // Required by App Review (Guideline 4.8) wherever Google sign-in is offered,
+  // and the better of the two for this app: Apple's private relay means someone
+  // can keep a policy library without handing over a real address.
+  app.post('/auth/apple', async (request, reply) => {
+    const parsed = z
+      .object({ identityToken: z.string().min(20).max(4096), nonce: z.string().min(16).max(256) })
+      .safeParse(request.body);
+    if (!parsed.success) return reply.status(400).send({ error: 'Apple sign-in did not return a token.' });
+    if (!(await allow(`apple:${request.ip}`, 30, 15 * MINUTE))) {
+      return reply.status(429).send({ error: 'Too many attempts. Try again in a few minutes.' });
+    }
+
+    let identity;
+    try {
+      identity = await verifyAppleIdentityToken(
+        parsed.data.identityToken,
+        env.APPLE_BUNDLE_ID,
+        parsed.data.nonce,
+      );
+    } catch (error) {
+      request.log.warn({ err: error }, 'apple sign-in rejected');
+      return reply.status(401).send({ error: 'Apple sign-in could not be verified. Try again.' });
+    }
+
+    const known = await pool.query<{ id: string; email: string }>(
+      `SELECT id, email FROM users WHERE apple_sub = $1 AND deleted_at IS NULL`,
+      [identity.sub],
+    );
+    if (known.rows[0]) return reply.send(await startSession(known.rows[0].id, known.rows[0].email));
+
+    // Apple can withhold the address entirely. Rather than refuse the sign-in,
+    // the account gets an address nobody can send to — the subject is what
+    // signs them back in, and Account still offers export and deletion.
+    const email = identity.email ?? `apple-${randomBytes(9).toString('hex')}@appleid.covera.invalid`;
+
+    // New to Covera, or an existing account signing in with Apple for the first
+    // time. Apple verified the address, so the two are the same person.
+    const { rows } = await pool.query<{ id: string }>(
+      `INSERT INTO users (email, apple_sub) VALUES ($1, $2)
+       ON CONFLICT (email) DO UPDATE SET apple_sub = EXCLUDED.apple_sub
+         WHERE users.apple_sub IS NULL AND users.deleted_at IS NULL
+       RETURNING id`,
+      [email, identity.sub],
+    );
+    const user = rows[0];
+    if (!user) {
+      return reply.status(409).send({ error: 'This email is already linked to a different Apple account.' });
+    }
+    return reply.send(await startSession(user.id, email));
+  });
+
   // A guest is a real account with no way back in once signed out: no email,
   // no password. Useful for trying the app; deleting it works like any account.
   app.post('/auth/guest', async (request, reply) => {
@@ -204,11 +256,13 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
       email: string;
       has_password: boolean;
       has_google: boolean;
+      has_apple: boolean;
       consent_version: string | null;
     }>(
       // consent_version is set only when all three agreements were recorded
       // for the same version; the app shows the agreement screen otherwise.
       `SELECT email, password_hash IS NOT NULL AS has_password, google_sub IS NOT NULL AS has_google,
+              apple_sub IS NOT NULL AS has_apple,
               CASE WHEN terms_version = health_consent_version AND not_advice_acknowledged_at IS NOT NULL
                    THEN terms_version END AS consent_version
        FROM users WHERE id = $1`,

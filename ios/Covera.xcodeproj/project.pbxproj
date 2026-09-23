@@ -19,6 +19,7 @@
 		572E3EC778DE3DD5A407AF5C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E1859A6594260CEBFE40B50 /* Assets.xcassets */; };
 		60A3776949312747E2C2BC13 /* PlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC07A45F27FCD4D79CCCFBC /* PlanView.swift */; };
 		61C7667D5D0A2700308B6881 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC8644C83EFDEC11E154F40 /* LoginView.swift */; };
+		67EB0DC1DB1AEF42EAF99651 /* AppleAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = C025BFEC7D0CE718F0D1BC30 /* AppleAuth.swift */; };
 		6EA045FFA18D0C1BDAA30977 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4000DE77EFC653220AD23CE /* ChatView.swift */; };
 		760B83D986EBD8E23C7DFB1F /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFDF218B5A369EA43805561E /* Session.swift */; };
 		7684ADD63248B91F51543004 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53715E5CD760B048D718AFCC /* Models.swift */; };
@@ -59,6 +60,7 @@
 		B0A9F4253BFB67BC9FDAA56C /* OnboardingDisclaimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingDisclaimerView.swift; sourceTree = "<group>"; };
 		B37D121FB5CEBFF5E2C5CFE7 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		B6455914633CB9F857AE55B5 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		C025BFEC7D0CE718F0D1BC30 /* AppleAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleAuth.swift; sourceTree = "<group>"; };
 		C4000DE77EFC653220AD23CE /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		D3DEB7FE7B89C7C707AC0BA2 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		DDC8644C83EFDEC11E154F40 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 			isa = PBXGroup;
 			children = (
 				8D1FE52E3AB2F55678222458 /* APIClient.swift */,
+				C025BFEC7D0CE718F0D1BC30 /* AppleAuth.swift */,
 				479BD4E8F33AF25EBEE22987 /* CallLog.swift */,
 				46D7B646651CEBFDE8EECCDE /* DocumentScanner.swift */,
 				24075F39F6AE914291E60030 /* GoogleAuth.swift */,
@@ -292,6 +295,7 @@
 			files = (
 				B4FD66069DCD9E2386DBED17 /* APIClient.swift in Sources */,
 				03EA4F30B1F7EE10AA4F5646 /* AccountView.swift in Sources */,
+				67EB0DC1DB1AEF42EAF99651 /* AppleAuth.swift in Sources */,
 				534736285BE8E8F3C3502BA3 /* CallLog.swift in Sources */,
 				0CAAD16C89A7B6B0EDD74FD9 /* CallLogView.swift in Sources */,
 				6EA045FFA18D0C1BDAA30977 /* ChatView.swift in Sources */,

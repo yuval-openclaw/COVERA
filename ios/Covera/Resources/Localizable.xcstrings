@@ -1691,6 +1691,64 @@
         }
       }
     },
+    "Apple sign-in didn't complete. Try again.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لم يكتمل تسجيل الدخول باستخدام Apple. حاول مرة أخرى."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anmeldung mit Apple nicht abgeschlossen. Bitte versuchen Sie es erneut."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El inicio de sesión con Apple no se completó. Inténtelo de nuevo."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La connexion Apple n'a pas abouti. Veuillez réessayer."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ההתחברות באמצעות Apple לא הושלמה. נסה שוב."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple साइन-इन पूरा नहीं हुआ। फिर से कोशिश करें।"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Appleサインインが完了しませんでした。もう一度お試しください。"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Login com a Apple não foi concluído. Tente novamente."
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "การลงชื่อเข้าใช้ด้วย Apple ไม่สำเร็จ โปรดลองอีกครั้ง"
+          }
+        }
+      }
+    },
     "Ask": {
       "localizations": {
         "ar": {
@@ -6563,64 +6621,6 @@
         }
       }
     },
-    "I am 18 or older, and I agree that Covera may process the health information in my documents as described in the Privacy Policy.": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "أنا أبلغ 18 عامًا أو أكثر، وأوافق على أن Covera قد تعالج المعلومات الصحية في مستنداتي كما هو موضح في سياسة الخصوصية."
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ich bin 18 Jahre oder älter und stimme zu, dass Covera die Gesundheitsinformationen in meinen Dokumenten wie in der Datenschutzerklärung beschrieben verarbeiten darf."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tengo 18 años o más, y acepto que Covera pueda procesar la información de salud en mis documentos según se describe en la Política de Privacidad."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "J'ai 18 ans ou plus, et j'accepte que Covera puisse traiter les informations de santé contenues dans mes documents, comme décrit dans la Politique de confidentialité."
-          }
-        },
-        "he": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "אני מעל גיל 18, ואני מסכים/ה ש-Covera רשאית לעבד את המידע הרפואי במסמכים שלי כמתואר במדיניות הפרטיות."
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "मैं 18 वर्ष या उससे अधिक का/की हूँ, और मैं सहमत हूँ कि Covera मेरे दस्तावेज़ों में मौजूद स्वास्थ्य संबंधी जानकारी को गोपनीयता नीति में बताए अनुसार प्रोसेस कर सकता है।"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "私は18歳以上であり、Coveraがプライバシーポリシーに記載されている通りに私の書類内の健康情報を処理することに同意します。"
-          }
-        },
-        "pt": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tenho 18 anos ou mais e concordo que a Covera pode processar as informações de saúde nos meus documentos, conforme descrito na Política de Privacidade."
-          }
-        },
-        "th": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ฉันมีอายุ 18 ปีขึ้นไป และฉันตกลงว่า Covera อาจประมวลผลข้อมูลสุขภาพในเอกสารของฉันตามที่ระบุไว้ในนโยบายความเป็นส่วนตัว"
-          }
-        }
-      }
-    },
     "I am 18 or older, and I agree to the Terms of Use.": {
       "localizations": {
         "ar": {
@@ -9985,64 +9985,6 @@
         }
       }
     },
-    "Privacy Policy": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "سياسة الخصوصية"
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Datenschutzerklärung"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Política de Privacidad"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Politique de confidentialité"
-          }
-        },
-        "he": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "מדיניות פרטיות"
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "गोपनीयता नीति"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "プライバシーポリシー"
-          }
-        },
-        "pt": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Política de Privacidade"
-          }
-        },
-        "th": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "นโยบายความเป็นส่วนตัว"
-          }
-        }
-      }
-    },
     "Privacy policy": {
       "localizations": {
         "ar": {
@@ -13055,64 +12997,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "บอกเราเพิ่มเติมอีกเล็กน้อย"
-          }
-        }
-      }
-    },
-    "Terms of Use": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "شروط الاستخدام"
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Nutzungsbedingungen"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Términos de Uso"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Conditions d'utilisation"
-          }
-        },
-        "he": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "תנאי שימוש"
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "उपयोग की शर्तें"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "利用規約"
-          }
-        },
-        "pt": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Termos de Uso"
-          }
-        },
-        "th": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ข้อกำหนดการใช้งาน"
           }
         }
       }
