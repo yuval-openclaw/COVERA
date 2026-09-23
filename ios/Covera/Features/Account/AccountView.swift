@@ -77,30 +77,19 @@ struct AccountView: View {
     // MARK: - Sections
 
     private var signedInCard: some View {
-        HStack(spacing: Theme.Spacing.step) {
-            IconTile(systemName: "person.crop.circle", tint: Theme.Palette.ink)
-            VStack(alignment: .leading, spacing: 2) {
-                Text(String(localized: "Signed in"))
-                    .font(.headline)
-                    .foregroundStyle(Theme.Palette.ink)
-                Text(model.isGuest ? String(localized: "Guest account") : (model.email ?? "placeholder@example.com"))
-                    .font(.footnote)
-                    .foregroundStyle(Theme.Palette.tertiaryInk)
-                    .lineLimit(1)
-                    .truncationMode(.middle)
-                    .redacted(reason: model.email == nil ? .placeholder : [])
+        // At accessibility text sizes the button and the label cannot share a
+        // row: "Sign out" broke across three lines, one letter wide. ViewThatFits
+        // takes the row while it fits and stacks below it.
+        ViewThatFits(in: .horizontal) {
+            HStack(spacing: Theme.Spacing.step) {
+                signedInLabel
+                Spacer(minLength: 0)
+                signOutButton
             }
-            Spacer(minLength: 0)
-            Button(String(localized: "Sign out")) {
-                // A guest has no password: signing out is final, so it is
-                // confirmed first. Anyone else can simply sign back in.
-                if model.isGuest {
-                    showingGuestSignOut = true
-                } else {
-                    Task { await model.signOut() }
-                }
+            VStack(alignment: .leading, spacing: Theme.Spacing.step) {
+                signedInLabel
+                signOutButton
             }
-            .buttonStyle(SecondaryButtonStyle())
         }
         .coveraCard()
         .alert(String(localized: "Sign out of a guest account?"), isPresented: $showingGuestSignOut) {
@@ -115,24 +104,74 @@ struct AccountView: View {
         }
     }
 
-    private var languageCard: some View {
-        VStack(alignment: .leading, spacing: Theme.Spacing.step) {
-            HStack(spacing: Theme.Spacing.step) {
-                IconTile(systemName: "globe", tint: Theme.Palette.cited, size: 36)
-                Text(String(localized: "Language"))
+    /// The signed-in identity, without the button beside it.
+    private var signedInLabel: some View {
+        HStack(spacing: Theme.Spacing.step) {
+            IconTile(systemName: "person.crop.circle", tint: Theme.Palette.ink)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(String(localized: "Signed in"))
                     .font(.headline)
                     .foregroundStyle(Theme.Palette.ink)
-                Spacer(minLength: 0)
-                // A dropdown: nine languages do not fit a segmented control.
-                Picker(String(localized: "Language"), selection: $language) {
-                    ForEach(AppLanguage.allCases) { Text($0.name).tag($0.rawValue) }
-                }
-                .pickerStyle(.menu)
-                .tint(Theme.Palette.ink)
+                Text(model.isGuest ? String(localized: "Guest account") : (model.email ?? "placeholder@example.com"))
+                    .font(.footnote)
+                    .foregroundStyle(Theme.Palette.tertiaryInk)
+                    .lineLimit(1)
+                    .truncationMode(.middle)
+                    .redacted(reason: model.email == nil ? .placeholder : [])
             }
-            .sensoryFeedback(.selection, trigger: language)
         }
+    }
+
+    private var signOutButton: some View {
+        Button(String(localized: "Sign out")) {
+            // A guest has no password: signing out is final, so it is
+            // confirmed first. Anyone else can simply sign back in.
+            if model.isGuest {
+                showingGuestSignOut = true
+            } else {
+                Task { await model.signOut() }
+            }
+        }
+        .buttonStyle(SecondaryButtonStyle())
+        // Without this the label is allowed to wrap inside the capsule.
+        .fixedSize(horizontal: true, vertical: false)
+    }
+
+    private var languageCard: some View {
+        // Same reason as the sign-out row: the picker's value was rendering one
+        // letter per line once "Language" had taken the width.
+        ViewThatFits(in: .horizontal) {
+            HStack(spacing: Theme.Spacing.step) {
+                languageLabel
+                Spacer(minLength: 0)
+                languagePicker
+            }
+            VStack(alignment: .leading, spacing: Theme.Spacing.step) {
+                languageLabel
+                languagePicker
+            }
+        }
+        .sensoryFeedback(.selection, trigger: language)
         .coveraCard()
+    }
+
+    private var languageLabel: some View {
+        HStack(spacing: Theme.Spacing.step) {
+            IconTile(systemName: "globe", tint: Theme.Palette.cited, size: 36)
+            Text(String(localized: "Language"))
+                .font(.headline)
+                .foregroundStyle(Theme.Palette.ink)
+        }
+    }
+
+    /// A dropdown: nine languages do not fit a segmented control.
+    private var languagePicker: some View {
+        Picker(String(localized: "Language"), selection: $language) {
+            ForEach(AppLanguage.allCases) { Text($0.name).tag($0.rawValue) }
+        }
+        .pickerStyle(.menu)
+        .tint(Theme.Palette.ink)
+        .fixedSize(horizontal: true, vertical: false)
     }
 
     private var dataCard: some View {
