@@ -3199,6 +3199,64 @@
         }
       }
     },
+    "Confirm all four to continue": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تأكيد جميع الأربعة للمتابعة"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bestätigen Sie alle vier, um fortzufahren"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Confirme los cuatro para continuar"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Confirmer les quatre pour continuer"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אשר את כל הארבעה כדי להמשיך"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "सभी चारों की पुष्टि करें"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "4項目すべてを確認して続行"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Confirme os quatro para continuar"
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ยืนยันทั้งสี่ข้อเพื่อดำเนินการต่อ"
+          }
+        }
+      }
+    },
     "Continue": {
       "localizations": {
         "ar": {
@@ -5751,60 +5809,60 @@
         }
       }
     },
-    "Four things to know about what Covera is — and what it is not.": {
+    "Four things to know about what Covera is — and what it is not. Confirm each one to continue.": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "أربعة أشياء يجب معرفتها حول ماهية Covera — وما ليس كذلك."
+            "value": "أربعة أمور عن Covera: ماهيتها وما ليست عليه. أكد كل منها للمتابعة."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Vier Dinge, die Sie über Covera wissen sollten – und was es nicht ist."
+            "value": "Vier Dinge, die Sie wissen sollten über was Covera ist — und was es nicht ist. Bestätigen Sie jedes, um fortzufahren."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Cuatro cosas que saber sobre lo que es Covera — y lo que no es."
+            "value": "Cuatro cosas que saber sobre qué es Covera — y qué no es. Confirme cada una para continuar."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Quatre choses à savoir sur ce qu'est Covera \b—\b et ce qu'il n'est pas."
+            "value": "Quatre choses à savoir sur ce qu'est Covera — et ce qu'il n'est pas. Confirmez chacun pour continuer."
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "ארבעה דברים שכדאי לדעת על מהי Covera – ומהי לא."
+            "value": "ארבעה דברים על Covera: מהי ומהי לא. אשר כל אחד כדי להמשיך."
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera क्या है — और क्या नहीं है, इसके बारे में जानने योग्य चार बातें।"
+            "value": "Covera क्या है और क्या नहीं है, इसके बारे में चार बातें। जारी रखने के लिए हर एक की पुष्टि करें।"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Coveraとは何か、そして何ではないかを知るべき4つのこと。"
+            "value": "Coveraの概要と注意点（4つのポイント）。各項目を確認して続行してください。"
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Quatro coisas a saber sobre o que a Covera é — e o que não é."
+            "value": "Quatro coisas a saber sobre o que Covera é — e o que não é. Confirme cada uma para continuar."
           }
         },
         "th": {
           "stringUnit": {
             "state": "translated",
-            "value": "สี่สิ่งที่ควรรู้เกี่ยวกับ Covera — ว่าคืออะไรและไม่ใช่สิ่งใด"
+            "value": "สี่สิ่งที่ควรรู้เกี่ยวกับ Covera ว่าคืออะไรและไม่ใช่ อะไร ยืนยันแต่ละข้อเพื่อดำเนินการต่อ"
           }
         }
       }
