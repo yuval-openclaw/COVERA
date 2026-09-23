@@ -158,11 +158,13 @@ struct LoginView: View {
         } onCompletion: { result in
             Task { if await model.continueWithApple(result) { onSignedIn() } }
         }
-        // Apple's guidance: a white button on a dark background. It is the
-        // most prominent thing on the screen, which for a new account it
-        // should be — it is the sign-in that hands over no address.
+        // Apple's guidance: a white button on a dark background. The colour is
+        // theirs and may not be replaced, so this only takes the pure white off
+        // it — enough that it sits in the screen instead of glaring out of it,
+        // and far short of restyling their button.
         .signInWithAppleButtonStyle(.white)
-        .frame(height: 54)
+        .frame(height: 50)
+        .colorMultiply(Color(white: 0.9))
         .clipShape(Capsule())
         .disabled(model.isWorking)
         .opacity(model.isWorking ? 0.4 : 1)

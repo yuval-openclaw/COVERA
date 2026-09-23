@@ -4,7 +4,9 @@ import SwiftUI
 /// app, and required by honesty regardless: someone about to hand over their
 /// health insurance file should know exactly what this is before they do.
 ///
-/// There is no "skip". The accept button is the only way forward.
+/// There is no "skip", and the button says "I agree" rather than "Continue":
+/// what follows is a health-data app, and the four points are the terms on
+/// which it is offered.
 struct OnboardingDisclaimerView: View {
     let onAccept: () -> Void
 
@@ -79,10 +81,13 @@ struct OnboardingDisclaimerView: View {
                 .frame(height: 28)
                 .allowsHitTesting(false)
 
-                // Agreement happens after sign-in (ConsentView), where it is
-                // recorded against the account; this screen only explains.
+                // "Continue" would let someone say later that they were only
+                // moving through a screen. This asks them to agree to the four
+                // points, which is what they are doing. The agreement that is
+                // recorded against an account still happens after sign-in
+                // (ConsentView); this one sets out what the app is.
                 Button(action: onAccept) {
-                    Text(String(localized: "Continue"))
+                    Text(String(localized: "I agree"))
                 }
                 .buttonStyle(PrimaryButtonStyle())
                 .padding(.horizontal, Theme.Spacing.screen + 4)
