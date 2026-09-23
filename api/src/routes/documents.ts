@@ -5,9 +5,12 @@ import { ingestPolicyDocument } from '../ingestion/pipeline.js';
 import { UnreadablePdfError } from '../ingestion/pdf.js';
 import { documentKey, documentStore } from '../storage/index.js';
 import { allow, DAY } from '../auth/rate-limit.js';
+import { contentDisposition } from './filename.js';
 import { requireConsent, requireUserId } from './auth.js';
 
 const ACCEPTED_TYPES = new Set(['application/pdf']);
+
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 export async function documentRoutes(app: FastifyInstance): Promise<void> {
   app.post('/documents', async (request, reply) => {
@@ -101,6 +104,11 @@ export async function documentRoutes(app: FastifyInstance): Promise<void> {
   // WHERE clause, not the storage key — a key is guessable, a row is not.
   app.get<{ Params: { id: string } }>('/documents/:id/file', async (request, reply) => {
     const userId = await requireUserId(request);
+    // The id column is a uuid, so anything that is not one is a 404, not a
+    // database error surfacing as a 500. Checked before the query so a bad id
+    // never reaches Postgres.
+    if (!UUID.test(request.params.id)) return reply.status(404).send({ error: 'No such document.' });
+
     const { rows } = await pool.query<{ original_filename: string; content_type: string }>(
       `SELECT original_filename, content_type FROM documents WHERE id = $1 AND user_id = $2`,
       [request.params.id, userId],
@@ -111,7 +119,7 @@ export async function documentRoutes(app: FastifyInstance): Promise<void> {
     const body = await documentStore.get(documentKey(userId, request.params.id));
     return reply
       .header('content-type', doc.content_type)
-      .header('content-disposition', `attachment; filename="${doc.original_filename.replace(/"/g, '')}"`)
+      .header('content-disposition', contentDisposition(doc.original_filename))
       .send(body);
   });
 }

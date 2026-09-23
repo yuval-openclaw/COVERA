@@ -17,7 +17,14 @@ const app = Fastify({
     redact: ['req.headers.authorization', 'req.headers.cookie', '*.text', '*.verbatim_quote'],
   },
   bodyLimit: 25 * 1024 * 1024,
-  trustProxy: env.TRUST_PROXY === 'true',
+  // A hop count (see env.ts), so req.ip is the address the proxy saw and cannot
+  // be forged by a client-supplied X-Forwarded-For.
+  // proxy-addr reads a *number* as a hop count (a numeric string would be
+  // parsed as a subnet list instead), so the runtime value stays a number;
+  // Fastify's option type omits number, hence the cast.
+  trustProxy: (env.TRUST_PROXY === 'false'
+    ? false
+    : Number(env.TRUST_PROXY)) as unknown as boolean,
 });
 
 await app.register(cors, { origin: false });

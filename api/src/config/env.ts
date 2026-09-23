@@ -5,10 +5,20 @@ const envSchema = z.object({
   PORT: z.coerce.number().int().positive().default(3000),
   // 127.0.0.1 on a laptop; a container must listen on 0.0.0.0 to be reachable.
   HOST: z.string().min(1).default('127.0.0.1'),
-  // Behind a hosting provider's proxy every request arrives from the proxy, so
-  // per-address rate limits would treat all users as one. "true" trusts the
-  // X-Forwarded-For header; set it only when a proxy is actually in front.
-  TRUST_PROXY: z.enum(['true', 'false']).default('false'),
+  // The number of proxies in front of the app, or "false" when it is exposed
+  // directly. This is the *hop count*, not a boolean: with plain `true`,
+  // Fastify would take the left-most X-Forwarded-For entry, which the client
+  // writes, so anyone could forge a fresh IP per request and walk past every
+  // per-address rate limit. A hop count makes it count in from the right — past
+  // exactly the proxies we trust — to the address the proxy actually saw.
+  // Fly.io and most single-proxy hosts are "1". "false" leaves req.ip as the
+  // socket address, correct only with no proxy at all.
+  TRUST_PROXY: z
+    .string()
+    .default('false')
+    .refine((v) => v === 'false' || /^[1-9]\d*$/.test(v), {
+      message: 'TRUST_PROXY must be "false" or a positive integer (the number of proxies in front)',
+    }),
   DATABASE_URL: z.string().min(1),
   STORAGE_DRIVER: z.enum(['local', 's3']).default('local'),
   STORAGE_LOCAL_PATH: z.string().default('./storage'),

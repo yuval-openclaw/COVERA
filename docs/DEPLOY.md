@@ -25,7 +25,7 @@ on every deploy, and the documents with it.
 | `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` | a key limited to that one bucket |
 | `DOCUMENT_ENCRYPTION_KEY` | a **new** 64-character hex key: `openssl rand -hex 32`. Keep a copy somewhere safe — without it every stored document is unreadable |
 | `COVERA_GEMINI_API_KEY` | a key from a Google Cloud project **with billing enabled** (see CLAUDE.md), not the key that was pasted in chat |
-| `TRUST_PROXY` | `true` — every host above puts a proxy in front; without this all users share one rate limit |
+| `TRUST_PROXY` | `1` — the number of proxies in front (Fly.io is one hop). Not `true`: a bare boolean lets a client forge X-Forwarded-For and evade rate limits. `false` only with no proxy |
 | `GOOGLE_IOS_CLIENT_ID` | only when Google sign-in is set up |
 
 `HOST` and `PORT` are set by the image.

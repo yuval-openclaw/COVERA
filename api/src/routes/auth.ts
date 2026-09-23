@@ -124,7 +124,13 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
     if (!parsed.success) return reply.status(400).send({ error: 'Enter your email address and password.' });
 
     const email = normalizeEmail(parsed.data.email);
-    if (!(await allow(`login:${request.ip}:${email}`, 10, 15 * MINUTE))) {
+    // Two buckets. Per (address, email) stops a single account being ground
+    // through; per address alone stops the same address spraying one password
+    // across a list of emails, which the per-email bucket never sees because
+    // each email is only tried once. Both must pass.
+    const ipOk = await allow(`login-ip:${request.ip}`, 50, 15 * MINUTE);
+    const pairOk = await allow(`login:${request.ip}:${email}`, 10, 15 * MINUTE);
+    if (!ipOk || !pairOk) {
       return reply.status(429).send({ error: 'Too many attempts. Try again in a few minutes.' });
     }
 
