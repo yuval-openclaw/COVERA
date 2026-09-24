@@ -123,22 +123,6 @@ struct LoginView: View {
                 .buttonStyle(PressableStyle())
                 .appearIn(6)
 
-                Button {
-                    focus = nil
-                    Task { if await model.continueAsGuest() { onSignedIn() } }
-                } label: {
-                    Text(String(localized: "Continue as guest"))
-                        .font(.subheadline.weight(.medium))
-                        .foregroundStyle(Theme.Palette.secondaryInk)
-                        .frame(maxWidth: .infinity, minHeight: 44)
-                }
-                .buttonStyle(PressableStyle())
-                .disabled(model.isWorking)
-                .appearIn(7)
-                Text(String(localized: "A guest can't sign back in after signing out."))
-                    .font(.caption)
-                    .foregroundStyle(Theme.Palette.tertiaryInk)
-                    .frame(maxWidth: .infinity)
             }
             .padding(.horizontal, Theme.Spacing.screen + 4)
             .padding(.bottom, Theme.Spacing.section)
@@ -254,19 +238,6 @@ final class LoginModel {
             )
             try await Session.shared.signIn(token: response.token)
             password = ""
-            return true
-        } catch {
-            errorMessage = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
-            return false
-        }
-    }
-
-    func continueAsGuest() async -> Bool {
-        isWorking = true
-        errorMessage = nil
-        defer { isWorking = false }
-        do {
-            try await Session.shared.signIn(token: try await APIClient.shared.signInAsGuest().token)
             return true
         } catch {
             errorMessage = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription

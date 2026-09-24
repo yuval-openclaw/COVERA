@@ -159,10 +159,6 @@ actor APIClient {
         )
     }
 
-    func signInAsGuest() async throws -> AuthResponse {
-        try await send(path: "/auth/guest", method: "POST", body: nil, as: AuthResponse.self, authenticated: false)
-    }
-
     func signInWithApple(identityToken: String, nonce: String) async throws -> AuthResponse {
         let body = try JSONSerialization.data(withJSONObject: ["identityToken": identityToken, "nonce": nonce])
         return try await send(path: "/auth/apple", method: "POST", body: body, as: AuthResponse.self, authenticated: false)

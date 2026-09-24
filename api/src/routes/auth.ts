@@ -13,7 +13,7 @@ import {
 } from '../auth/passwords.js';
 import { env } from '../config/env.js';
 import { pool } from '../db/pool.js';
-import { allow, HOUR, MINUTE } from '../auth/rate-limit.js';
+import { allow, MINUTE } from '../auth/rate-limit.js';
 
 const SESSION_DAYS = 30;
 
@@ -237,17 +237,6 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
       return reply.status(409).send({ error: 'This email is already linked to a different Apple account.' });
     }
     return reply.send(await startSession(user.id, email));
-  });
-
-  // A guest is a real account with no way back in once signed out: no email,
-  // no password. Useful for trying the app; deleting it works like any account.
-  app.post('/auth/guest', async (request, reply) => {
-    if (!(await allow(`guest:${request.ip}`, 5, HOUR))) {
-      return reply.status(429).send({ error: 'Too many attempts. Try again in a few minutes.' });
-    }
-    const email = `guest-${randomBytes(9).toString('hex')}@guest.covera.invalid`;
-    const { rows } = await pool.query<{ id: string }>(`INSERT INTO users (email) VALUES ($1) RETURNING id`, [email]);
-    return reply.status(201).send(await startSession(rows[0]!.id, email));
   });
 
   app.post('/auth/logout', async (request, reply) => {

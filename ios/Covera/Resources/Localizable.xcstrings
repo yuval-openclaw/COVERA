@@ -763,122 +763,6 @@
         }
       }
     },
-    "A guest account has no password, so signing out deletes it, with every policy in it. To keep your policies, export them first or create an account.": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "حساب الضيف ليس له كلمة مرور، لذا فإن تسجيل الخروج يحذفه مع كل وثيقة تأمين فيه. للاحتفاظ بوثائقك، قم بتصديرها أولاً أو أنشئ حسابًا."
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ein Gastkonto hat kein Passwort, daher wird es beim Abmelden gelöscht, mit allen darin enthaltenen Policen. Um Ihre Policen zu behalten, exportieren Sie diese zuerst oder erstellen Sie ein Konto."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Una cuenta de invitado no tiene contraseña, por lo que cerrar sesión la elimina, con todas las pólizas que contiene. Para conservar sus pólizas, expórtelas primero o cree una cuenta."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Un compte invité n'a pas de mot de passe. La déconnexion le supprime, ainsi que toutes ses polices. Pour les conserver, exportez-les d'abord ou créez un compte."
-          }
-        },
-        "he": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "לחשבון אורח אין סיסמה, לכן יציאה מוחקת אותו ואת כל הפוליסות שבו. כדי לשמור את הפוליסות שלך, ייצא אותן קודם או צור חשבון."
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "अतिथि खाते का कोई पासवर्ड नहीं होता, इसलिए साइन आउट करने से यह इसमें मौजूद हर पॉलिसी के साथ हट जाएगा। अपनी पॉलिसियों को रखने के लिए, पहले उन्हें निर्यात करें या एक खाता बनाएँ।"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ゲストアカウントにはパスワードがありません。サインアウトすると、含まれるすべての保険証券とともに削除されます。保険証券を保持するには、まずエクスポートするか、アカウントを作成してください。"
-          }
-        },
-        "pt": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Uma conta de convidado não tem senha, então sair a exclui, com todas as apólices nela. Para manter suas apólices, exporte-as primeiro ou crie uma conta."
-          }
-        },
-        "th": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "บัญชีผู้เยี่ยมชมไม่มีรหัสผ่าน การออกจากระบบจะลบบัญชีและกรมธรรม์ทั้งหมดในนั้น หากต้องการเก็บกรมธรรม์ของคุณไว้ โปรดส่งออกก่อนหรือสร้างบัญชี"
-          }
-        }
-      }
-    },
-    "A guest can't sign back in after signing out.": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "لا يمكن للضيف تسجيل الدخول مرة أخرى بعد تسجيل الخروج."
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ein Gast kann sich nach dem Abmelden nicht wieder anmelden."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Un invitado no puede volver a iniciar sesión después de cerrar sesión."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Un invité ne peut pas se reconnecter après s'être déconnecté."
-          }
-        },
-        "he": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "אורח אינו יכול להיכנס שוב לאחר יציאה."
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "एक अतिथि साइन आउट करने के बाद फिर से साइन इन नहीं कर सकता।"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ゲストはサインアウトすると、再度サインインできません。"
-          }
-        },
-        "pt": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Um convidado não pode iniciar sessão novamente depois de terminar a sessão."
-          }
-        },
-        "th": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ผู้เยี่ยมชมจะไม่สามารถลงชื่อเข้าใช้ได้อีกหลังจากลงชื่อออก"
-          }
-        }
-      }
-    },
     "A specialist visit or tests.": {
       "localizations": {
         "ar": {
@@ -3315,64 +3199,6 @@
         }
       }
     },
-    "Continue as guest": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "المتابعة كضيف"
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Als Gast fortfahren"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Continuar como invitado"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Continuer en tant qu'invité"
-          }
-        },
-        "he": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "המשך כאורח"
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "मेहमान के रूप में जारी रखें"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ゲストとして続ける"
-          }
-        },
-        "pt": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Continuar como convidado"
-          }
-        },
-        "th": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ดำเนินการต่อในฐานะผู้เยี่ยมชม"
-          }
-        }
-      }
-    },
     "Continue with Google": {
       "localizations": {
         "ar": {
@@ -4361,116 +4187,10 @@
     },
     "Delete": {
       "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "DELETE"
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "DELETE"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "DELETE"
-          }
-        },
         "fr": {
           "stringUnit": {
             "state": "translated",
             "value": "Supprimer"
-          }
-        },
-        "he": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "DELETE"
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "DELETE"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "DELETE"
-          }
-        },
-        "pt": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "DELETE"
-          }
-        },
-        "th": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "DELETE"
-          }
-        }
-      }
-    },
-    "Delete and sign out": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "DELETE وتسجيل الخروج"
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Löschen und abmelden"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Eliminar y cerrar sesión"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "DELETE et se déconnecter"
-          }
-        },
-        "he": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "DELETE וצא/י"
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "DELETE और साइन आउट करें"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "削除してサインアウト"
-          }
-        },
-        "pt": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "DELETE e sair"
-          }
-        },
-        "th": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ลบและออกจากระบบ"
           }
         }
       }
@@ -4489,12 +4209,6 @@
             "value": "Alles löschen?"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "¿DELETE todo?"
-          }
-        },
         "fr": {
           "stringUnit": {
             "state": "translated",
@@ -4505,12 +4219,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "למחוק הכל?"
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "सब कुछ DELETE करें?"
           }
         },
         "ja": {
@@ -4593,24 +4301,6 @@
     },
     "Delete this contact?": {
       "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "DELETE جهة الاتصال هذه؟"
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Diesen Kontakt DELETE?"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "¿DELETE este contacto?"
-          }
-        },
         "fr": {
           "stringUnit": {
             "state": "translated",
@@ -4623,28 +4313,10 @@
             "value": "למחוק איש קשר זה?"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "क्या इस संपर्क को DELETE करें?"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "この連絡先をDELETEしますか？"
-          }
-        },
         "pt": {
           "stringUnit": {
             "state": "translated",
             "value": "Excluir este contato?"
-          }
-        },
-        "th": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "DELETE ผู้ติดต่อนี้หรือไม่?"
           }
         }
       }
@@ -5359,12 +5031,6 @@
             "value": "Verschlüsselt, nur in Ihrem Konto gespeichert und niemals zum Trainieren eines Modells verwendet. Exportieren oder löschen Sie alles jederzeit unter Konto."
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cifrado, guardado solo en su cuenta y nunca usado para entrenar un modelo. Exporte o DELETE todo en cualquier momento desde Cuenta."
-          }
-        },
         "fr": {
           "stringUnit": {
             "state": "translated",
@@ -5375,12 +5041,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "מוצפן, נשמר בחשבונך בלבד, ולעולם אינו משמש לאימון מודל. ייצא או מחק הכל בכל עת מחשבון."
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "एन्क्रिप्टेड, केवल आपके खाते तक सीमित, और कभी भी किसी मॉडल को प्रशिक्षित करने के लिए उपयोग नहीं किया जाता। खाते से कभी भी सब कुछ एक्सपोर्ट या DELETE करें।"
           }
         },
         "ja": {
@@ -5707,12 +5367,6 @@
             "value": "Exportieren oder löschen"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Exportar o DELETE"
-          }
-        },
         "fr": {
           "stringUnit": {
             "state": "translated",
@@ -5723,12 +5377,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "ייצא או מחק"
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "एक्सपोर्ट या DELETE करें"
           }
         },
         "ja": {
@@ -6215,64 +5863,6 @@
         }
       }
     },
-    "Guest account": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "حساب الضيف"
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Gastkonto"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cuenta de invitado"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Compte invité"
-          }
-        },
-        "he": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "חשבון אורח"
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "अतिथि खाता"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ゲストアカウント"
-          }
-        },
-        "pt": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Conta de convidado"
-          }
-        },
-        "th": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "บัญชีผู้เยี่ยมชม"
-          }
-        }
-      }
-    },
     "Hide the quoted wording from page %lld": {
       "localizations": {
         "ar": {
@@ -6681,12 +6271,6 @@
     },
     "I agree that Covera may process the health information in my documents to provide the service, as described in the Privacy Policy. I can withdraw this at any time by deleting my account.": {
       "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "أوافق على أن Covera قد تعالج المعلومات الصحية في مستنداتي لتقديم الخدمة، كما هو موضح في سياسة الخصوصية. يمكنني سحب هذا في أي وقت عن طريق DELETE حسابي."
-          }
-        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -6699,24 +6283,6 @@
             "value": "Acepto que Covera puede procesar la información de salud en mis documentos para proporcionar el servicio, según se describe en la Política de Privacidad. Puedo retirar esto en cualquier momento eliminando mi cuenta."
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "J'accepte que Covera puisse traiter les informations de santé contenues dans mes documents pour fournir le service, tel que décrit dans la Politique de confidentialité. Je peux retirer ce consentement à tout moment en DELETE mon compte."
-          }
-        },
-        "he": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "אני מסכים/ה ש-Covera תעבד את מידע הבריאות במסמכים שלי כדי לספק את השירות, כמתואר במדיניות הפרטיות. אני יכול/ה לבטל זאת בכל עת על ידי DELETE חשבוני."
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "मैं सहमत हूँ कि Covera सेवा प्रदान करने के लिए मेरे दस्तावेज़ों में स्वास्थ्य जानकारी को संसाधित कर सकता है, जैसा कि गोपनीयता नीति में वर्णित है। मैं किसी भी समय अपना खाता DELETE करके इसे वापस ले सकता हूँ।"
-          }
-        },
         "ja": {
           "stringUnit": {
             "state": "translated",
@@ -6727,12 +6293,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Concordo que a Covera pode processar as informações de saúde nos meus documentos para fornecer o serviço, conforme descrito na Política de Privacidade. Posso retirar este consentimento a qualquer momento, eliminando a minha conta."
-          }
-        },
-        "th": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ฉันตกลงให้ Covera ประมวลผลข้อมูลสุขภาพในเอกสารของฉันเพื่อให้บริการ ตามที่ระบุไว้ในนโยบายความเป็นส่วนตัว ฉันสามารถถอนความยินยอมนี้ได้ทุกเมื่อโดยการ DELETE บัญชีของฉัน"
           }
         }
       }
@@ -11837,64 +11397,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "ออกจากระบบ"
-          }
-        }
-      }
-    },
-    "Sign out of a guest account?": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "تسجيل الخروج من حساب ضيف؟"
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Von einem Gastkonto abmelden?"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "¿Cerrar sesión de una cuenta de invitado?"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Se déconnecter d'un compte invité ?"
-          }
-        },
-        "he": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "לצאת מחשבון אורח?"
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "अतिथि खाते से साइन आउट करें?"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ゲストアカウントからサインアウトしますか？"
-          }
-        },
-        "pt": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sair de uma conta de convidado?"
-          }
-        },
-        "th": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ออกจากระบบบัญชีผู้เยี่ยมชมหรือไม่?"
           }
         }
       }

@@ -8,7 +8,6 @@ import { authRoutes } from './routes/auth.js';
 import { chatRoutes } from './routes/chat.js';
 import { documentRoutes } from './routes/documents.js';
 import { guidanceRoutes } from './routes/guidance.js';
-import { deleteUnreachableGuests } from './account/delete.js';
 
 const app = Fastify({
   logger: {
@@ -48,8 +47,6 @@ const sweep = async (): Promise<void> => {
   try {
     await pool.query(`DELETE FROM sessions WHERE expires_at < now()`);
     await pool.query(`DELETE FROM rate_limits WHERE reset_at < now()`);
-    const guests = await deleteUnreachableGuests((message, detail) => app.log.warn(detail, message));
-    if (guests > 0) app.log.info({ guests }, 'deleted unreachable guest accounts');
   } catch (error) {
     app.log.warn({ err: error }, 'sweep of expired sessions failed');
   }

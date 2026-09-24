@@ -60,7 +60,7 @@
   <table>
     <thead><tr><th scope="col">Data</th><th scope="col">What it is</th><th scope="col">Where it is kept</th></tr></thead>
     <tbody>
-      <tr><td><strong>Account</strong></td><td>Your email address and a salted hash of your password. If you sign in with Google, the Google account identifier and verified email Google gives us. A guest account holds no email at all — only a random identifier.</td><td>Our servers</td></tr>
+      <tr><td><strong>Account</strong></td><td>Your email address and a salted hash of your password. If you sign in with Apple or Google, the account identifier and verified email they give us. Apple lets you hide your address, in which case we hold the relay address, or none at all.</td><td>Our servers</td></tr>
       <tr><td><strong>Documents</strong></td><td>The policy PDFs and scans you upload, which may show your name, ID number, policy number, health conditions, treatments and financial terms.</td><td>Our servers, encrypted</td></tr>
       <tr><td><strong>Information read from them</strong></td><td>Page text, and the policy details read out of it — sums, percentages, waiting periods, deadlines — each stored with the page and exact sentence it came from. Also numeric "search vectors" of the text, used to find the right passage when you ask something.</td><td>Our servers</td></tr>
       <tr><td><strong>Your questions</strong></td><td>What you type in Ask, and the answers you tap when getting a plan. These are sent to Google to produce a reply. <strong>We do not store them</strong> on our servers after the reply is returned.</td><td>Not stored by us</td></tr>
@@ -113,7 +113,6 @@
     <li><strong>Backups:</strong> deleted data can remain in encrypted backups for up to 30 days, after which it is overwritten. It is not used or restored in that time except to recover from a failure.</li>
     <li><strong>Server logs:</strong> up to 30 days.</li>
     <li><strong>Sign-in sessions:</strong> until you sign out, or 30 days after you last used the app.</li>
-    <li><strong>Guest accounts:</strong> a guest account has no password; only the phone that created it can open it. Signing out of it deletes it immediately, with everything in it. If it goes unused for 30 days it can never be opened again, so we delete it automatically too.</li>
   </ul>
 
   <h2 id="security">8. How it is protected</h2>

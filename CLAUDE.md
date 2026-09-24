@@ -216,7 +216,8 @@ use submitted content to improve its products, which breaks the promise in onboa
 - **Authentication is basic.** No email verification and no password reset (both need an
   email provider). Rate limits are in Postgres (`auth/rate-limit.ts`, migration 006) and also cap
   the paid routes per account per day. Sessions slide while used; an hourly sweep in `server.ts`
-  deletes expired sessions and guest accounts nobody can reach any more (`account/delete.ts`). **Sign in with Apple is implemented
+  deletes expired sessions and spent rate-limit rows. There is no guest mode: every account is
+  reachable by its owner, so none can be stranded with health data nobody can delete. **Sign in with Apple is implemented
   (Guideline 4.8) but has never run against Apple: the entitlement needs a Developer account.
 - **Hebrew policies.** Page text is rebuilt from positioned runs (`ingestion/pdf.ts`), since
   many Hebrew PDFs store no space characters. A fictional two-page Hebrew policy now extracts

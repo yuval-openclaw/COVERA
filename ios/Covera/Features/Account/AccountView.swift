@@ -12,7 +12,6 @@ struct AccountView: View {
     @State private var showingDeleteConfirmation = false
     @State private var confirmationText = ""
     @State private var exportFile: ExportFile?
-    @State private var showingGuestSignOut = false
     @AppStorage(AppLanguage.storageKey) private var language = AppLanguage.en.rawValue
 
     private var deleteConfirmed: Bool {
@@ -92,16 +91,6 @@ struct AccountView: View {
             }
         }
         .coveraCard()
-        .alert(String(localized: "Sign out of a guest account?"), isPresented: $showingGuestSignOut) {
-            Button(String(localized: "Cancel"), role: .cancel) {}
-            // Nobody could open the account again, so it is deleted now rather
-            // than left on the server until the cleanup finds it.
-            Button(String(localized: "Delete and sign out"), role: .destructive) {
-                Task { await model.deleteAccount() }
-            }
-        } message: {
-            Text(String(localized: "A guest account has no password, so signing out deletes it, with every policy in it. To keep your policies, export them first or create an account."))
-        }
     }
 
     /// The signed-in identity, without the button beside it.
@@ -112,7 +101,7 @@ struct AccountView: View {
                 Text(String(localized: "Signed in"))
                     .font(.headline)
                     .foregroundStyle(Theme.Palette.ink)
-                Text(model.isGuest ? String(localized: "Guest account") : (model.email ?? "placeholder@example.com"))
+                Text(model.email ?? "placeholder@example.com")
                     .font(.footnote)
                     .foregroundStyle(Theme.Palette.tertiaryInk)
                     .lineLimit(1)
@@ -124,13 +113,7 @@ struct AccountView: View {
 
     private var signOutButton: some View {
         Button(String(localized: "Sign out")) {
-            // A guest has no password: signing out is final, so it is
-            // confirmed first. Anyone else can simply sign back in.
-            if model.isGuest {
-                showingGuestSignOut = true
-            } else {
-                Task { await model.signOut() }
-            }
+            Task { await model.signOut() }
         }
         .buttonStyle(SecondaryButtonStyle())
         // Without this the label is allowed to wrap inside the capsule.
@@ -339,9 +322,6 @@ final class AccountModel {
 
     private(set) var email: String?
 
-    /// Guest accounts are created with an address on a reserved domain that
-    /// can never receive mail.
-    var isGuest: Bool { email?.hasSuffix("@guest.covera.invalid") ?? false }
     private(set) var isWorking = false
     private(set) var errorMessage: String?
 

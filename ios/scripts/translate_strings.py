@@ -51,7 +51,13 @@ def acceptable(source: str, translated: str) -> bool:
         return False
     if sorted(SPEC.findall(source)) != sorted(SPEC.findall(translated)):
         return False
-    return all(word not in source or word in translated for word in ("Covera", "DELETE"))
+    # "DELETE" in capitals is a literal the user types to confirm an erasure, so
+    # it has to survive translation. The check runs both ways: a model told to
+    # preserve it will otherwise leave an ordinary "Delete" verb in English too,
+    # which produced buttons reading "DELETE וצא/י" in Hebrew.
+    if ("DELETE" in source) != ("DELETE" in translated):
+        return False
+    return "Covera" not in source or "Covera" in translated
 
 
 def translate(key: str, code: str, strings: list[str]) -> dict[str, str]:
@@ -63,7 +69,7 @@ Context: Covera, a calm, trustworthy iPhone app that helps people understand the
 Rules:
 - Keep every format specifier exactly (%lld, %@). If word order requires it, use positional forms (%1$lld, %2$lld).
 - Keep the brand name "Covera" untranslated.
-- Keep the word "DELETE" in Latin capitals exactly as written (the app checks for it).
+- "DELETE" written in Latin capitals is a literal word the user has to type to confirm; keep it exactly as written. An ordinary "Delete" or "delete" is just the verb — translate it normally, and never leave it in English.
 - Do not add or remove information.
 
 Return JSON: {{"items": [{{"i": number, "t": translation}}]}} with one item per input.

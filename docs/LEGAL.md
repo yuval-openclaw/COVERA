@@ -25,13 +25,14 @@ publishing and `site/check.sh --launch` gates release.
   quotes; fixed, and the leaked lines removed from the local log).
 - Emergency first: choosing "Emergency" shows a call-for-help card with the
   region's number (101 in Israel) above any insurance step, and on the plan.
-- Abuse and cost limits kept in Postgres (survive restarts): sign-in attempts,
-  5 guest accounts per address per hour, and daily caps per account on uploads
-  (20), plans (30) and chat (150). Keys are hashed, so no emails or IPs stored.
+- Abuse and cost limits kept in Postgres (survive restarts): sign-in attempts
+  (per address, and per address and email), and daily caps per account on
+  uploads (20), plans (30) and chat (150). Keys are hashed, so no emails or IPs
+  stored.
 - Uploads must really be PDFs (checked by content, not the declared type).
 - Retention matches the policy: expired sessions and rate-limit rows are swept
-  hourly; sessions renew while used; guest accounts no one can reach any more
-  (no live session for 30 days) are deleted with all their files.
+  hourly, and sessions renew while used. Every account is reachable by its owner
+  (email, Apple or Google), so none is ever left with data nobody can delete.
 - Site security headers (CSP, HSTS, no framing, no referrer).
 
 ## Published
