@@ -339,7 +339,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Covera/Covera.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				COVERA_GOOGLE_CLIENT_ID = "";
+				COVERA_GOOGLE_CLIENT_ID = "641446426848-ikfdgfdqsg5v18814o4k0m1q2llgg5np.apps.googleusercontent.com";
 				CURRENT_PROJECT_VERSION = 1;
 				CoveraAPIBaseURL = "https://api.covera.invalid";
 				CoveraLegalBaseURL = "https://covera-legal.vercel.app";
@@ -428,7 +428,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Covera/Covera.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				COVERA_GOOGLE_CLIENT_ID = "";
+				COVERA_GOOGLE_CLIENT_ID = "641446426848-ikfdgfdqsg5v18814o4k0m1q2llgg5np.apps.googleusercontent.com";
 				CURRENT_PROJECT_VERSION = 1;
 				CoveraAPIBaseURL = "http://localhost:3000";
 				CoveraLegalBaseURL = "https://covera-legal.vercel.app";

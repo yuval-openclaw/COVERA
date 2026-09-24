@@ -117,9 +117,11 @@ their published keys (`auth/apple.ts`, no JWT library), the audience is the bund
 Apple may withhold the address, so `apple_sub` (migration 008) is the identity, as `google_sub` is.
 The button is Apple's own and must stay above any other provider's.
 
-Google sign-in is written but **off until configured**: create an iOS OAuth client in Google
-Cloud Console (bundle id `com.covera.app`), then set `COVERA_GOOGLE_CLIENT_ID` in
-`ios/project.yml` and the same value as `GOOGLE_IOS_CLIENT_ID` in `api/.env`. The app uses the
+Google sign-in is **configured and live** (iOS OAuth client, bundle id `com.covera.app`):
+`COVERA_GOOGLE_CLIENT_ID` in `ios/project.yml` and the same value as `GOOGLE_IOS_CLIENT_ID` in
+`api/.env` and `api/prod.env`. The client id is not a secret — it ships inside the app — but the
+consent screen is still in Google's "Testing" mode, so only accounts listed as test users can
+sign in until it is published. The app uses the
 native OAuth + PKCE flow (`Core/GoogleAuth.swift`, no SDK); the server verifies the ID token's
 audience, issuer, expiry and verified email with Google.
 
