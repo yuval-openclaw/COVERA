@@ -179,26 +179,22 @@ struct LoginView: View {
             focus = nil
             Task { if await model.continueWithGoogle() { onSignedIn() } }
         } label: {
-            // The logo is pinned to the leading edge and the label centred in
-            // what is left, which is how Google draws it — and it keeps the
-            // text optically centred against the Apple button's centred label.
-            ZStack {
+            // Mark and label travel together, centred, because the button
+            // beside it is Apple's and that is how Apple centres theirs. Pinned
+            // to the leading edge — Google's own arrangement — it left a gap
+            // across the middle of a full-width button and the pair stopped
+            // reading as one object.
+            HStack(spacing: 10) {
+                GoogleLogo(size: 19)
+                    // Google requires the mark on white, and a circle keeps it
+                    // from reading as a second, smaller button.
+                    .padding(6)
+                    .background(Color.white, in: Circle())
                 Text(String(localized: "Continue with Google"))
                     .font(.system(size: 17, weight: .medium))
                     .foregroundStyle(Theme.Palette.ink)
                     .lineLimit(1)
                     .minimumScaleFactor(0.8)
-                    .padding(.horizontal, 52)
-                HStack {
-                    GoogleLogo(size: 20)
-                        // Google requires the mark on white; a plain tile is
-                        // the smallest thing that satisfies that on a dark
-                        // button without turning the whole button white.
-                        .padding(7)
-                        .background(Color.white, in: RoundedRectangle(cornerRadius: 6, style: .continuous))
-                    Spacer(minLength: 0)
-                }
-                .padding(.leading, 8)
             }
             .frame(maxWidth: .infinity, minHeight: 50)
         }
