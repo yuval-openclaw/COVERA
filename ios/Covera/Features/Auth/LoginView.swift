@@ -170,27 +170,41 @@ struct LoginView: View {
         .opacity(model.isWorking ? 0.4 : 1)
     }
 
+    /// Google's dark sign-in button: their real mark, their wording, on a
+    /// surface dark enough to sit under Apple's white one without competing.
+    /// The height and the capsule match the Apple button above it, so the two
+    /// read as one pair rather than two borrowed components.
     private var googleButton: some View {
-        VStack(spacing: Theme.Spacing.tight) {
-            Button {
-                focus = nil
-                Task { if await model.continueWithGoogle() { onSignedIn() } }
-            } label: {
-                HStack(spacing: Theme.Spacing.step) {
-                    Text(verbatim: "G")
-                        .font(.system(size: 17, weight: .bold, design: .rounded))
-                        .foregroundStyle(Theme.Palette.background)
-                        .frame(width: 26, height: 26)
-                        .background(Theme.Palette.ink, in: Circle())
-                        .accessibilityHidden(true)
-                    Text(String(localized: "Continue with Google"))
+        Button {
+            focus = nil
+            Task { if await model.continueWithGoogle() { onSignedIn() } }
+        } label: {
+            // The logo is pinned to the leading edge and the label centred in
+            // what is left, which is how Google draws it — and it keeps the
+            // text optically centred against the Apple button's centred label.
+            ZStack {
+                Text(String(localized: "Continue with Google"))
+                    .font(.system(size: 17, weight: .medium))
+                    .foregroundStyle(Theme.Palette.ink)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
+                    .padding(.horizontal, 52)
+                HStack {
+                    GoogleLogo(size: 20)
+                        // Google requires the mark on white; a plain tile is
+                        // the smallest thing that satisfies that on a dark
+                        // button without turning the whole button white.
+                        .padding(7)
+                        .background(Color.white, in: RoundedRectangle(cornerRadius: 6, style: .continuous))
+                    Spacer(minLength: 0)
                 }
-                .frame(maxWidth: .infinity, minHeight: 54)
+                .padding(.leading, 8)
             }
-            .buttonStyle(SecondaryButtonStyle(fullWidth: true))
-            .disabled(!GoogleAuth.isConfigured || model.isWorking)
-
+            .frame(maxWidth: .infinity, minHeight: 50)
         }
+        .buttonStyle(GoogleButtonStyle())
+        .disabled(!GoogleAuth.isConfigured || model.isWorking)
+        .opacity(model.isWorking ? 0.4 : 1)
     }
 
     private func field<Content: View>(isFocused: Bool, @ViewBuilder content: () -> Content) -> some View {

@@ -33,12 +33,14 @@
 		B4FD66069DCD9E2386DBED17 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D1FE52E3AB2F55678222458 /* APIClient.swift */; };
 		DD05861AC79C952294C5680A /* CoveraApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE77C7AADBE049B7F14B16C /* CoveraApp.swift */; };
 		F23FDAC9206C74DECA3DF37E /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37D121FB5CEBFF5E2C5CFE7 /* HomeView.swift */; };
+		F7D37CADDE9FC803F1156263 /* GoogleLogo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15CEEFCF6753DD47E6D5E0D7 /* GoogleLogo.swift */; };
 		FB526B9940D0A4FB5DD989FF /* GoogleAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24075F39F6AE914291E60030 /* GoogleAuth.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0056CC5217451564F314AA3D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Covera.strings; sourceTree = "<group>"; };
 		01B39CF205786F224B9A7F66 /* Covera.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Covera.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		15CEEFCF6753DD47E6D5E0D7 /* GoogleLogo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleLogo.swift; sourceTree = "<group>"; };
 		24075F39F6AE914291E60030 /* GoogleAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleAuth.swift; sourceTree = "<group>"; };
 		2590DAC58997B8DF2AD61F48 /* CallLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallLogView.swift; sourceTree = "<group>"; };
 		3B6C53B7285A9A9120ADA1F6 /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 				479BD4E8F33AF25EBEE22987 /* CallLog.swift */,
 				46D7B646651CEBFDE8EECCDE /* DocumentScanner.swift */,
 				24075F39F6AE914291E60030 /* GoogleAuth.swift */,
+				15CEEFCF6753DD47E6D5E0D7 /* GoogleLogo.swift */,
 				E99F25E50A82D5237E5B2CDF /* Legal.swift */,
 				3B6C53B7285A9A9120ADA1F6 /* Localization.swift */,
 				53715E5CD760B048D718AFCC /* Models.swift */,
@@ -305,6 +308,7 @@
 				9B07CBB696844D8A4A8A2ED8 /* DocumentsView.swift in Sources */,
 				19E60CDE586E96BAFDB5A90F /* EmergencyCallCard.swift in Sources */,
 				FB526B9940D0A4FB5DD989FF /* GoogleAuth.swift in Sources */,
+				F7D37CADDE9FC803F1156263 /* GoogleLogo.swift in Sources */,
 				ADEDD9B5DBD11162023C54BE /* GuidanceFlow.swift in Sources */,
 				F23FDAC9206C74DECA3DF37E /* HomeView.swift in Sources */,
 				2479F42918EBB1A7458C43B1 /* Legal.swift in Sources */,
