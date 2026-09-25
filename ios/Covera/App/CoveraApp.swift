@@ -59,7 +59,7 @@ struct CoveraApp: App {
             // One committed look. The palette is designed for black and is not
             // meant to be inverted, so system chrome — alerts, keyboards, share
             // sheets — is pinned dark to match.
-            .preferredColorScheme(.dark)
+            .preferredColorScheme(Theme.appearance == .light ? .light : .dark)
             .environment(\.layoutDirection, (AppLanguage(rawValue: language) ?? .en).isRightToLeft ? .rightToLeft : .leftToRight)
         }
         .onChange(of: scenePhase) { _, phase in

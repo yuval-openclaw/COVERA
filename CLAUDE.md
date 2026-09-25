@@ -146,7 +146,12 @@ each account's consent (`POST /account/consent`, migration 005). Open items: `do
 
 ## Design rules (iOS)
 
-Black only — `preferredColorScheme(.dark)` plus `UIUserInterfaceStyle = Dark`. Colour means
+One ground at a time, chosen by `Theme.appearance` in `Core/Theme.swift` — **that single line
+switches the whole app**, including the palette, the luxury surface, the lit edges and
+`UIUserInterfaceStyle` in `Info.plist` (change both together). It is currently `.light`: warm
+paper rather than white or grey, with a faint apricot glow, so a health app reads as calm
+instead of clinical. `.dark` restores the original OLED black. Every colour is defined for both
+and clears WCAG AA (4.5:1) on `surface` *and* on `background` in each. Colour means
 exactly one thing each: blue = cited from a policy, amber = not stated / ask the insurer,
 coral = deadline, conflict or withheld. **No green and no checkmarks anywhere**: nothing in
 this app has been approved by an insurer. Serif (New York) for headings and verbatim quotes,

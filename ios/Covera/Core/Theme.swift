@@ -16,31 +16,47 @@ import UIKit
 /// There is no green anywhere and no checkmark. Nothing here has been approved
 /// by an insurer, and a green tick would say otherwise.
 enum Theme {
-    enum Palette {
-        /// OLED black. The ground everything sits on.
-        static let background = Color(hex: 0x000000)
-        /// Cards.
-        static let surface = Color(hex: 0x0E0E11)
-        /// Inputs, quotes, anything set into a card.
-        static let inset = Color(hex: 0x18181D)
-        /// Chips, pressed states, icon tiles.
-        static let elevated = Color(hex: 0x222228)
-        static let hairline = Color.white.opacity(0.09)
-        /// The faint cool light behind each screen. Never used for meaning.
-        static let ambient = Color(hex: 0x1C2233)
+    /// Which ground the app is drawn on. **This is the only line to change to
+    /// swap the whole app back to the original black.** Every colour, the
+    /// metal surface, the lit edges and the status bar follow it.
+    enum Appearance { case light, dark }
+    static let appearance: Appearance = .light
 
-        // Every text colour below clears WCAG AA (4.5:1) on `surface`.
-        static let ink = Color(hex: 0xF4F4F6)
-        static let secondaryInk = Color(hex: 0xA3A3AA)
-        static let tertiaryInk = Color(hex: 0x7F7F87)
+    private static var isLight: Bool { appearance == .light }
+
+    enum Palette {
+        /// The ground everything sits on: warm paper, not white, so the screen
+        /// reads as something printed rather than something clinical.
+        static var background: Color { Theme.isLight ? Color(hex: 0xF7F2EC) : Color(hex: 0x000000) }
+        /// Cards, lifted off the ground by being warmer and lighter than it.
+        static var surface: Color { Theme.isLight ? Color(hex: 0xFFFCF8) : Color(hex: 0x0E0E11) }
+        /// Inputs, quotes, anything set into a card.
+        static var inset: Color { Theme.isLight ? Color(hex: 0xF1EAE1) : Color(hex: 0x18181D) }
+        /// Chips, pressed states, icon tiles.
+        static var elevated: Color { Theme.isLight ? Color(hex: 0xE9E0D5) : Color(hex: 0x222228) }
+        static var hairline: Color {
+            Theme.isLight ? Color.black.opacity(0.10) : Color.white.opacity(0.09)
+        }
+        /// The faint light behind each screen. Never used for meaning — it is
+        /// warmth, which is the whole difference between calm and clinical.
+        static var ambient: Color { Theme.isLight ? Color(hex: 0xFBE3D2) : Color(hex: 0x1C2233) }
+        /// Highlights on a lifted surface: light catching metal in the dark,
+        /// and a soft shadow on paper in the light.
+        static var sheen: Color { Theme.isLight ? Color.black : Color.white }
+
+        // Every text colour below clears WCAG AA (4.5:1) on `surface` *and* on
+        // `background`, in both appearances.
+        static var ink: Color { Theme.isLight ? Color(hex: 0x1C1B20) : Color(hex: 0xF4F4F6) }
+        static var secondaryInk: Color { Theme.isLight ? Color(hex: 0x5A5860) : Color(hex: 0xA3A3AA) }
+        static var tertiaryInk: Color { Theme.isLight ? Color(hex: 0x6A6872) : Color(hex: 0x7F7F87) }
 
         /// Citations and anything the documents actually support.
-        static let cited = Color(hex: 0x93B4FF)
+        static var cited: Color { Theme.isLight ? Color(hex: 0x2A5BD7) : Color(hex: 0x93B4FF) }
         /// Where the documents are silent. Not red: a gap is not an error, it
         /// is a question for the insurer.
-        static let unstated = Color(hex: 0xF0B65A)
+        static var unstated: Color { Theme.isLight ? Color(hex: 0x8A5A05) : Color(hex: 0xF0B65A) }
         /// Deadlines, conflicts and withheld steps only.
-        static let caution = Color(hex: 0xFF8B7B)
+        static var caution: Color { Theme.isLight ? Color(hex: 0xC03A2B) : Color(hex: 0xFF8B7B) }
     }
 
     enum Spacing {
@@ -302,17 +318,20 @@ struct LuxurySurface: ViewModifier {
             .background {
                 ZStack {
                     LinearGradient(
-                        colors: [Color(hex: 0x1E1E24), Color(hex: 0x111114), Color(hex: 0x0B0B0D)],
+                        colors: Theme.appearance == .light
+                            ? [Color(hex: 0xFFFFFF), Color(hex: 0xFFFAF4), Color(hex: 0xF6EDE2)]
+                            : [Color(hex: 0x1E1E24), Color(hex: 0x111114), Color(hex: 0x0B0B0D)],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
                     )
-                    // The sheen: a soft diagonal band, like light on anodised metal.
+                    // The sheen: a soft diagonal band — light on anodised metal
+                    // in the dark, and the same band as shadow on paper.
                     LinearGradient(
                         stops: [
-                            .init(color: .white.opacity(0.07), location: 0),
-                            .init(color: .white.opacity(0), location: 0.38),
-                            .init(color: .white.opacity(0.025), location: 0.72),
-                            .init(color: .white.opacity(0), location: 1),
+                            .init(color: Theme.Palette.sheen.opacity(0.07), location: 0),
+                            .init(color: Theme.Palette.sheen.opacity(0), location: 0.38),
+                            .init(color: Theme.Palette.sheen.opacity(0.025), location: 0.72),
+                            .init(color: Theme.Palette.sheen.opacity(0), location: 1),
                         ],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
@@ -323,7 +342,9 @@ struct LuxurySurface: ViewModifier {
             .overlay(
                 shape.strokeBorder(
                     LinearGradient(
-                        colors: [.white.opacity(0.24), .white.opacity(0.05), .white.opacity(0.1)],
+                        colors: Theme.appearance == .light
+                            ? [Color.black.opacity(0.10), Color.black.opacity(0.04), Color.black.opacity(0.07)]
+                            : [.white.opacity(0.24), .white.opacity(0.05), .white.opacity(0.1)],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
                     ),
@@ -728,7 +749,7 @@ struct Sheen: ViewModifier {
                 GeometryReader { proxy in
                     let width = proxy.size.width
                     LinearGradient(
-                        colors: [.clear, .white.opacity(0.09), .clear],
+                        colors: [.clear, Theme.Palette.sheen.opacity(0.09), .clear],
                         startPoint: .leading,
                         endPoint: .trailing
                     )

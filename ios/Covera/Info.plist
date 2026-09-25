@@ -71,7 +71,7 @@
 
   <!-- The palette is designed for black only; keep system chrome matching. -->
   <key>UIUserInterfaceStyle</key>
-  <string>Dark</string>
+  <string>Light</string>
 
   <key>UILaunchScreen</key>
   <dict>
