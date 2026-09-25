@@ -544,7 +544,12 @@ struct UploadingOverlay: View {
 @MainActor
 @Observable
 final class DocumentsModel {
-    private(set) var documents: [PolicyDocument] = []
+    /// Newest first, always. The server returns them in that order, but the
+    /// order a policy library is read in should not depend on a server keeping
+    /// its promise — and sample data was already arriving in a different one.
+    private(set) var documents: [PolicyDocument] = [] {
+        didSet { sortNewestFirst() }
+    }
     private(set) var lastUpload: UploadResponse?
     private(set) var isLoading = false
     private(set) var isUploading = false
@@ -554,6 +559,14 @@ final class DocumentsModel {
     init() {}
 
     var readyCount: Int { documents.filter(\.isReady).count }
+
+    private func sortNewestFirst() {
+        let ordered = documents.sorted { $0.uploadedAt > $1.uploadedAt }
+        // Assigning inside didSet would recurse; only write when it differs.
+        if ordered.map(\.id) != documents.map(\.id) {
+            documents = ordered
+        }
+    }
 
     func load() async {
         guard !isSample else { return }

@@ -111,21 +111,21 @@ enum PreviewData {
             originalFilename: "Supplementary Health — Policy Wording 2026.pdf",
             status: "extracted",
             pageCount: 48,
-            uploadedAt: Date(timeIntervalSinceNow: -86_400 * 12)
+            uploadedAt: Date(timeIntervalSinceNow: -3_600 * 5)
         ),
         PolicyDocument(
             id: "8a2e41c7-0d93-4b5f-a1e6-2c7b9f3d5e10",
             originalFilename: "Private Surgery Plan.pdf",
             status: "extracted",
             pageCount: 31,
-            uploadedAt: Date(timeIntervalSinceNow: -86_400 * 40)
+            uploadedAt: Date(timeIntervalSinceNow: -86_400 * 12)
         ),
         PolicyDocument(
             id: "c4d9b2f1-7e3a-4c86-b0d5-9a1f6e2c8b73",
             originalFilename: "Dental cover scan.pdf",
             status: "failed",
             pageCount: nil,
-            uploadedAt: Date(timeIntervalSinceNow: -3_600 * 5)
+            uploadedAt: Date(timeIntervalSinceNow: -86_400 * 40)
         ),
     ]
 
