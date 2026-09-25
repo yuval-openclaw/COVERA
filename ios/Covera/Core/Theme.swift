@@ -50,7 +50,7 @@ enum Theme {
         // worst case. Measured, not judged by eye.
         static var ink: Color { Theme.isLight ? Color(hex: 0x1C1B20) : Color(hex: 0xF4F4F6) }
         static var secondaryInk: Color { Theme.isLight ? Color(hex: 0x5A5860) : Color(hex: 0xA3A3AA) }
-        static var tertiaryInk: Color { Theme.isLight ? Color(hex: 0x615F69) : Color(hex: 0x7F7F87) }
+        static var tertiaryInk: Color { Theme.isLight ? Color(hex: 0x5B5963) : Color(hex: 0x7F7F87) }
 
         /// Citations and anything the documents actually support.
         static var cited: Color { Theme.isLight ? Color(hex: 0x2A5BD7) : Color(hex: 0x93B4FF) }
@@ -308,6 +308,64 @@ struct CardModifier: ViewModifier {
     }
 }
 
+/// A band of light crossing a polished surface, over and over.
+///
+/// The band is wider than it needs to be and fades to nothing at both ends, so
+/// the moment it restarts happens off the card and is never seen — it reads as
+/// one continuous travel rather than a loop snapping back.
+///
+/// Reduce Motion stops it and parks the light across the middle of the face:
+/// the surface still looks polished, it simply holds still. A slow shimmer
+/// repeating forever is exactly what that setting exists to switch off.
+struct SheenSweep: View {
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    /// Seconds for one crossing. Long: the light should be noticed only if
+    /// someone looks for it.
+    private static let crossing: Double = 7
+
+    var body: some View {
+        // A timeline rather than a repeating animation started in onAppear:
+        // that animation silently failed to attach when the card appeared
+        // during a transition, and the band never moved. This is driven by the
+        // clock, so it cannot be missed — and `paused` is how Reduce Motion
+        // stops it dead rather than merely slowing it.
+        TimelineView(.animation(minimumInterval: 1.0 / 30.0, paused: reduceMotion)) { timeline in
+            GeometryReader { geo in
+                let bright = Theme.appearance == .light
+                let phase = reduceMotion
+                    ? 0.5
+                    : timeline.date.timeIntervalSinceReferenceDate
+                        .truncatingRemainder(dividingBy: Self.crossing) / Self.crossing
+                // Starts off one edge and ends off the other, so the restart
+                // happens out of sight and reads as one continuous travel.
+                let travel = -0.35 + phase * 1.7
+
+                LinearGradient(
+                    stops: [
+                        .init(color: .white.opacity(0), location: 0),
+                        .init(color: .white.opacity(bright ? 0.65 : 0.05), location: 0.35),
+                        .init(color: .white.opacity(bright ? 1.0 : 0.12), location: 0.5),
+                        .init(color: .white.opacity(bright ? 0.65 : 0.05), location: 0.65),
+                        .init(color: .white.opacity(0), location: 1),
+                    ],
+                    startPoint: .leading,
+                    endPoint: .trailing
+                )
+                // Narrow, or it spreads across the whole card and reads as a
+                // flat tint rather than a beam crossing it. Tall enough that
+                // tilting it still covers the card top to bottom.
+                .frame(width: geo.size.width * 0.38, height: (geo.size.width + geo.size.height) * 2)
+                // Tilted, so the light crosses on a diagonal the way it would
+                // fall on something held in the hand.
+                .rotationEffect(.degrees(-24))
+                .position(x: geo.size.width * travel, y: geo.size.height / 2)
+            }
+        }
+        .allowsHitTesting(false)
+    }
+}
+
 /// The premium surface: brushed dark metal with a lit edge, brighter where the
 /// ambient light would catch it. Reserved for the few objects a screen is
 /// about — the plan's summary, a policy, the main action.
@@ -324,34 +382,17 @@ struct LuxurySurface: ViewModifier {
                     // something to travel across.
                     LinearGradient(
                         colors: Theme.appearance == .light
-                            ? [Color(hex: 0xF2E7D9), Color(hex: 0xFBF4EC), Color(hex: 0xEFE3D4)]
+                            ? [Color(hex: 0xEDE0CE), Color(hex: 0xF0E4D5), Color(hex: 0xE7D9C6)]
                             : [Color(hex: 0x1E1E24), Color(hex: 0x111114), Color(hex: 0x0B0B0D)],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
                     )
-                    // The sheen: a band of light drawn corner to corner, so the
-                    // whole face catches it rather than one corner. Light on
-                    // anodised metal in the dark; on paper it is the gloss of a
-                    // pressed card turned to the window.
-                    LinearGradient(
-                        stops: Theme.appearance == .light
-                            ? [
-                                .init(color: .white.opacity(0), location: 0),
-                                .init(color: .white.opacity(0.55), location: 0.30),
-                                .init(color: .white.opacity(0.95), location: 0.47),
-                                .init(color: .white.opacity(0.95), location: 0.55),
-                                .init(color: .white.opacity(0.45), location: 0.72),
-                                .init(color: .white.opacity(0), location: 1),
-                            ]
-                            : [
-                                .init(color: .white.opacity(0.07), location: 0),
-                                .init(color: .white.opacity(0), location: 0.38),
-                                .init(color: .white.opacity(0.025), location: 0.72),
-                                .init(color: .white.opacity(0), location: 1),
-                            ],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
+                    // The sheen: a band of light that travels across the face
+                    // and begins again, so the surface reads as something
+                    // polished under a moving light rather than a printed
+                    // gradient. Slow on purpose — this is the background of a
+                    // screen someone reads, not an effect to watch.
+                    SheenSweep()
                 }
                 .clipShape(shape)
             }
