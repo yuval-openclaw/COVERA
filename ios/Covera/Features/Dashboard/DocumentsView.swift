@@ -408,8 +408,18 @@ private struct DocumentDetailSheet: View {
                 }
             }
             .padding(Theme.Spacing.screen)
+            // Room under the last button. Without it the bottom action sits
+            // flush against the edge of the sheet, where it is both awkward to
+            // reach and easy to miss — and on a real phone it lands under the
+            // home indicator.
+            .padding(.bottom, Theme.Spacing.section)
         }
-        .presentationDetents([.medium, .large])
+        .scrollBounceBehavior(.basedOnSize)
+        // Tall enough that the last action clears the bottom of the screen on
+        // opening. At .medium the card, the explanation and three buttons did
+        // not fit, so the final button opened flush against the edge — reachable
+        // only by stretching, and right where the home-indicator gesture lives.
+        .presentationDetents([.fraction(0.76), .large])
         .presentationDragIndicator(.visible)
         .presentationBackground(Theme.Palette.background)
         .presentationCornerRadius(Theme.Radius.luxury + 6)
