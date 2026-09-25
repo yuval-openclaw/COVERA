@@ -132,7 +132,7 @@ private struct WalletStack: View {
                         fanned = true
                     }
                 } label: {
-                    PolicyCard(document: document, height: cardHeight, sheenDelay: Double(position) * 0.6)
+                    PolicyCard(document: document, height: cardHeight)
                         // Tucked-in cards sit slightly back, so the stack reads
                         // as depth rather than as a misaligned list.
                         .scaleEffect(scale(position), anchor: .top)
@@ -267,7 +267,6 @@ private struct EmptyLibraryCard: View {
 struct PolicyCard: View {
     let document: PolicyDocument
     var height: CGFloat = 168
-    var sheenDelay: Double = 0
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     private var statusTint: Color {
@@ -317,7 +316,6 @@ struct PolicyCard: View {
         .padding(Theme.Spacing.block)
         .frame(maxWidth: .infinity, minHeight: height, alignment: .leading)
         .coveraLuxury()
-        .modifier(Sheen(delay: sheenDelay))
         .accessibilityElement(children: .combine)
     }
 

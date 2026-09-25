@@ -40,9 +40,6 @@ enum Theme {
         /// The faint light behind each screen. Never used for meaning — it is
         /// warmth, which is the whole difference between calm and clinical.
         static var ambient: Color { Theme.isLight ? Color(hex: 0xFBE3D2) : Color(hex: 0x1C2233) }
-        /// Highlights on a lifted surface: light catching metal in the dark,
-        /// and a soft shadow on paper in the light.
-        static var sheen: Color { Theme.isLight ? Color.black : Color.white }
 
         // Every text colour below clears WCAG AA (4.5:1) in both appearances, on
         // `surface`, on `background`, *and* on the darkest corner of the polished
@@ -324,6 +321,10 @@ struct SheenSweep: View {
     /// someone looks for it.
     private static let crossing: Double = 5
 
+    /// Degrees off vertical. Also decides how far the band has to travel to
+    /// clear the card, which the travel range below accounts for.
+    private static let tilt: Double = 24
+
     var body: some View {
         // A timeline rather than a repeating animation started in onAppear:
         // that animation silently failed to attach when the card appeared
@@ -337,9 +338,16 @@ struct SheenSweep: View {
                     ? 0.5
                     : timeline.date.timeIntervalSinceReferenceDate
                         .truncatingRemainder(dividingBy: Self.crossing) / Self.crossing
-                // Starts off one edge and ends off the other, so the restart
-                // happens out of sight and reads as one continuous travel.
-                let travel = -0.35 + phase * 1.7
+                // Tilting the band throws its ends sideways, so clearing the
+                // card takes much more than half its width. Measured from the
+                // geometry: with too little, one corner of the beam was still
+                // lit when the cycle restarted and it jumped.
+                let radians = Self.tilt * .pi / 180
+                let bandWidth = geo.size.width * 0.26
+                let bandHeight = geo.size.width + geo.size.height
+                let reach = (bandWidth / 2) * cos(radians) + (bandHeight / 2) * sin(radians)
+                let clearance = reach / max(geo.size.width, 1)
+                let travel = -clearance + phase * (1 + 2 * clearance)
 
                 LinearGradient(
                     stops: [
@@ -355,10 +363,10 @@ struct SheenSweep: View {
                 // Narrow, or it spreads across the whole card and reads as a
                 // flat tint rather than a beam crossing it. Tall enough that
                 // tilting it still covers the card top to bottom.
-                .frame(width: geo.size.width * 0.26, height: (geo.size.width + geo.size.height) * 2)
+                .frame(width: bandWidth, height: bandHeight)
                 // Tilted, so the light crosses on a diagonal the way it would
                 // fall on something held in the hand.
-                .rotationEffect(.degrees(-24))
+                .rotationEffect(.degrees(-Self.tilt))
                 .position(x: geo.size.width * travel, y: geo.size.height / 2)
             }
         }
@@ -377,17 +385,20 @@ struct LuxurySurface: ViewModifier {
         content
             .background {
                 ZStack {
-                    // The body of the surface: warm and close to even. The
-                    // corners were darkened once to make the beam show, and the
-                    // darker one read as a grey patch that moved with it —
-                    // worse than a faint beam. The beam earns its own contrast.
-                    LinearGradient(
-                        colors: Theme.appearance == .light
-                            ? [Color(hex: 0xF8F0E6), Color(hex: 0xFBF5EE), Color(hex: 0xF5ECE0)]
-                            : [Color(hex: 0x1E1E24), Color(hex: 0x111114), Color(hex: 0x0B0B0D)],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
+                    // The body of the surface. Flat in the light: any corner
+                    // to corner shading here makes one side permanently darker,
+                    // and as the beam sweeps away from it that side appears to
+                    // darken on a cycle — read as a grey patch blinking on the
+                    // edge of the card. The beam is the only thing that varies.
+                    if Theme.appearance == .light {
+                        Color(hex: 0xFAF3EA)
+                    } else {
+                        LinearGradient(
+                            colors: [Color(hex: 0x1E1E24), Color(hex: 0x111114), Color(hex: 0x0B0B0D)],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    }
                     // The sheen: a band of light that travels across the face
                     // and begins again, so the surface reads as something
                     // polished under a moving light rather than a printed
@@ -795,38 +806,6 @@ struct NoticeCard: View {
 
 // MARK: - Ambient motion
 
-/// A band of light that crosses a card every few seconds, like a reflection
-/// moving over metal. Staggered by `delay` so a list never flashes in unison.
-struct Sheen: ViewModifier {
-    var delay: Double = 0
-    @State private var sweep = false
-
-    func body(content: Content) -> some View {
-        content
-            .overlay {
-                GeometryReader { proxy in
-                    let width = proxy.size.width
-                    LinearGradient(
-                        colors: [.clear, Theme.Palette.sheen.opacity(0.09), .clear],
-                        startPoint: .leading,
-                        endPoint: .trailing
-                    )
-                    .frame(width: width * 0.4, height: proxy.size.height * 2)
-                    .rotationEffect(.degrees(20))
-                    .offset(x: sweep ? width * 1.2 : -width * 0.6, y: -proxy.size.height / 2)
-                }
-                .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.luxury, style: .continuous))
-                .allowsHitTesting(false)
-                .opacity(Theme.Motion.reduceMotion ? 0 : 1)
-            }
-            .onAppear {
-                guard !Theme.Motion.reduceMotion else { return }
-                withAnimation(.easeInOut(duration: 1.8).delay(2.4 + delay).repeatForever(autoreverses: false)) {
-                    sweep = true
-                }
-            }
-    }
-}
 
 /// A gentle hover, for an empty state's single icon.
 struct Float: ViewModifier {

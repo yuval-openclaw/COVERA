@@ -307,7 +307,7 @@ struct HomeView: View {
                             Button {
                                 selected = document
                             } label: {
-                                PolicyCard(document: document, height: 176, sheenDelay: Double(position) * 0.6)
+                                PolicyCard(document: document, height: 176)
                                     .frame(width: 290)
                             }
                             .buttonStyle(PressableStyle())
