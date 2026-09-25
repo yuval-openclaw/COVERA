@@ -44,11 +44,13 @@ enum Theme {
         /// and a soft shadow on paper in the light.
         static var sheen: Color { Theme.isLight ? Color.black : Color.white }
 
-        // Every text colour below clears WCAG AA (4.5:1) on `surface` *and* on
-        // `background`, in both appearances.
+        // Every text colour below clears WCAG AA (4.5:1) in both appearances, on
+        // `surface`, on `background`, *and* on the darkest corner of the polished
+        // luxury card — a date sits there, and the sheen makes that corner the
+        // worst case. Measured, not judged by eye.
         static var ink: Color { Theme.isLight ? Color(hex: 0x1C1B20) : Color(hex: 0xF4F4F6) }
         static var secondaryInk: Color { Theme.isLight ? Color(hex: 0x5A5860) : Color(hex: 0xA3A3AA) }
-        static var tertiaryInk: Color { Theme.isLight ? Color(hex: 0x6A6872) : Color(hex: 0x7F7F87) }
+        static var tertiaryInk: Color { Theme.isLight ? Color(hex: 0x615F69) : Color(hex: 0x7F7F87) }
 
         /// Citations and anything the documents actually support.
         static var cited: Color { Theme.isLight ? Color(hex: 0x2A5BD7) : Color(hex: 0x93B4FF) }
@@ -317,22 +319,36 @@ struct LuxurySurface: ViewModifier {
         content
             .background {
                 ZStack {
+                    // The body of the surface. Warmer at the corners than
+                    // through the middle, so the sheen laid over it has
+                    // something to travel across.
                     LinearGradient(
                         colors: Theme.appearance == .light
-                            ? [Color(hex: 0xFFFFFF), Color(hex: 0xFFFAF4), Color(hex: 0xF6EDE2)]
+                            ? [Color(hex: 0xF2E7D9), Color(hex: 0xFBF4EC), Color(hex: 0xEFE3D4)]
                             : [Color(hex: 0x1E1E24), Color(hex: 0x111114), Color(hex: 0x0B0B0D)],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
                     )
-                    // The sheen: a soft diagonal band — light on anodised metal
-                    // in the dark, and the same band as shadow on paper.
+                    // The sheen: a band of light drawn corner to corner, so the
+                    // whole face catches it rather than one corner. Light on
+                    // anodised metal in the dark; on paper it is the gloss of a
+                    // pressed card turned to the window.
                     LinearGradient(
-                        stops: [
-                            .init(color: Theme.Palette.sheen.opacity(0.07), location: 0),
-                            .init(color: Theme.Palette.sheen.opacity(0), location: 0.38),
-                            .init(color: Theme.Palette.sheen.opacity(0.025), location: 0.72),
-                            .init(color: Theme.Palette.sheen.opacity(0), location: 1),
-                        ],
+                        stops: Theme.appearance == .light
+                            ? [
+                                .init(color: .white.opacity(0), location: 0),
+                                .init(color: .white.opacity(0.55), location: 0.30),
+                                .init(color: .white.opacity(0.95), location: 0.47),
+                                .init(color: .white.opacity(0.95), location: 0.55),
+                                .init(color: .white.opacity(0.45), location: 0.72),
+                                .init(color: .white.opacity(0), location: 1),
+                            ]
+                            : [
+                                .init(color: .white.opacity(0.07), location: 0),
+                                .init(color: .white.opacity(0), location: 0.38),
+                                .init(color: .white.opacity(0.025), location: 0.72),
+                                .init(color: .white.opacity(0), location: 1),
+                            ],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
                     )
