@@ -322,7 +322,7 @@ struct SheenSweep: View {
 
     /// Seconds for one crossing. Long: the light should be noticed only if
     /// someone looks for it.
-    private static let crossing: Double = 7
+    private static let crossing: Double = 5
 
     var body: some View {
         // A timeline rather than a repeating animation started in onAppear:
@@ -355,7 +355,7 @@ struct SheenSweep: View {
                 // Narrow, or it spreads across the whole card and reads as a
                 // flat tint rather than a beam crossing it. Tall enough that
                 // tilting it still covers the card top to bottom.
-                .frame(width: geo.size.width * 0.38, height: (geo.size.width + geo.size.height) * 2)
+                .frame(width: geo.size.width * 0.26, height: (geo.size.width + geo.size.height) * 2)
                 // Tilted, so the light crosses on a diagonal the way it would
                 // fall on something held in the hand.
                 .rotationEffect(.degrees(-24))
@@ -377,12 +377,13 @@ struct LuxurySurface: ViewModifier {
         content
             .background {
                 ZStack {
-                    // The body of the surface. Warmer at the corners than
-                    // through the middle, so the sheen laid over it has
-                    // something to travel across.
+                    // The body of the surface: warm and close to even. The
+                    // corners were darkened once to make the beam show, and the
+                    // darker one read as a grey patch that moved with it —
+                    // worse than a faint beam. The beam earns its own contrast.
                     LinearGradient(
                         colors: Theme.appearance == .light
-                            ? [Color(hex: 0xEDE0CE), Color(hex: 0xF0E4D5), Color(hex: 0xE7D9C6)]
+                            ? [Color(hex: 0xF8F0E6), Color(hex: 0xFBF5EE), Color(hex: 0xF5ECE0)]
                             : [Color(hex: 0x1E1E24), Color(hex: 0x111114), Color(hex: 0x0B0B0D)],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
