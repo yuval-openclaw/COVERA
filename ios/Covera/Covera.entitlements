@@ -15,12 +15,18 @@
     <string>Default</string>
   </array>
 
-  <!-- Needed for password autofill and, later, universal links from an
-       insurer's confirmation email. Replace the domain before submission. -->
-  <key>com.apple.developer.associated-domains</key>
-  <array>
-    <string>applinks:covera.app</string>
-    <string>webcredentials:covera.app</string>
-  </array>
+  <!-- Associated domains are deliberately absent. They were declared for
+       covera.app, a domain nobody here owns: Apple verifies the claim by
+       fetching apple-app-site-association from the domain, so the entitlement
+       did nothing except risk failing validation. Password autofill and
+       universal links need a domain we control — restore this block, pointing
+       at that domain, once one exists:
+
+       <key>com.apple.developer.associated-domains</key>
+       <array>
+         <string>applinks:example.com</string>
+         <string>webcredentials:example.com</string>
+       </array>
+  -->
 </dict>
 </plist>
