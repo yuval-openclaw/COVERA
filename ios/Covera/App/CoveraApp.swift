@@ -4,6 +4,10 @@ import SwiftUI
 struct CoveraApp: App {
     @State private var lock = AppLock()
     @State private var auth = AuthState.shared
+    /// The signed-in account's plan, library and call log. Held here, above the
+    /// lock, so locking can take the whole interface away without losing a plan
+    /// in progress; replaced on sign-out, because it belongs to that account.
+    @State private var workspace = Workspace()
     // The first-launch explanation of what Covera is. Agreement to the terms is
     // separate and per account (ConsentView, after sign-in).
     @AppStorage("covera.onboardingSeen") private var disclaimerAccepted = false
@@ -38,7 +42,7 @@ struct CoveraApp: App {
                             .task { await auth.refreshAgreement(version: Legal.version) }
                     }
                 } else {
-                    RootView(lock: lock)
+                    gated
                 }
             }
             .overlay {
@@ -64,9 +68,68 @@ struct CoveraApp: App {
         }
         .onChange(of: scenePhase) { _, phase in
             // Re-lock as soon as the app leaves the foreground, so a document is
-            // never sitting open in the app switcher.
-            if phase == .background { lock.lock() }
+            // never sitting open in the app switcher. Remember whether the plan
+            // was open first: someone who leaves to call their insurer should
+            // come back to the step they were on.
+            if phase == .background {
+                workspace.resumeGuidance = workspace.showingGuidance
+                lock.lock()
+            }
+            // Asking while in the background fails at once, so the prompt
+            // waits until the app is really in front again.
+            if phase == .active, lock.promptOnActive, lock.state == .locked, auth.isSignedIn || isDemo {
+                Task { await lock.unlock() }
+            }
         }
+        .onChange(of: auth.isSignedIn) { _, signedIn in
+            // Sign-out, or a session the server rejected: nothing of this
+            // account's may carry over to the next one.
+            if !signedIn { workspace = Workspace() }
+        }
+    }
+
+    /// Nothing that shows policy data exists in the view tree until the lock is
+    /// open — not the tabs, not a sheet, not a resumed plan. Removing the root
+    /// rather than covering it also dismisses whatever it had presented, which
+    /// an overlay could not: sheets and full-screen covers sit above it.
+    @ViewBuilder
+    private var gated: some View {
+        switch lock.state {
+        case .unlocked:
+            RootView(lock: lock, workspace: workspace)
+        case .locked:
+            LockScreen(lock: lock)
+        case .unavailable(let reason):
+            LockScreen(lock: lock, unavailableReason: reason)
+        }
+    }
+}
+
+/// What one signed-in account has open: its plan, its library, its call log,
+/// and where it was in the app. Outlives the lock; not the account.
+@MainActor
+@Observable
+final class Workspace {
+    var tab: AppTab = .home
+    var showingGuidance = false
+    /// The plan was open when the app locked; reopen it once unlocked.
+    var resumeGuidance = false
+    let guidance: GuidanceModel
+    let documents: DocumentsModel
+    let callLog: CallLogStore
+
+    init() {
+        #if DEBUG
+        if PreviewData.isDemo {
+            guidance = PreviewData.guidanceModel()
+            documents = DocumentsModel(sample: PreviewData.documents)
+            callLog = CallLogStore(sample: PreviewData.callLog)
+            return
+        }
+        #endif
+        guidance = GuidanceModel()
+        documents = DocumentsModel()
+        callLog = CallLogStore()
     }
 }
 
@@ -89,43 +152,28 @@ enum AppTab: Hashable {
 /// survives closing the flow, so Home can offer to pick it up again.
 struct RootView: View {
     let lock: AppLock
-    @State private var tab: AppTab = .home
-    @State private var guidance: GuidanceModel
-    @State private var documents: DocumentsModel
-    @State private var callLog: CallLogStore
-    @State private var showingGuidance = false
+    @Bindable var workspace: Workspace
     // Tabs are re-identified on a language change so every string redraws,
     // while the tab, the plan and the library survive it.
     @AppStorage(AppLanguage.storageKey) private var language = AppLanguage.en.rawValue
 
-    init(lock: AppLock) {
-        self.lock = lock
-        #if DEBUG
-        if PreviewData.isDemo {
-            _guidance = State(initialValue: PreviewData.guidanceModel())
-            _documents = State(initialValue: DocumentsModel(sample: PreviewData.documents))
-            _callLog = State(initialValue: CallLogStore(sample: PreviewData.callLog))
-            return
-        }
-        #endif
-        _guidance = State(initialValue: GuidanceModel())
-        _documents = State(initialValue: DocumentsModel())
-        _callLog = State(initialValue: CallLogStore())
-    }
+    private var guidance: GuidanceModel { workspace.guidance }
+    private var documents: DocumentsModel { workspace.documents }
+    private var callLog: CallLogStore { workspace.callLog }
 
     var body: some View {
-        TabView(selection: $tab) {
+        TabView(selection: $workspace.tab) {
             HomeView(
                 guidance: guidance,
                 documents: documents,
                 callLog: callLog,
-                onOpenGuidance: { showingGuidance = true },
+                onOpenGuidance: { workspace.showingGuidance = true },
                 onNewGuidance: {
                     guidance.reset()
-                    showingGuidance = true
+                    workspace.showingGuidance = true
                 },
-                onShowPolicies: { tab = .policies },
-                onShowAccount: { tab = .account }
+                onShowPolicies: { workspace.tab = .policies },
+                onShowAccount: { workspace.tab = .account }
             )
             .tabItem { Label(String(localized: "Home"), systemImage: "house") }
             .tag(AppTab.home)
@@ -139,7 +187,7 @@ struct RootView: View {
             DocumentsView(
                 model: documents,
                 callLog: callLog,
-                onStartGuidance: { showingGuidance = true }
+                onStartGuidance: { workspace.showingGuidance = true }
             )
                 .tabItem { Label(String(localized: "Policies"), systemImage: "doc.text") }
                 .tag(AppTab.policies)
@@ -152,13 +200,13 @@ struct RootView: View {
         }
         .tint(Theme.Palette.ink)
         .environment(\.locale, Locale(identifier: language))
-        .fullScreenCover(isPresented: $showingGuidance) {
+        .fullScreenCover(isPresented: $workspace.showingGuidance) {
             GuidanceFlowView(
                 model: guidance,
-                onClose: { showingGuidance = false },
+                onClose: { workspace.showingGuidance = false },
                 onOpenAccount: {
-                    showingGuidance = false
-                    tab = .account
+                    workspace.showingGuidance = false
+                    workspace.tab = .account
                 }
             )
             .coveraLayoutDirection()
@@ -169,12 +217,19 @@ struct RootView: View {
             }
         }
         .animation(Theme.Motion.appear, value: documents.isUploading)
+        .onAppear {
+            // Back from the lock: return to the plan if it was open.
+            if workspace.resumeGuidance {
+                workspace.resumeGuidance = false
+                workspace.showingGuidance = true
+            }
+        }
         #if DEBUG
         .onAppear {
             switch PreviewData.shot {
-            case "plan": showingGuidance = true
-            case "policies": tab = .policies
-            case "ask": tab = .ask
+            case "plan": workspace.showingGuidance = true
+            case "policies": workspace.tab = .policies
+            case "ask": workspace.tab = .ask
             default: break
             }
         }
@@ -203,8 +258,12 @@ private struct PrivacyShield: View {
     }
 }
 
+/// In front of everything while the app is locked. With `unavailableReason`,
+/// the device has no passcode or biometrics at all; see `AppLock.continueWithoutLock`.
 struct LockScreen: View {
     let lock: AppLock
+    var unavailableReason: String?
+    @Environment(\.scenePhase) private var scenePhase
 
     var body: some View {
         VStack(spacing: 0) {
@@ -223,21 +282,30 @@ struct LockScreen: View {
                 .foregroundStyle(Theme.Palette.ink)
                 .padding(.top, Theme.Spacing.block + 4)
 
-            Text(String(localized: "Your insurance documents are behind Face ID or your passcode."))
+            Text(unavailableReason ?? String(localized: "Your insurance documents are behind Face ID or your passcode."))
                 .font(.subheadline)
-                .foregroundStyle(Theme.Palette.secondaryInk)
+                .foregroundStyle(unavailableReason == nil ? Theme.Palette.secondaryInk : Theme.Palette.caution)
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
                 .padding(.top, Theme.Spacing.tight)
 
             Spacer()
 
-            Button {
-                Task { await lock.unlock() }
-            } label: {
-                Label(String(localized: "Unlock"), systemImage: "faceid")
+            if unavailableReason == nil {
+                Button {
+                    Task { await lock.unlock() }
+                } label: {
+                    Label(String(localized: "Unlock"), systemImage: "faceid")
+                }
+                .buttonStyle(PrimaryButtonStyle())
+            } else {
+                Button(String(localized: "Continue")) { lock.continueWithoutLock() }
+                    .buttonStyle(PrimaryButtonStyle())
+                Button(String(localized: "Try again")) { Task { await lock.unlock() } }
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(Theme.Palette.cited)
+                    .padding(.top, Theme.Spacing.step)
             }
-            .buttonStyle(PrimaryButtonStyle())
 
             Wordmark(size: .headline)
                 .padding(.top, Theme.Spacing.block)
@@ -247,6 +315,8 @@ struct LockScreen: View {
         .frame(maxWidth: 460)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .coveraScreen()
-        .task { await lock.unlock() }
+        // At launch the app may already be active; otherwise the scene-phase
+        // handler asks once it is. Never with nothing to ask with.
+        .task { if unavailableReason == nil, scenePhase == .active { await lock.unlock() } }
     }
 }

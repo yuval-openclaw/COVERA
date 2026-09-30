@@ -107,6 +107,14 @@ audience, issuer, expiry and verified email with Google.
 
 `-CoveraDemo` (Debug builds only) loads the fictional sample plan and library from
 `Core/PreviewData.swift` and skips the device lock, for screenshots and design review.
+Add `-CoveraDemoLocked` to keep the real lock over the sample data, and `-CoveraNoDeviceLock`
+to see what a device with neither passcode nor biometrics gets.
+
+The lock is structural (`CoveraApp.gated`): until `AppLock` is unlocked, nothing that shows
+policy data is in the view tree — no tabs, sheets or resumed plan. The account's plan, library
+and call log live in `Workspace`, above the lock, so locking loses nothing; it is replaced on
+sign-out. The prompt is asked for when the app becomes active, never from the background. A
+device with no passcode or biometrics is told so on every return and may continue.
 Sample data must obey the citation rule like real data does. `#if DEBUG` keeps all of it
 out of release builds — keep it that way.
 
