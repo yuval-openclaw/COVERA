@@ -1,6 +1,6 @@
 import AppKit
 
-// Covera's app icon: the wordmark's serif "C" and blue full stop, on the
+// Clausa's app icon: the wordmark's serif "C" and blue full stop, on the
 // app's warm paper — the light theme, so the icon and the app are one thing.
 // 1024x1024, fully opaque (App Store icons may not have an alpha channel);
 // iOS applies the rounded corners itself.
@@ -26,22 +26,33 @@ let glow = CGGradient(colorsSpace: CGColorSpace(name: CGColorSpace.sRGB),
 ctx.drawRadialGradient(glow, startCenter: CGPoint(x: 300, y: 800), startRadius: 0,
                        endCenter: CGPoint(x: 300, y: 800), endRadius: 950, options: [.drawsAfterEndLocation])
 
-// The letter, in the app's serif.
-let font = NSFont(name: "NewYorkLarge-Semibold", size: 700)
-    ?? NSFont(name: "NewYork-Semibold", size: 700)
-    ?? NSFont(name: "Georgia-Bold", size: 700)!
+// The letter, in Newsreader (SIL Open Font License, scripts/fonts). Not Apple's
+// New York: its licence covers app interfaces, not logos or marketing.
+let fontURL = URL(fileURLWithPath: CommandLine.arguments[0]).deletingLastPathComponent()
+    .appendingPathComponent("fonts/Newsreader.ttf")
+CTFontManagerRegisterFontsForURL(fontURL as CFURL, .process, nil)
+let variation: [NSNumber: NSNumber] = [0x7767_6874: 720, 0x6F70_737A: 72]   // wght, opsz
+let descriptor = NSFontDescriptor(fontAttributes: [.family: "Newsreader",
+    NSFontDescriptor.AttributeName(kCTFontVariationAttribute as String): variation])
+guard let font = NSFont(descriptor: descriptor, size: 700), font.familyName == "Newsreader" else {
+    fatalError("Newsreader not found at \(fontURL.path)")
+}
+// Placed by the letter's ink, not its line box, so the mark is centred whatever
+// the font's metrics: the C centred on its height, the full stop on its baseline.
 let letter = NSAttributedString(string: "C", attributes: [
-    .font: font, .foregroundColor: NSColor(cgColor: rgb(0x1C1B20))!, .kern: 0,
+    .font: font, NSAttributedString.Key(kCTForegroundColorAttributeName as String): rgb(0x1C1B20),
 ])
-let size = letter.size()
-let origin = CGPoint(x: (CGFloat(side) - size.width) / 2 - 60, y: (CGFloat(side) - size.height) / 2 + 10)
-letter.draw(at: origin)
+let line = CTLineCreateWithAttributedString(letter)
+let ink = CTLineGetImageBounds(line, ctx)
+let dot: CGFloat = 100, gap: CGFloat = 22
+let left = (CGFloat(side) - (ink.width + gap + dot)) / 2 - ink.minX
+let baseline = (CGFloat(side) - ink.height) / 2 - ink.minY
+ctx.textPosition = CGPoint(x: left, y: baseline)
+CTLineDraw(line, ctx)
 
 // The full stop, in the blue that means "cited" throughout the app.
-let dot: CGFloat = 104
-let dotRect = CGRect(x: origin.x + size.width + 18, y: origin.y + font.descender * -1 + 38, width: dot, height: dot)
 ctx.setFillColor(rgb(0x2A5BD7))
-ctx.fillEllipse(in: dotRect)
+ctx.fillEllipse(in: CGRect(x: left + ink.maxX + gap, y: baseline, width: dot, height: dot))
 
 NSGraphicsContext.restoreGraphicsState()
 import ImageIO

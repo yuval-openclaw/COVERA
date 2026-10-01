@@ -1,6 +1,6 @@
 import Foundation
 
-/// Wire types for the Covera API.
+/// Wire types for the Clausa API.
 ///
 /// `StepBasis` mirrors the server's discriminated union deliberately. The server
 /// cannot express a figure without a citation; neither can this client. If the

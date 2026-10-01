@@ -20,7 +20,7 @@ enum GoogleAuthError: LocalizedError {
 /// "Continue with Google" without a third-party SDK: the standard OAuth flow
 /// for native apps (authorization code + PKCE) in Apple's own secure browser
 /// sheet. The app never sees the Google password; it receives an ID token and
-/// hands it to the Covera server, which verifies it with Google.
+/// hands it to the Clausa server, which verifies it with Google.
 @MainActor
 final class GoogleAuth: NSObject, ASWebAuthenticationPresentationContextProviding {
     /// The iOS OAuth client ID, set as `COVERA_GOOGLE_CLIENT_ID` in project.yml.

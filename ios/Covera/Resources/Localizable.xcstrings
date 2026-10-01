@@ -1053,60 +1053,60 @@
         }
       }
     },
-    "Add the full policy wording your insurer sent you, not the summary page. Covera reads it page by page and keeps the page number for every figure.": {
+    "Add the full policy wording your insurer sent you, not the summary page. Clausa reads it page by page and keeps the page number for every figure.": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "أضف النص الكامل لوثيقة التأمين التي أرسلها لك مؤمنك، وليس صفحة الملخص. Covera تقرأها صفحة بصفحة وتحتفظ برقم الصفحة لكل معلومة."
+            "value": "أضف النص الكامل لوثيقة التأمين التي أرسلها لك مؤمنك، وليس صفحة الملخص. Clausa تقرأها صفحة بصفحة وتحتفظ برقم الصفحة لكل معلومة."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Fügen Sie den vollständigen Wortlaut der Police hinzu, den Ihnen Ihr Versicherer geschickt hat, nicht die Zusammenfassungsseite. Covera liest sie Seite für Seite und speichert die Seitenzahl für jede Angabe."
+            "value": "Fügen Sie den vollständigen Wortlaut der Police hinzu, den Ihnen Ihr Versicherer geschickt hat, nicht die Zusammenfassungsseite. Clausa liest sie Seite für Seite und speichert die Seitenzahl für jede Angabe."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Añada el texto completo de la póliza que le envió su aseguradora, no la página de resumen. Covera lo lee página por página y guarda el número de página para cada cifra."
+            "value": "Añada el texto completo de la póliza que le envió su aseguradora, no la página de resumen. Clausa lo lee página por página y guarda el número de página para cada cifra."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ajoutez le texte intégral de la police que votre assureur vous a envoyé, pas la page de résumé. Covera le lit page par page et conserve le numéro de page pour chaque chiffre."
+            "value": "Ajoutez le texte intégral de la police que votre assureur vous a envoyé, pas la page de résumé. Clausa le lit page par page et conserve le numéro de page pour chaque chiffre."
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "הוסף את נוסח הפוליסה המלא ששלח לך המבטח, לא את דף הסיכום. Covera קוראת אותו עמוד אחר עמוד ושומרת את מספר העמוד עבור כל נתון."
+            "value": "הוסף את נוסח הפוליסה המלא ששלח לך המבטח, לא את דף הסיכום. Clausa קוראת אותו עמוד אחר עמוד ושומרת את מספר העמוד עבור כל נתון."
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "पॉलिसी का पूरा विवरण जोड़ें जो आपके बीमाकर्ता ने आपको भेजा है, सारांश पृष्ठ नहीं। Covera इसे पृष्ठ दर पृष्ठ पढ़ता है और हर आंकड़े के लिए पृष्ठ संख्या रखता है।"
+            "value": "पॉलिसी का पूरा विवरण जोड़ें जो आपके बीमाकर्ता ने आपको भेजा है, सारांश पृष्ठ नहीं। Clausa इसे पृष्ठ दर पृष्ठ पढ़ता है और हर आंकड़े के लिए पृष्ठ संख्या रखता है।"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "保険会社から送付されたポリシーの全文を追加してください。要約ページではありません。Coveraはそれをページごとに読み取り、すべての数値のページ番号を保持します。"
+            "value": "保険会社から送付されたポリシーの全文を追加してください。要約ページではありません。Clausaはそれをページごとに読み取り、すべての数値のページ番号を保持します。"
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Adicione o texto completo da apólice que a sua seguradora lhe enviou, não a página de resumo. A Covera lê página por página e guarda o número da página para cada dado."
+            "value": "Adicione o texto completo da apólice que a sua seguradora lhe enviou, não a página de resumo. A Clausa lê página por página e guarda o número da página para cada dado."
           }
         },
         "th": {
           "stringUnit": {
             "state": "translated",
-            "value": "เพิ่มข้อความกรมธรรม์ฉบับเต็มที่บริษัทประกันส่งให้คุณ ไม่ใช่หน้าสรุป Covera จะอ่านทีละหน้าและเก็บเลขหน้าสำหรับทุกตัวเลข"
+            "value": "เพิ่มข้อความกรมธรรม์ฉบับเต็มที่บริษัทประกันส่งให้คุณ ไม่ใช่หน้าสรุป Clausa จะอ่านทีละหน้าและเก็บเลขหน้าสำหรับทุกตัวเลข"
           }
         }
       }
@@ -1691,60 +1691,60 @@
         }
       }
     },
-    "Ask Covera": {
+    "Ask Clausa": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "اسأل Covera"
+            "value": "اسأل Clausa"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera fragen"
+            "value": "Clausa fragen"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Preguntar a Covera"
+            "value": "Preguntar a Clausa"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Demander à Covera"
+            "value": "Demander à Clausa"
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "שאל את Covera"
+            "value": "שאל את Clausa"
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera से पूछें"
+            "value": "Clausa से पूछें"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Coveraに質問"
+            "value": "Clausaに質問"
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Pergunte ao Covera"
+            "value": "Pergunte ao Clausa"
           }
         },
         "th": {
           "stringUnit": {
             "state": "translated",
-            "value": "ถาม Covera"
+            "value": "ถาม Clausa"
           }
         }
       }
@@ -3431,644 +3431,644 @@
         }
       }
     },
-    "Could not reach Covera. Check your connection and try again.": {
+    "Could not reach Clausa. Check your connection and try again.": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "تعذر الوصول إلى Covera. يرجى التحقق من اتصالك والمحاولة مرة أخرى."
+            "value": "تعذر الوصول إلى Clausa. يرجى التحقق من اتصالك والمحاولة مرة أخرى."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera konnte nicht erreicht werden. Überprüfen Sie Ihre Verbindung und versuchen Sie es erneut."
+            "value": "Clausa konnte nicht erreicht werden. Überprüfen Sie Ihre Verbindung und versuchen Sie es erneut."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "No se pudo contactar con Covera. Compruebe su conexión e inténtelo de nuevo."
+            "value": "No se pudo contactar con Clausa. Compruebe su conexión e inténtelo de nuevo."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Impossible de joindre Covera. Vérifiez votre connexion et réessayez."
+            "value": "Impossible de joindre Clausa. Vérifiez votre connexion et réessayez."
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "לא ניתן היה להגיע ל-Covera. בדוק את החיבור שלך ונסה שוב."
+            "value": "לא ניתן היה להגיע ל-Clausa. בדוק את החיבור שלך ונסה שוב."
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera तक नहीं पहुँचा जा सका। अपना कनेक्शन जाँचें और फिर से प्रयास करें।"
+            "value": "Clausa तक नहीं पहुँचा जा सका। अपना कनेक्शन जाँचें और फिर से प्रयास करें।"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Coveraに接続できませんでした。接続を確認して、もう一度お試しください。"
+            "value": "Clausaに接続できませんでした。接続を確認して、もう一度お試しください。"
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Não foi possível contactar a Covera. Verifique a sua ligação e tente novamente."
+            "value": "Não foi possível contactar a Clausa. Verifique a sua ligação e tente novamente."
           }
         },
         "th": {
           "stringUnit": {
             "state": "translated",
-            "value": "ไม่สามารถติดต่อ Covera ได้ โปรดตรวจสอบการเชื่อมต่อของคุณแล้วลองอีกครั้ง"
+            "value": "ไม่สามารถติดต่อ Clausa ได้ โปรดตรวจสอบการเชื่อมต่อของคุณแล้วลองอีกครั้ง"
           }
         }
       }
     },
-    "Covera": {
+    "Clausa": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera"
+            "value": "Clausa"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera"
+            "value": "Clausa"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera"
+            "value": "Clausa"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera"
+            "value": "Clausa"
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera"
+            "value": "Clausa"
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera"
+            "value": "Clausa"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera"
+            "value": "Clausa"
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera"
+            "value": "Clausa"
           }
         },
         "th": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera"
+            "value": "Clausa"
           }
         }
       }
     },
-    "Covera already had this document, so nothing was duplicated.": {
+    "Clausa already had this document, so nothing was duplicated.": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "كان Covera يمتلك هذا المستند بالفعل، لذلك لم يتم تكرار أي شيء."
+            "value": "كان Clausa يمتلك هذا المستند بالفعل، لذلك لم يتم تكرار أي شيء."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera hatte dieses Dokument bereits, es wurde nichts dupliziert."
+            "value": "Clausa hatte dieses Dokument bereits, es wurde nichts dupliziert."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera ya tenía este documento, por lo que no se duplicó nada."
+            "value": "Clausa ya tenía este documento, por lo que no se duplicó nada."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera possédait déjà ce document, donc rien n'a été dupliqué."
+            "value": "Clausa possédait déjà ce document, donc rien n'a été dupliqué."
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "ל-Covera כבר היה מסמך זה, כך ששום דבר לא שוכפל."
+            "value": "ל-Clausa כבר היה מסמך זה, כך ששום דבר לא שוכפל."
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera के पास यह दस्तावेज़ पहले से था, इसलिए कुछ भी डुप्लिकेट नहीं हुआ।"
+            "value": "Clausa के पास यह दस्तावेज़ पहले से था, इसलिए कुछ भी डुप्लिकेट नहीं हुआ।"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Coveraはこの文書をすでに持っていたため、重複はありませんでした。"
+            "value": "Clausaはこの文書をすでに持っていたため、重複はありませんでした。"
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "A Covera já tinha este documento, por isso nada foi duplicado."
+            "value": "A Clausa já tinha este documento, por isso nada foi duplicado."
           }
         },
         "th": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera มีเอกสารนี้อยู่แล้ว จึงไม่มีการทำซ้ำ"
+            "value": "Clausa มีเอกสารนี้อยู่แล้ว จึงไม่มีการทำซ้ำ"
           }
         }
       }
     },
-    "Covera cannot approve or deny anything. Your insurer decides what is covered. Where the wording is ambiguous, you see both readings rather than a guess.": {
+    "Clausa cannot approve or deny anything. Your insurer decides what is covered. Where the wording is ambiguous, you see both readings rather than a guess.": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "لا يمكن لـ Covera الموافقة على أي شيء أو رفضه. يقرر مؤمنك ما هو مشمول. عندما تكون الصياغة غامضة، سترى كلا التفسيرين بدلاً من التخمين."
+            "value": "لا يمكن لـ Clausa الموافقة على أي شيء أو رفضه. يقرر مؤمنك ما هو مشمول. عندما تكون الصياغة غامضة، سترى كلا التفسيرين بدلاً من التخمين."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera kann nichts genehmigen oder ablehnen. Ihr Versicherer entscheidet, was abgedeckt ist. Bei mehrdeutigen Formulierungen sehen Sie beide Interpretationen anstelle einer Vermutung."
+            "value": "Clausa kann nichts genehmigen oder ablehnen. Ihr Versicherer entscheidet, was abgedeckt ist. Bei mehrdeutigen Formulierungen sehen Sie beide Interpretationen anstelle einer Vermutung."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera no puede aprobar ni denegar nada. Su aseguradora decide qué está cubierto. Cuando la redacción es ambigua, verá ambas interpretaciones en lugar de una suposición."
+            "value": "Clausa no puede aprobar ni denegar nada. Su aseguradora decide qué está cubierto. Cuando la redacción es ambigua, verá ambas interpretaciones en lugar de una suposición."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera ne peut rien approuver ni refuser. Votre assureur décide de ce qui est couvert. Lorsque le libellé est ambigu, vous voyez les deux interprétations plutôt qu'une supposition."
+            "value": "Clausa ne peut rien approuver ni refuser. Votre assureur décide de ce qui est couvert. Lorsque le libellé est ambigu, vous voyez les deux interprétations plutôt qu'une supposition."
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera אינה יכולה לאשר או לדחות דבר. המבטח שלך מחליט מה מכוסה. כאשר הניסוח מעורפל, תראה את שתי הפרשנויות במקום ניחוש."
+            "value": "Clausa אינה יכולה לאשר או לדחות דבר. המבטח שלך מחליט מה מכוסה. כאשר הניסוח מעורפל, תראה את שתי הפרשנויות במקום ניחוש."
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera कुछ भी स्वीकृत या अस्वीकृत नहीं कर सकता। आपका बीमाकर्ता तय करता है कि क्या कवर किया गया है। जहाँ शब्दावली अस्पष्ट है, वहाँ आपको अनुमान के बजाय दोनों व्याख्याएँ दिखेंगी।"
+            "value": "Clausa कुछ भी स्वीकृत या अस्वीकृत नहीं कर सकता। आपका बीमाकर्ता तय करता है कि क्या कवर किया गया है। जहाँ शब्दावली अस्पष्ट है, वहाँ आपको अनुमान के बजाय दोनों व्याख्याएँ दिखेंगी।"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Coveraは何も承認または拒否できません。何が補償されるかは保険会社が決定します。文言が曖昧な場合は、推測ではなく両方の解釈が表示されます。"
+            "value": "Clausaは何も承認または拒否できません。何が補償されるかは保険会社が決定します。文言が曖昧な場合は、推測ではなく両方の解釈が表示されます。"
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "A Covera não pode aprovar nem negar nada. A sua seguradora decide o que está coberto. Onde a redação é ambígua, verá ambas as interpretações em vez de um palpite."
+            "value": "A Clausa não pode aprovar nem negar nada. A sua seguradora decide o que está coberto. Onde a redação é ambígua, verá ambas as interpretações em vez de um palpite."
           }
         },
         "th": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera ไม่สามารถอนุมัติหรือปฏิเสธสิ่งใดได้ ผู้ให้บริการประกันของคุณเป็นผู้ตัดสินใจว่าจะครอบคลุมอะไร ในกรณีที่ถ้อยคำกำกวม คุณจะเห็นทั้งสองความหมายแทนที่จะเป็นการคาดเดา"
+            "value": "Clausa ไม่สามารถอนุมัติหรือปฏิเสธสิ่งใดได้ ผู้ให้บริการประกันของคุณเป็นผู้ตัดสินใจว่าจะครอบคลุมอะไร ในกรณีที่ถ้อยคำกำกวม คุณจะเห็นทั้งสองความหมายแทนที่จะเป็นการคาดเดา"
           }
         }
       }
     },
-    "Covera could not complete that request.": {
+    "Clausa could not complete that request.": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "لم يتمكن Covera من إكمال هذا الطلب."
+            "value": "لم يتمكن Clausa من إكمال هذا الطلب."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera konnte diese Anfrage nicht abschließen."
+            "value": "Clausa konnte diese Anfrage nicht abschließen."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera no pudo completar esa solicitud."
+            "value": "Clausa no pudo completar esa solicitud."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera n'a pas pu satisfaire cette demande."
+            "value": "Clausa n'a pas pu satisfaire cette demande."
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera לא הצליחה להשלים את הבקשה הזו."
+            "value": "Clausa לא הצליחה להשלים את הבקשה הזו."
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera वह अनुरोध पूरा नहीं कर सका।"
+            "value": "Clausa वह अनुरोध पूरा नहीं कर सका।"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Coveraはそのリクエストを完了できませんでした。"
+            "value": "Clausaはそのリクエストを完了できませんでした。"
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "A Covera não pôde concluir esse pedido."
+            "value": "A Clausa não pôde concluir esse pedido."
           }
         },
         "th": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera ไม่สามารถดำเนินการตามคำขอนั้นได้"
+            "value": "Clausa ไม่สามารถดำเนินการตามคำขอนั้นได้"
           }
         }
       }
     },
-    "Covera does not choose between these. Your insurer decides which applies.": {
+    "Clausa does not choose between these. Your insurer decides which applies.": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "لا يختار Covera بين هذه الخيارات. يقرر مؤمنك أيها ينطبق."
+            "value": "لا يختار Clausa بين هذه الخيارات. يقرر مؤمنك أيها ينطبق."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera trifft hier keine Auswahl. Ihr Versicherer entscheidet, welche zutrifft."
+            "value": "Clausa trifft hier keine Auswahl. Ihr Versicherer entscheidet, welche zutrifft."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera no elige entre estas opciones. Su aseguradora decide cuál se aplica."
+            "value": "Clausa no elige entre estas opciones. Su aseguradora decide cuál se aplica."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera ne choisit pas entre ces options. Votre assureur décide de ce qui s'applique."
+            "value": "Clausa ne choisit pas entre ces options. Votre assureur décide de ce qui s'applique."
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera אינה בוחרת בין אלה. המבטח שלך מחליט איזה מהם חל."
+            "value": "Clausa אינה בוחרת בין אלה. המבטח שלך מחליט איזה מהם חל."
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera इनमें से नहीं चुनता। आपका बीमाकर्ता तय करता है कि कौन सा लागू होता है।"
+            "value": "Clausa इनमें से नहीं चुनता। आपका बीमाकर्ता तय करता है कि कौन सा लागू होता है।"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Coveraはこれらの中から選択しません。どちらが適用されるかは保険会社が決定します。"
+            "value": "Clausaはこれらの中から選択しません。どちらが適用されるかは保険会社が決定します。"
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "A Covera não escolhe entre estes. A sua seguradora decide qual se aplica."
+            "value": "A Clausa não escolhe entre estes. A sua seguradora decide qual se aplica."
           }
         },
         "th": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera ไม่ได้เลือกสิ่งเหล่านี้ ผู้ให้บริการประกันของคุณเป็นผู้ตัดสินใจว่าจะใช้สิ่งใด"
+            "value": "Clausa ไม่ได้เลือกสิ่งเหล่านี้ ผู้ให้บริการประกันของคุณเป็นผู้ตัดสินใจว่าจะใช้สิ่งใด"
           }
         }
       }
     },
-    "Covera drafted these but could not trace them to your documents, so it will not show them. Ask your insurer instead.": {
+    "Clausa drafted these but could not trace them to your documents, so it will not show them. Ask your insurer instead.": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "صاغ Covera هذه، لكنه لم يتمكن من ربطها بمستنداتك، لذلك لن يعرضها. اسأل مؤمنك بدلاً من ذلك."
+            "value": "صاغ Clausa هذه، لكنه لم يتمكن من ربطها بمستنداتك، لذلك لن يعرضها. اسأل مؤمنك بدلاً من ذلك."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera hat diese entworfen, konnte sie aber nicht Ihren Dokumenten zuordnen, daher werden sie nicht angezeigt. Fragen Sie stattdessen Ihren Versicherer."
+            "value": "Clausa hat diese entworfen, konnte sie aber nicht Ihren Dokumenten zuordnen, daher werden sie nicht angezeigt. Fragen Sie stattdessen Ihren Versicherer."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera redactó esto pero no pudo vincularlo a sus documentos, por lo que no lo mostrará. Pregunte a su aseguradora en su lugar."
+            "value": "Clausa redactó esto pero no pudo vincularlo a sus documentos, por lo que no lo mostrará. Pregunte a su aseguradora en su lugar."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera a rédigé ces éléments mais n'a pas pu les relier à vos documents, ils ne seront donc pas affichés. Demandez plutôt à votre assureur."
+            "value": "Clausa a rédigé ces éléments mais n'a pas pu les relier à vos documents, ils ne seront donc pas affichés. Demandez plutôt à votre assureur."
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera ניסחה את אלה אך לא הצליחה לאתר אותם במסמכים שלך, ולכן לא תציג אותם. שאל את המבטח שלך במקום זאת."
+            "value": "Clausa ניסחה את אלה אך לא הצליחה לאתר אותם במסמכים שלך, ולכן לא תציג אותם. שאל את המבטח שלך במקום זאת."
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera ने इन्हें तैयार किया था लेकिन इन्हें आपके दस्तावेज़ों से नहीं जोड़ सका, इसलिए यह इन्हें नहीं दिखाएगा। इसके बजाय अपने बीमाकर्ता से पूछें।"
+            "value": "Clausa ने इन्हें तैयार किया था लेकिन इन्हें आपके दस्तावेज़ों से नहीं जोड़ सका, इसलिए यह इन्हें नहीं दिखाएगा। इसके बजाय अपने बीमाकर्ता से पूछें।"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Coveraはこれらを作成しましたが、お客様の文書と照合できなかったため、表示しません。代わりに保険会社にお問い合わせください。"
+            "value": "Clausaはこれらを作成しましたが、お客様の文書と照合できなかったため、表示しません。代わりに保険会社にお問い合わせください。"
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "A Covera elaborou-os, mas não conseguiu rastreá-los nos seus documentos, por isso não os mostrará. Pergunte à sua seguradora."
+            "value": "A Clausa elaborou-os, mas não conseguiu rastreá-los nos seus documentos, por isso não os mostrará. Pergunte à sua seguradora."
           }
         },
         "th": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera ร่างสิ่งเหล่านี้ขึ้นมาแต่ไม่สามารถอ้างอิงกับเอกสารของคุณได้ จึงจะไม่แสดง โปรดสอบถามผู้ให้บริการประกันของคุณแทน"
+            "value": "Clausa ร่างสิ่งเหล่านี้ขึ้นมาแต่ไม่สามารถอ้างอิงกับเอกสารของคุณได้ จึงจะไม่แสดง โปรดสอบถามผู้ให้บริการประกันของคุณแทน"
           }
         }
       }
     },
-    "Covera is for people aged 18 and over.": {
-      "comment": "A description of the age requirement for using Covera.",
+    "Clausa is for people aged 18 and over.": {
+      "comment": "A description of the age requirement for using Clausa.",
       "isCommentAutoGenerated": true
     },
-    "Covera is not a doctor and not a licensed insurance agent. This is a reading of your own documents, not medical advice and not a coverage decision. Your insurer decides what is covered.": {
+    "Clausa is not a doctor and not a licensed insurance agent. This is a reading of your own documents, not medical advice and not a coverage decision. Your insurer decides what is covered.": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera ليس طبيبًا ولا وكيل تأمين مرخّصًا. هذه قراءة لمستنداتك الخاصة، وليست نصيحة طبية ولا قرار تغطية. شركة التأمين هي من تقرر ما هو مغطى."
+            "value": "Clausa ليس طبيبًا ولا وكيل تأمين مرخّصًا. هذه قراءة لمستنداتك الخاصة، وليست نصيحة طبية ولا قرار تغطية. شركة التأمين هي من تقرر ما هو مغطى."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera ist weder Arzt noch zugelassener Versicherungsvertreter. Dies ist eine Auslegung Ihrer eigenen Dokumente, keine medizinische Beratung und keine Leistungsentscheidung. Ihr Versicherer entscheidet, was abgedeckt ist."
+            "value": "Clausa ist weder Arzt noch zugelassener Versicherungsvertreter. Dies ist eine Auslegung Ihrer eigenen Dokumente, keine medizinische Beratung und keine Leistungsentscheidung. Ihr Versicherer entscheidet, was abgedeckt ist."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera no es médico ni agente de seguros autorizado. Esto es una lectura de sus propios documentos, no un consejo médico ni una decisión de cobertura. Su aseguradora decide qué está cubierto."
+            "value": "Clausa no es médico ni agente de seguros autorizado. Esto es una lectura de sus propios documentos, no un consejo médico ni una decisión de cobertura. Su aseguradora decide qué está cubierto."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera n’est ni médecin ni agent d’assurance agréé. Il s’agit d’une lecture de vos propres documents, pas d’un avis médical ni d’une décision de couverture. Votre assureur décide de ce qui est couvert."
+            "value": "Clausa n’est ni médecin ni agent d’assurance agréé. Il s’agit d’une lecture de vos propres documents, pas d’un avis médical ni d’une décision de couverture. Votre assureur décide de ce qui est couvert."
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera אינה רופא ואינה סוכן ביטוח מורשה. זוהי קריאה של המסמכים שלך בלבד, לא ייעוץ רפואי ולא החלטת כיסוי. חברת הביטוח שלך קובעת מה מכוסה."
+            "value": "Clausa אינה רופא ואינה סוכן ביטוח מורשה. זוהי קריאה של המסמכים שלך בלבד, לא ייעוץ רפואי ולא החלטת כיסוי. חברת הביטוח שלך קובעת מה מכוסה."
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera न तो डॉक्टर है और न ही लाइसेंसधारी बीमा एजेंट। यह आपके अपने दस्तावेज़ों का पठन है, चिकित्सा सलाह या कवरेज निर्णय नहीं। क्या कवर है, यह आपका बीमाकर्ता तय करता है।"
+            "value": "Clausa न तो डॉक्टर है और न ही लाइसेंसधारी बीमा एजेंट। यह आपके अपने दस्तावेज़ों का पठन है, चिकित्सा सलाह या कवरेज निर्णय नहीं। क्या कवर है, यह आपका बीमाकर्ता तय करता है।"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Coveraは医師でも認可を受けた保険代理店でもありません。これはご自身の書類の読み取りであり、医療上の助言や補償の判断ではありません。何が補償されるかは保険会社が決定します。"
+            "value": "Clausaは医師でも認可を受けた保険代理店でもありません。これはご自身の書類の読み取りであり、医療上の助言や補償の判断ではありません。何が補償されるかは保険会社が決定します。"
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera não é médico nem corretor de seguros licenciado. Esta é uma leitura dos seus próprios documentos, não um aconselhamento médico nem uma decisão de cobertura. Sua seguradora decide o que é coberto."
+            "value": "Clausa não é médico nem corretor de seguros licenciado. Esta é uma leitura dos seus próprios documentos, não um aconselhamento médico nem uma decisão de cobertura. Sua seguradora decide o que é coberto."
           }
         },
         "th": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera ไม่ใช่แพทย์และไม่ใช่ตัวแทนประกันที่ได้รับอนุญาต นี่คือการอ่านเอกสารของคุณเอง ไม่ใช่คำแนะนำทางการแพทย์หรือการตัดสินความคุ้มครอง บริษัทประกันของคุณเป็นผู้ตัดสินว่าอะไรได้รับความคุ้มครอง"
+            "value": "Clausa ไม่ใช่แพทย์และไม่ใช่ตัวแทนประกันที่ได้รับอนุญาต นี่คือการอ่านเอกสารของคุณเอง ไม่ใช่คำแนะนำทางการแพทย์หรือการตัดสินความคุ้มครอง บริษัทประกันของคุณเป็นผู้ตัดสินว่าอะไรได้รับความคุ้มครอง"
           }
         }
       }
     },
-    "Covera is not a doctor. It will not tell you whether to have a procedure, and it does not know your medical history.": {
+    "Clausa is not a doctor. It will not tell you whether to have a procedure, and it does not know your medical history.": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera ليس طبيبًا. لن يخبرك ما إذا كان يجب عليك إجراء عملية، ولا يعرف تاريخك الطبي."
+            "value": "Clausa ليس طبيبًا. لن يخبرك ما إذا كان يجب عليك إجراء عملية، ولا يعرف تاريخك الطبي."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera ist kein Arzt. Es wird Ihnen nicht sagen, ob Sie einen Eingriff vornehmen sollen, und es kennt Ihre Krankengeschichte nicht."
+            "value": "Clausa ist kein Arzt. Es wird Ihnen nicht sagen, ob Sie einen Eingriff vornehmen sollen, und es kennt Ihre Krankengeschichte nicht."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera no es un médico. No le dirá si debe someterse a un procedimiento y no conoce su historial médico."
+            "value": "Clausa no es un médico. No le dirá si debe someterse a un procedimiento y no conoce su historial médico."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera n'est pas un médecin. L'application ne vous dira pas si vous devez subir une procédure, et elle ne connaît pas vos antécédents médicaux."
+            "value": "Clausa n'est pas un médecin. L'application ne vous dira pas si vous devez subir une procédure, et elle ne connaît pas vos antécédents médicaux."
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera אינה רופא. היא לא תגיד לך אם לעבור הליך, והיא אינה יודעת את ההיסטוריה הרפואית שלך."
+            "value": "Clausa אינה רופא. היא לא תגיד לך אם לעבור הליך, והיא אינה יודעת את ההיסטוריה הרפואית שלך."
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera डॉक्टर नहीं है। यह आपको यह नहीं बताएगा कि कोई प्रक्रिया करानी है या नहीं, और इसे आपके मेडिकल इतिहास की जानकारी नहीं है।"
+            "value": "Clausa डॉक्टर नहीं है। यह आपको यह नहीं बताएगा कि कोई प्रक्रिया करानी है या नहीं, और इसे आपके मेडिकल इतिहास की जानकारी नहीं है।"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Coveraは医師ではありません。処置を受けるべきかどうかを指示することはなく、お客様の病歴も知りません。"
+            "value": "Clausaは医師ではありません。処置を受けるべきかどうかを指示することはなく、お客様の病歴も知りません。"
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "A Covera não é um médico. Não lhe dirá se deve fazer um procedimento e não conhece o seu histórico médico."
+            "value": "A Clausa não é um médico. Não lhe dirá se deve fazer um procedimento e não conhece o seu histórico médico."
           }
         },
         "th": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera ไม่ใช่แพทย์ จะไม่บอกคุณว่าควรทำหัตถการหรือไม่ และไม่ทราบประวัติทางการแพทย์ของคุณ"
+            "value": "Clausa ไม่ใช่แพทย์ จะไม่บอกคุณว่าควรทำหัตถการหรือไม่ และไม่ทราบประวัติทางการแพทย์ของคุณ"
           }
         }
       }
     },
-    "Covera is still reading this document. Nothing from it is used until every figure has been checked against its page.": {
+    "Clausa is still reading this document. Nothing from it is used until every figure has been checked against its page.": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "لا يزال Covera يقرأ هذا المستند. لا يتم استخدام أي شيء منه حتى يتم التحقق من كل رقم مقابل صفحته."
+            "value": "لا يزال Clausa يقرأ هذا المستند. لا يتم استخدام أي شيء منه حتى يتم التحقق من كل رقم مقابل صفحته."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera liest dieses Dokument noch. Nichts daraus wird verwendet, bevor jede Zahl mit der entsprechenden Seite abgeglichen wurde."
+            "value": "Clausa liest dieses Dokument noch. Nichts daraus wird verwendet, bevor jede Zahl mit der entsprechenden Seite abgeglichen wurde."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera sigue leyendo este documento. No se usa nada hasta que cada cifra haya sido verificada con su página."
+            "value": "Clausa sigue leyendo este documento. No se usa nada hasta que cada cifra haya sido verificada con su página."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera est toujours en train de lire ce document. Rien n'en est utilisé tant que chaque chiffre n'a pas été vérifié par rapport à sa page."
+            "value": "Clausa est toujours en train de lire ce document. Rien n'en est utilisé tant que chaque chiffre n'a pas été vérifié par rapport à sa page."
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera עדיין קוראת מסמך זה. שום דבר ממנו אינו בשימוש עד שכל נתון נבדק מול העמוד שלו."
+            "value": "Clausa עדיין קוראת מסמך זה. שום דבר ממנו אינו בשימוש עד שכל נתון נבדק מול העמוד שלו."
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera अभी भी यह दस्तावेज़ पढ़ रहा है। इसमें से कुछ भी तब तक उपयोग नहीं किया जाता जब तक कि हर अंक को उसके पृष्ठ से जाँच न लिया जाए।"
+            "value": "Clausa अभी भी यह दस्तावेज़ पढ़ रहा है। इसमें से कुछ भी तब तक उपयोग नहीं किया जाता जब तक कि हर अंक को उसके पृष्ठ से जाँच न लिया जाए।"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Coveraはこの文書をまだ読み取り中です。すべての数値がページと照合されるまで、その内容は使用されません。"
+            "value": "Clausaはこの文書をまだ読み取り中です。すべての数値がページと照合されるまで、その内容は使用されません。"
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "A Covera ainda está a ler este documento. Nada dele é usado até que cada valor tenha sido verificado na sua página."
+            "value": "A Clausa ainda está a ler este documento. Nada dele é usado até que cada valor tenha sido verificado na sua página."
           }
         },
         "th": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera ยังคงอ่านเอกสารนี้อยู่ จะไม่มีการนำข้อมูลใดๆ จากเอกสารนี้ไปใช้จนกว่าตัวเลขทุกตัวจะได้รับการตรวจสอบกับหน้าเอกสารแล้ว"
+            "value": "Clausa ยังคงอ่านเอกสารนี้อยู่ จะไม่มีการนำข้อมูลใดๆ จากเอกสารนี้ไปใช้จนกว่าตัวเลขทุกตัวจะได้รับการตรวจสอบกับหน้าเอกสารแล้ว"
           }
         }
       }
     },
-    "Covera received a reply it could not read safely, so nothing is shown.": {
+    "Clausa received a reply it could not read safely, so nothing is shown.": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "تلقى Covera ردًا لم يتمكن من قراءته بأمان، لذلك لم يتم عرض أي شيء."
+            "value": "تلقى Clausa ردًا لم يتمكن من قراءته بأمان، لذلك لم يتم عرض أي شيء."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera erhielt eine Antwort, die nicht sicher gelesen werden konnte, daher wird nichts angezeigt."
+            "value": "Clausa erhielt eine Antwort, die nicht sicher gelesen werden konnte, daher wird nichts angezeigt."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera recibió una respuesta que no pudo leer de forma segura, por lo que no se muestra nada."
+            "value": "Clausa recibió una respuesta que no pudo leer de forma segura, por lo que no se muestra nada."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera a reçu une réponse qu'il n'a pas pu lire en toute sécurité, donc rien n'est affiché."
+            "value": "Clausa a reçu une réponse qu'il n'a pas pu lire en toute sécurité, donc rien n'est affiché."
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera קיבלה תשובה שלא יכלה לקרוא בבטחה, ולכן שום דבר לא מוצג."
+            "value": "Clausa קיבלה תשובה שלא יכלה לקרוא בבטחה, ולכן שום דבר לא מוצג."
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera को एक ऐसा जवाब मिला जिसे वह सुरक्षित रूप से पढ़ नहीं सका, इसलिए कुछ भी नहीं दिखाया गया है।"
+            "value": "Clausa को एक ऐसा जवाब मिला जिसे वह सुरक्षित रूप से पढ़ नहीं सका, इसलिए कुछ भी नहीं दिखाया गया है।"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Coveraは安全に読み取れない返信を受け取ったため、何も表示されません。"
+            "value": "Clausaは安全に読み取れない返信を受け取ったため、何も表示されません。"
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "A Covera recebeu uma resposta que não pôde ler em segurança, por isso nada é mostrado."
+            "value": "A Clausa recebeu uma resposta que não pôde ler em segurança, por isso nada é mostrado."
           }
         },
         "th": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera ได้รับการตอบกลับที่ไม่สามารถอ่านได้อย่างปลอดภัย จึงไม่มีการแสดงสิ่งใด"
+            "value": "Clausa ได้รับการตอบกลับที่ไม่สามารถอ่านได้อย่างปลอดภัย จึงไม่มีการแสดงสิ่งใด"
           }
         }
       }
@@ -5125,60 +5125,60 @@
         }
       }
     },
-    "Every figure Covera quotes from this policy links back to its page.": {
+    "Every figure Clausa quotes from this policy links back to its page.": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "كل رقم يقتبسه Covera من هذه البوليصة يعود إلى صفحته."
+            "value": "كل رقم يقتبسه Clausa من هذه البوليصة يعود إلى صفحته."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Jede Zahl, die Covera aus dieser Police zitiert, verweist auf die entsprechende Seite."
+            "value": "Jede Zahl, die Clausa aus dieser Police zitiert, verweist auf die entsprechende Seite."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Cada cifra que Covera cita de esta póliza remite a su página."
+            "value": "Cada cifra que Clausa cita de esta póliza remite a su página."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Chaque chiffre que Covera cite de cette police renvoie à sa page."
+            "value": "Chaque chiffre que Clausa cite de cette police renvoie à sa page."
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "כל נתון ש-Covera מצטטת מפוליסה זו מקושר בחזרה לעמוד שלו."
+            "value": "כל נתון ש-Clausa מצטטת מפוליסה זו מקושר בחזרה לעמוד שלו."
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera इस पॉलिसी से जो भी अंक उद्धृत करता है, वह उसके पृष्ठ से जुड़ा होता है।"
+            "value": "Clausa इस पॉलिसी से जो भी अंक उद्धृत करता है, वह उसके पृष्ठ से जुड़ा होता है।"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Coveraがこの保険契約から引用するすべての数値は、そのページにリンクしています。"
+            "value": "Clausaがこの保険契約から引用するすべての数値は、そのページにリンクしています。"
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Cada valor que a Covera cita desta apólice remete para a sua página."
+            "value": "Cada valor que a Clausa cita desta apólice remete para a sua página."
           }
         },
         "th": {
           "stringUnit": {
             "state": "translated",
-            "value": "ตัวเลขทุกตัวที่ Covera อ้างอิงจากนโยบายนี้จะเชื่อมโยงกลับไปยังหน้าเอกสารต้นฉบับ"
+            "value": "ตัวเลขทุกตัวที่ Clausa อ้างอิงจากนโยบายนี้จะเชื่อมโยงกลับไปยังหน้าเอกสารต้นฉบับ"
           }
         }
       }
@@ -5241,60 +5241,60 @@
         }
       }
     },
-    "Every figure it shows — a percentage, a cap, a deadline — is quoted from a page of your own policy, with the page number attached. If your policy does not say something, Covera says so and tells you what to ask your insurer.": {
+    "Every figure it shows — a percentage, a cap, a deadline — is quoted from a page of your own policy, with the page number attached. If your policy does not say something, Clausa says so and tells you what to ask your insurer.": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "كل رقم يعرضه — نسبة مئوية، حد أقصى، موعد نهائي — مقتبس من صفحة من بوليصتك الخاصة، مع إرفاق رقم الصفحة. إذا كانت بوليصتك لا تذكر شيئًا، فإن Covera يوضح ذلك ويخبرك بما يجب أن تسأله لمؤمنك."
+            "value": "كل رقم يعرضه — نسبة مئوية، حد أقصى، موعد نهائي — مقتبس من صفحة من بوليصتك الخاصة، مع إرفاق رقم الصفحة. إذا كانت بوليصتك لا تذكر شيئًا، فإن Clausa يوضح ذلك ويخبرك بما يجب أن تسأله لمؤمنك."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Jede angezeigte Zahl – ein Prozentsatz, eine Obergrenze, eine Frist – wird aus einer Seite Ihrer eigenen Police zitiert, mit Angabe der Seitenzahl. Wenn Ihre Police etwas nicht aussagt, weist Covera darauf hin und sagt Ihnen, was Sie Ihren Versicherer fragen sollen."
+            "value": "Jede angezeigte Zahl – ein Prozentsatz, eine Obergrenze, eine Frist – wird aus einer Seite Ihrer eigenen Police zitiert, mit Angabe der Seitenzahl. Wenn Ihre Police etwas nicht aussagt, weist Clausa darauf hin und sagt Ihnen, was Sie Ihren Versicherer fragen sollen."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Cada cifra que muestra —un porcentaje, un límite, una fecha límite— se cita de una página de su propia póliza, con el número de página adjunto. Si su póliza no dice algo, Covera lo indica y le dice qué preguntar a su aseguradora."
+            "value": "Cada cifra que muestra —un porcentaje, un límite, una fecha límite— se cita de una página de su propia póliza, con el número de página adjunto. Si su póliza no dice algo, Clausa lo indica y le dice qué preguntar a su aseguradora."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Chaque chiffre affiché \b—\b un pourcentage, un plafond, une date limite \b—\b est cité d'une page de votre propre police, avec le numéro de page joint. Si votre police ne dit pas quelque chose, Covera le signale et vous indique quoi demander à votre assureur."
+            "value": "Chaque chiffre affiché \b—\b un pourcentage, un plafond, une date limite \b—\b est cité d'une page de votre propre police, avec le numéro de page joint. Si votre police ne dit pas quelque chose, Clausa le signale et vous indique quoi demander à votre assureur."
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "כל נתון שהיא מציגה – אחוז, תקרה, מועד אחרון – מצוטט מעמוד בפוליסה שלך, עם מספר העמוד מצורף. אם הפוליסה שלך אינה אומרת משהו, Covera מציינת זאת ואומרת לך מה לשאול את המבטח שלך."
+            "value": "כל נתון שהיא מציגה – אחוז, תקרה, מועד אחרון – מצוטט מעמוד בפוליסה שלך, עם מספר העמוד מצורף. אם הפוליסה שלך אינה אומרת משהו, Clausa מציינת זאת ואומרת לך מה לשאול את המבטח שלך."
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "यह जो भी अंक दिखाता है — एक प्रतिशत, एक सीमा, एक समय-सीमा — वह आपकी अपनी पॉलिसी के एक पृष्ठ से उद्धृत होता है, जिसमें पृष्ठ संख्या संलग्न होती है। यदि आपकी पॉलिसी कुछ नहीं कहती है, तो Covera ऐसा बताता है और आपको बताता है कि अपने बीमाकर्ता से क्या पूछना है।"
+            "value": "यह जो भी अंक दिखाता है — एक प्रतिशत, एक सीमा, एक समय-सीमा — वह आपकी अपनी पॉलिसी के एक पृष्ठ से उद्धृत होता है, जिसमें पृष्ठ संख्या संलग्न होती है। यदि आपकी पॉलिसी कुछ नहीं कहती है, तो Clausa ऐसा बताता है और आपको बताता है कि अपने बीमाकर्ता से क्या पूछना है।"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "表示されるすべての数値（割合、上限、期限など）は、お客様ご自身の保険契約のページから引用されており、ページ番号が付いています。お客様の保険契約に記載されていない場合は、Coveraがその旨を伝え、保険会社に何を尋ねるべきかをお知らせします。"
+            "value": "表示されるすべての数値（割合、上限、期限など）は、お客様ご自身の保険契約のページから引用されており、ページ番号が付いています。お客様の保険契約に記載されていない場合は、Clausaがその旨を伝え、保険会社に何を尋ねるべきかをお知らせします。"
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Cada valor que mostra — uma percentagem, um limite, um prazo — é citado de uma página da sua própria apólice, com o número da página anexado. Se a sua apólice não disser algo, a Covera informa-o e diz-lhe o que perguntar à sua seguradora."
+            "value": "Cada valor que mostra — uma percentagem, um limite, um prazo — é citado de uma página da sua própria apólice, com o número da página anexado. Se a sua apólice não disser algo, a Clausa informa-o e diz-lhe o que perguntar à sua seguradora."
           }
         },
         "th": {
           "stringUnit": {
             "state": "translated",
-            "value": "ตัวเลขทุกตัวที่แสดง — ไม่ว่าจะเป็นเปอร์เซ็นต์, วงเงินสูงสุด, หรือกำหนดเวลา — ถูกอ้างอิงจากหน้าเอกสารในกรมธรรม์ของคุณเอง พร้อมระบุเลขหน้า หากกรมธรรม์ของคุณไม่ได้ระบุสิ่งใด Covera จะแจ้งให้ทราบและบอกคุณว่าควรสอบถามอะไรจากผู้ให้บริการประกันของคุณ"
+            "value": "ตัวเลขทุกตัวที่แสดง — ไม่ว่าจะเป็นเปอร์เซ็นต์, วงเงินสูงสุด, หรือกำหนดเวลา — ถูกอ้างอิงจากหน้าเอกสารในกรมธรรม์ของคุณเอง พร้อมระบุเลขหน้า หากกรมธรรม์ของคุณไม่ได้ระบุสิ่งใด Clausa จะแจ้งให้ทราบและบอกคุณว่าควรสอบถามอะไรจากผู้ให้บริการประกันของคุณ"
           }
         }
       }
@@ -5461,60 +5461,60 @@
         }
       }
     },
-    "Four things to know about what Covera is — and what it is not. Confirm each one to continue.": {
+    "Four things to know about what Clausa is — and what it is not. Confirm each one to continue.": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "أربعة أمور عن Covera: ماهيتها وما ليست عليه. أكد كل منها للمتابعة."
+            "value": "أربعة أمور عن Clausa: ماهيتها وما ليست عليه. أكد كل منها للمتابعة."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Vier Dinge, die Sie wissen sollten über was Covera ist — und was es nicht ist. Bestätigen Sie jedes, um fortzufahren."
+            "value": "Vier Dinge, die Sie wissen sollten über was Clausa ist — und was es nicht ist. Bestätigen Sie jedes, um fortzufahren."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Cuatro cosas que saber sobre qué es Covera — y qué no es. Confirme cada una para continuar."
+            "value": "Cuatro cosas que saber sobre qué es Clausa — y qué no es. Confirme cada una para continuar."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Quatre choses à savoir sur ce qu'est Covera — et ce qu'il n'est pas. Confirmez chacun pour continuer."
+            "value": "Quatre choses à savoir sur ce qu'est Clausa — et ce qu'il n'est pas. Confirmez chacun pour continuer."
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "ארבעה דברים על Covera: מהי ומהי לא. אשר כל אחד כדי להמשיך."
+            "value": "ארבעה דברים על Clausa: מהי ומהי לא. אשר כל אחד כדי להמשיך."
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera क्या है और क्या नहीं है, इसके बारे में चार बातें। जारी रखने के लिए हर एक की पुष्टि करें।"
+            "value": "Clausa क्या है और क्या नहीं है, इसके बारे में चार बातें। जारी रखने के लिए हर एक की पुष्टि करें।"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Coveraの概要と注意点（4つのポイント）。各項目を確認して続行してください。"
+            "value": "Clausaの概要と注意点（4つのポイント）。各項目を確認して続行してください。"
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Quatro coisas a saber sobre o que Covera é — e o que não é. Confirme cada uma para continuar."
+            "value": "Quatro coisas a saber sobre o que Clausa é — e o que não é. Confirme cada uma para continuar."
           }
         },
         "th": {
           "stringUnit": {
             "state": "translated",
-            "value": "สี่สิ่งที่ควรรู้เกี่ยวกับ Covera ว่าคืออะไรและไม่ใช่ อะไร ยืนยันแต่ละข้อเพื่อดำเนินการต่อ"
+            "value": "สี่สิ่งที่ควรรู้เกี่ยวกับ Clausa ว่าคืออะไรและไม่ใช่ อะไร ยืนยันแต่ละข้อเพื่อดำเนินการต่อ"
           }
         }
       }
@@ -6273,30 +6273,30 @@
         }
       }
     },
-    "I agree that Covera may process the health information in my documents to provide the service, as described in the Privacy Policy. I can withdraw this at any time by deleting my account.": {
+    "I agree that Clausa may process the health information in my documents to provide the service, as described in the Privacy Policy. I can withdraw this at any time by deleting my account.": {
       "localizations": {
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ich stimme zu, dass Covera die Gesundheitsinformationen in meinen Dokumenten zur Bereitstellung des Dienstes verarbeiten darf, wie in der Datenschutzerklärung beschrieben. Ich kann dies jederzeit durch Löschen meines Kontos widerrufen."
+            "value": "Ich stimme zu, dass Clausa die Gesundheitsinformationen in meinen Dokumenten zur Bereitstellung des Dienstes verarbeiten darf, wie in der Datenschutzerklärung beschrieben. Ich kann dies jederzeit durch Löschen meines Kontos widerrufen."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Acepto que Covera puede procesar la información de salud en mis documentos para proporcionar el servicio, según se describe en la Política de Privacidad. Puedo retirar esto en cualquier momento eliminando mi cuenta."
+            "value": "Acepto que Clausa puede procesar la información de salud en mis documentos para proporcionar el servicio, según se describe en la Política de Privacidad. Puedo retirar esto en cualquier momento eliminando mi cuenta."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "プライバシーポリシーに記載されている通り、Coveraがサービス提供のため私の書類内の健康情報を処理することに同意します。アカウントを削除することで、いつでもこの同意を撤回できます。"
+            "value": "プライバシーポリシーに記載されている通り、Clausaがサービス提供のため私の書類内の健康情報を処理することに同意します。アカウントを削除することで、いつでもこの同意を撤回できます。"
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Concordo que a Covera pode processar as informações de saúde nos meus documentos para fornecer o serviço, conforme descrito na Política de Privacidade. Posso retirar este consentimento a qualquer momento, eliminando a minha conta."
+            "value": "Concordo que a Clausa pode processar as informações de saúde nos meus documentos para fornecer o serviço, conforme descrito na Política de Privacidade. Posso retirar este consentimento a qualquer momento, eliminando a minha conta."
           }
         }
       }
@@ -6364,60 +6364,60 @@
         }
       }
     },
-    "I understand that Covera is not medical, legal or insurance advice, that it can make mistakes, and that I will confirm anything important with my insurer before relying on it.": {
+    "I understand that Clausa is not medical, legal or insurance advice, that it can make mistakes, and that I will confirm anything important with my insurer before relying on it.": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "أتفهم أن Covera ليست نصيحة طبية أو قانونية أو تأمينية، وأنها قد ترتكب أخطاء، وأنني سأؤكد أي شيء مهم مع شركة التأمين الخاصة بي قبل الاعتماد عليها."
+            "value": "أتفهم أن Clausa ليست نصيحة طبية أو قانونية أو تأمينية، وأنها قد ترتكب أخطاء، وأنني سأؤكد أي شيء مهم مع شركة التأمين الخاصة بي قبل الاعتماد عليها."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ich verstehe, dass Covera keine medizinische, rechtliche oder Versicherungsberatung ist, dass Fehler auftreten können und dass ich wichtige Informationen vor der Nutzung mit meinem Versicherer bestätigen werde."
+            "value": "Ich verstehe, dass Clausa keine medizinische, rechtliche oder Versicherungsberatung ist, dass Fehler auftreten können und dass ich wichtige Informationen vor der Nutzung mit meinem Versicherer bestätigen werde."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Entiendo que Covera no es asesoramiento médico, legal o de seguros, que puede cometer errores, y que confirmaré cualquier cosa importante con mi aseguradora antes de confiar en ello."
+            "value": "Entiendo que Clausa no es asesoramiento médico, legal o de seguros, que puede cometer errores, y que confirmaré cualquier cosa importante con mi aseguradora antes de confiar en ello."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Je comprends que Covera ne fournit pas de conseils médicaux, juridiques ou d'assurance, qu'il peut y avoir des erreurs, et que je confirmerai toute information importante auprès de mon assureur avant de m'y fier."
+            "value": "Je comprends que Clausa ne fournit pas de conseils médicaux, juridiques ou d'assurance, qu'il peut y avoir des erreurs, et que je confirmerai toute information importante auprès de mon assureur avant de m'y fier."
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "אני מבין/ה ש-Covera אינה ייעוץ רפואי, משפטי או ביטוחי, שהיא עלולה לטעות, ושאאשר כל דבר חשוב מול המבטח שלי לפני שאסתמך עליה."
+            "value": "אני מבין/ה ש-Clausa אינה ייעוץ רפואי, משפטי או ביטוחי, שהיא עלולה לטעות, ושאאשר כל דבר חשוב מול המבטח שלי לפני שאסתמך עליה."
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "मैं समझता हूँ कि Covera चिकित्सीय, कानूनी या बीमा संबंधी सलाह नहीं है, कि यह गलतियाँ कर सकता है, और मैं इस पर भरोसा करने से पहले अपने बीमाकर्ता से किसी भी महत्वपूर्ण बात की पुष्टि करूँगा।"
+            "value": "मैं समझता हूँ कि Clausa चिकित्सीय, कानूनी या बीमा संबंधी सलाह नहीं है, कि यह गलतियाँ कर सकता है, और मैं इस पर भरोसा करने से पहले अपने बीमाकर्ता से किसी भी महत्वपूर्ण बात की पुष्टि करूँगा।"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Coveraは医療、法律、保険に関するアドバイスではなく、誤りがある可能性があること、および重要な事項については、Coveraに依拠する前に保険会社に確認することを理解しています。"
+            "value": "Clausaは医療、法律、保険に関するアドバイスではなく、誤りがある可能性があること、および重要な事項については、Clausaに依拠する前に保険会社に確認することを理解しています。"
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Compreendo que a Covera não é um aconselhamento médico, legal ou de seguros, que pode cometer erros e que confirmarei qualquer informação importante com a minha seguradora antes de confiar nela."
+            "value": "Compreendo que a Clausa não é um aconselhamento médico, legal ou de seguros, que pode cometer erros e que confirmarei qualquer informação importante com a minha seguradora antes de confiar nela."
           }
         },
         "th": {
           "stringUnit": {
             "state": "translated",
-            "value": "ฉันเข้าใจว่า Covera ไม่ใช่คำแนะนำทางการแพทย์ กฎหมาย หรือประกันภัย ว่าอาจเกิดข้อผิดพลาดได้ และฉันจะยืนยันข้อมูลสำคัญใดๆ กับบริษัทประกันของฉันก่อนที่จะเชื่อถือ"
+            "value": "ฉันเข้าใจว่า Clausa ไม่ใช่คำแนะนำทางการแพทย์ กฎหมาย หรือประกันภัย ว่าอาจเกิดข้อผิดพลาดได้ และฉันจะยืนยันข้อมูลสำคัญใดๆ กับบริษัทประกันของฉันก่อนที่จะเชื่อถือ"
           }
         }
       }
@@ -7814,60 +7814,60 @@
         }
       }
     },
-    "New to Covera? Create an account": {
+    "New to Clausa? Create an account": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "هل أنت جديد على Covera؟ أنشئ حسابًا"
+            "value": "هل أنت جديد على Clausa؟ أنشئ حسابًا"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Neu bei Covera? Konto erstellen"
+            "value": "Neu bei Clausa? Konto erstellen"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "¿Nuevo en Covera? Crear una cuenta"
+            "value": "¿Nuevo en Clausa? Crear una cuenta"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Nouveau sur Covera ? Créer un compte"
+            "value": "Nouveau sur Clausa ? Créer un compte"
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "חדש ב-Covera? צור חשבון"
+            "value": "חדש ב-Clausa? צור חשבון"
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Covera पर नए हैं? एक खाता बनाएँ।"
+            "value": "Clausa पर नए हैं? एक खाता बनाएँ।"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Coveraが初めてですか？アカウントを作成"
+            "value": "Clausaが初めてですか？アカウントを作成"
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Novo no Covera? Crie uma conta"
+            "value": "Novo no Clausa? Crie uma conta"
           }
         },
         "th": {
           "stringUnit": {
             "state": "translated",
-            "value": "ใหม่สำหรับ Covera? สร้างบัญชี"
+            "value": "ใหม่สำหรับ Clausa? สร้างบัญชี"
           }
         }
       }
@@ -9902,60 +9902,60 @@
         }
       }
     },
-    "Read and stored. Every figure Covera quotes from this policy links back to its page, so you can always check the wording yourself.": {
+    "Read and stored. Every figure Clausa quotes from this policy links back to its page, so you can always check the wording yourself.": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "تمت القراءة والتخزين. كل رقم تستشهد به Covera من هذه الوثيقة يعود إلى صفحته الأصلية، حتى تتمكن دائمًا من التحقق من الصياغة بنفسك."
+            "value": "تمت القراءة والتخزين. كل رقم تستشهد به Clausa من هذه الوثيقة يعود إلى صفحته الأصلية، حتى تتمكن دائمًا من التحقق من الصياغة بنفسك."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Gelesen und gespeichert. Jede Zahl, die Covera aus dieser Police zitiert, verweist auf die entsprechende Seite, sodass Sie den Wortlaut jederzeit selbst überprüfen können."
+            "value": "Gelesen und gespeichert. Jede Zahl, die Clausa aus dieser Police zitiert, verweist auf die entsprechende Seite, sodass Sie den Wortlaut jederzeit selbst überprüfen können."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Leído y guardado. Cada cifra que Covera cita de esta póliza enlaza a su página, para que siempre pueda verificar la redacción usted mismo."
+            "value": "Leído y guardado. Cada cifra que Clausa cita de esta póliza enlaza a su página, para que siempre pueda verificar la redacción usted mismo."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Lu et stocké. Chaque chiffre que Covera cite de cette police renvoie à sa page, afin que vous puissiez toujours vérifier le libellé vous-même."
+            "value": "Lu et stocké. Chaque chiffre que Clausa cite de cette police renvoie à sa page, afin que vous puissiez toujours vérifier le libellé vous-même."
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "נקרא ואוחסן. כל נתון ש-Covera מצטטת מפוליסה זו מקושר לעמוד המקורי, כך שתוכל/י תמיד לבדוק את הניסוח בעצמך."
+            "value": "נקרא ואוחסן. כל נתון ש-Clausa מצטטת מפוליסה זו מקושר לעמוד המקורי, כך שתוכל/י תמיד לבדוק את הניסוח בעצמך."
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "पढ़ा और सहेजा गया। Covera इस पॉलिसी से जो भी जानकारी देती है, वह उसके मूल पेज से जुड़ी होती है, ताकि आप हमेशा खुद शब्दों की जाँच कर सकें।"
+            "value": "पढ़ा और सहेजा गया। Clausa इस पॉलिसी से जो भी जानकारी देती है, वह उसके मूल पेज से जुड़ी होती है, ताकि आप हमेशा खुद शब्दों की जाँच कर सकें।"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "読み込み、保存しました。Coveraがこの保険証券から引用するすべての数値は、そのページにリンクしており、いつでもご自身で文言を確認できます。"
+            "value": "読み込み、保存しました。Clausaがこの保険証券から引用するすべての数値は、そのページにリンクしており、いつでもご自身で文言を確認できます。"
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Lido e armazenado. Cada valor que a Covera cita desta apólice remete para a sua página, para que possa sempre verificar a redação por si."
+            "value": "Lido e armazenado. Cada valor que a Clausa cita desta apólice remete para a sua página, para que possa sempre verificar a redação por si."
           }
         },
         "th": {
           "stringUnit": {
             "state": "translated",
-            "value": "อ่านและจัดเก็บแล้ว ทุกตัวเลขที่ Covera อ้างอิงจากกรมธรรม์นี้จะเชื่อมโยงกลับไปยังหน้าต้นฉบับ คุณจึงสามารถตรวจสอบถ้อยคำได้ด้วยตนเอง"
+            "value": "อ่านและจัดเก็บแล้ว ทุกตัวเลขที่ Clausa อ้างอิงจากกรมธรรม์นี้จะเชื่อมโยงกลับไปยังหน้าต้นฉบับ คุณจึงสามารถตรวจสอบถ้อยคำได้ด้วยตนเอง"
           }
         }
       }
@@ -12860,60 +12860,60 @@
         }
       }
     },
-    "The scan had no pages Covera could use. Try again in better light.": {
+    "The scan had no pages Clausa could use. Try again in better light.": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "لم يحتوي المسح الضوئي على صفحات يمكن لـ Covera استخدامها. حاول مرة أخرى في إضاءة أفضل."
+            "value": "لم يحتوي المسح الضوئي على صفحات يمكن لـ Clausa استخدامها. حاول مرة أخرى في إضاءة أفضل."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Der Scan enthielt keine Seiten, die Covera verwenden konnte. Versuchen Sie es erneut bei besserem Licht."
+            "value": "Der Scan enthielt keine Seiten, die Clausa verwenden konnte. Versuchen Sie es erneut bei besserem Licht."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "El escaneo no tenía páginas que Covera pudiera usar. Intente de nuevo con mejor luz."
+            "value": "El escaneo no tenía páginas que Clausa pudiera usar. Intente de nuevo con mejor luz."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Le scan ne contenait aucune page que Covera pouvait utiliser. Réessayez avec une meilleure lumière."
+            "value": "Le scan ne contenait aucune page que Clausa pouvait utiliser. Réessayez avec une meilleure lumière."
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "הסריקה לא הכילה דפים ש-Covera יכלה להשתמש בהם. נסה שוב בתאורה טובה יותר."
+            "value": "הסריקה לא הכילה דפים ש-Clausa יכלה להשתמש בהם. נסה שוב בתאורה טובה יותר."
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "स्कैन में ऐसे कोई पेज नहीं थे जिनका Covera उपयोग कर सके। बेहतर रोशनी में फिर से कोशिश करें।"
+            "value": "स्कैन में ऐसे कोई पेज नहीं थे जिनका Clausa उपयोग कर सके। बेहतर रोशनी में फिर से कोशिश करें।"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "スキャンにはCoveraが使用できるページがありませんでした。より良い照明でもう一度お試しください。"
+            "value": "スキャンにはClausaが使用できるページがありませんでした。より良い照明でもう一度お試しください。"
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "A digitalização não tinha páginas que Covera pudesse usar. Tente novamente com melhor iluminação."
+            "value": "A digitalização não tinha páginas que Clausa pudesse usar. Tente novamente com melhor iluminação."
           }
         },
         "th": {
           "stringUnit": {
             "state": "translated",
-            "value": "การสแกนไม่มีหน้ากระดาษที่ Covera ใช้ได้ โปรดลองอีกครั้งในที่ที่มีแสงสว่างดีกว่า"
+            "value": "การสแกนไม่มีหน้ากระดาษที่ Clausa ใช้ได้ โปรดลองอีกครั้งในที่ที่มีแสงสว่างดีกว่า"
           }
         }
       }
@@ -12976,60 +12976,60 @@
         }
       }
     },
-    "This device has no passcode or biometric lock, so Covera cannot lock your documents.": {
+    "This device has no passcode or biometric lock, so Clausa cannot lock your documents.": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "لا يحتوي هذا الجهاز على رمز مرور أو قفل بيومتري، لذلك لا يمكن لـ Covera قفل مستنداتك."
+            "value": "لا يحتوي هذا الجهاز على رمز مرور أو قفل بيومتري، لذلك لا يمكن لـ Clausa قفل مستنداتك."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Dieses Gerät hat keinen Passcode oder biometrische Sperre, daher kann Covera Ihre Dokumente nicht sperren."
+            "value": "Dieses Gerät hat keinen Passcode oder biometrische Sperre, daher kann Clausa Ihre Dokumente nicht sperren."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Este dispositivo no tiene código o bloqueo biométrico, por lo que Covera no puede bloquear sus documentos."
+            "value": "Este dispositivo no tiene código o bloqueo biométrico, por lo que Clausa no puede bloquear sus documentos."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Cet appareil n'a pas de code d'accès ou de verrouillage biométrique, donc Covera ne peut pas verrouiller vos documents."
+            "value": "Cet appareil n'a pas de code d'accès ou de verrouillage biométrique, donc Clausa ne peut pas verrouiller vos documents."
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "למכשיר זה אין קוד גישה או נעילה ביומטרית, ולכן Covera לא יכולה לנעול את המסמכים שלך."
+            "value": "למכשיר זה אין קוד גישה או נעילה ביומטרית, ולכן Clausa לא יכולה לנעול את המסמכים שלך."
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "इस डिवाइस में कोई पासकोड या बायोमेट्रिक लॉक नहीं है, इसलिए Covera आपके दस्तावेज़ों को लॉक नहीं कर सकता।"
+            "value": "इस डिवाइस में कोई पासकोड या बायोमेट्रिक लॉक नहीं है, इसलिए Clausa आपके दस्तावेज़ों को लॉक नहीं कर सकता।"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "このデバイスにはパスコードまたは生体認証ロックが設定されていないため、Coveraは書類をロックできません。"
+            "value": "このデバイスにはパスコードまたは生体認証ロックが設定されていないため、Clausaは書類をロックできません。"
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Este dispositivo não tem código de acesso ou bloqueio biométrico, então Covera não pode bloquear seus documentos."
+            "value": "Este dispositivo não tem código de acesso ou bloqueio biométrico, então Clausa não pode bloquear seus documentos."
           }
         },
         "th": {
           "stringUnit": {
             "state": "translated",
-            "value": "อุปกรณ์นี้ไม่มีรหัสผ่านหรือการล็อกด้วยไบโอเมตริกซ์ Covera จึงไม่สามารถล็อกเอกสารของคุณได้"
+            "value": "อุปกรณ์นี้ไม่มีรหัสผ่านหรือการล็อกด้วยไบโอเมตริกซ์ Clausa จึงไม่สามารถล็อกเอกสารของคุณได้"
           }
         }
       }
@@ -15412,7 +15412,7 @@
         }
       }
     },
-    "You need to be 18 or over to use Covera.": {},
+    "You need to be 18 or over to use Clausa.": {},
     "Your answer": {
       "localizations": {
         "ar": {

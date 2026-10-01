@@ -84,7 +84,7 @@ final class CallLogStore {
     }
 
     /// Before logs were filed by account there was one shared `call-log.json`.
-    /// Its owner cannot be known, so it is given to no one. (Covera had not
+    /// Its owner cannot be known, so it is given to no one. (Clausa had not
     /// launched; the only notes in it were test data.)
     private static func discardUnownedLog() {
         try? FileManager.default.removeItem(at: directory.appendingPathComponent("call-log.json"))

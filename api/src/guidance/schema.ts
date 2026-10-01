@@ -58,15 +58,15 @@ export const guidancePlanSchema = z.object({
 export type GuidancePlan = z.infer<typeof guidancePlanSchema>;
 
 const DISCLAIMERS: Record<string, string> = {
-  fr: "Covera n'est ni médecin ni agent d'assurance agréé. Il s'agit d'une lecture de vos propres documents, pas d'un avis médical ni d'une décision de couverture. Votre assureur décide de ce qui est couvert.",
-  de: "Covera ist weder Arzt noch zugelassener Versicherungsmakler. Dies ist eine Lesart Ihrer eigenen Dokumente, keine medizinische Beratung und keine Entscheidung über den Versicherungsschutz. Was übernommen wird, entscheidet Ihre Versicherung.",
-  pt: "Covera não é médico nem corretor de seguros licenciado. Esta é uma leitura dos seus próprios documentos, não um aconselhamento médico nem uma decisão de cobertura. Sua seguradora decide o que é coberto.",
-  he: "Covera אינה רופא ואינה סוכן ביטוח מורשה. זוהי קריאה של המסמכים שלך בלבד, לא ייעוץ רפואי ולא החלטת כיסוי. חברת הביטוח שלך קובעת מה מכוסה.",
-  ar: "Covera ليس طبيبًا ولا وكيل تأمين مرخّصًا. هذه قراءة لمستنداتك الخاصة، وليست نصيحة طبية ولا قرار تغطية. شركة التأمين هي من تقرر ما هو مغطى.",
-  hi: "Covera न तो डॉक्टर है और न ही लाइसेंसधारी बीमा एजेंट। यह आपके अपने दस्तावेज़ों का पठन है, चिकित्सा सलाह या कवरेज निर्णय नहीं। क्या कवर है, यह आपका बीमाकर्ता तय करता है।",
-  th: "Covera ไม่ใช่แพทย์และไม่ใช่ตัวแทนประกันที่ได้รับอนุญาต นี่คือการอ่านเอกสารของคุณเอง ไม่ใช่คำแนะนำทางการแพทย์หรือการตัดสินความคุ้มครอง บริษัทประกันของคุณเป็นผู้ตัดสินว่าอะไรได้รับความคุ้มครอง",
-  ja: "Coveraは医師でも認可を受けた保険代理店でもありません。これはご自身の書類の読み取りであり、医療上の助言や補償の判断ではありません。何が補償されるかは保険会社が決定します。",
-  es: 'Covera no es médico ni agente de seguros autorizado. Esto es una lectura de sus propios documentos, no un consejo médico ni una decisión de cobertura. Su aseguradora decide qué está cubierto.',
+  fr: "Clausa n'est ni médecin ni agent d'assurance agréé. Il s'agit d'une lecture de vos propres documents, pas d'un avis médical ni d'une décision de couverture. Votre assureur décide de ce qui est couvert.",
+  de: "Clausa ist weder Arzt noch zugelassener Versicherungsmakler. Dies ist eine Lesart Ihrer eigenen Dokumente, keine medizinische Beratung und keine Entscheidung über den Versicherungsschutz. Was übernommen wird, entscheidet Ihre Versicherung.",
+  pt: "Clausa não é médico nem corretor de seguros licenciado. Esta é uma leitura dos seus próprios documentos, não um aconselhamento médico nem uma decisão de cobertura. Sua seguradora decide o que é coberto.",
+  he: "Clausa אינה רופא ואינה סוכן ביטוח מורשה. זוהי קריאה של המסמכים שלך בלבד, לא ייעוץ רפואי ולא החלטת כיסוי. חברת הביטוח שלך קובעת מה מכוסה.",
+  ar: "Clausa ليس طبيبًا ولا وكيل تأمين مرخّصًا. هذه قراءة لمستنداتك الخاصة، وليست نصيحة طبية ولا قرار تغطية. شركة التأمين هي من تقرر ما هو مغطى.",
+  hi: "Clausa न तो डॉक्टर है और न ही लाइसेंसधारी बीमा एजेंट। यह आपके अपने दस्तावेज़ों का पठन है, चिकित्सा सलाह या कवरेज निर्णय नहीं। क्या कवर है, यह आपका बीमाकर्ता तय करता है।",
+  th: "Clausa ไม่ใช่แพทย์และไม่ใช่ตัวแทนประกันที่ได้รับอนุญาต นี่คือการอ่านเอกสารของคุณเอง ไม่ใช่คำแนะนำทางการแพทย์หรือการตัดสินความคุ้มครอง บริษัทประกันของคุณเป็นผู้ตัดสินว่าอะไรได้รับความคุ้มครอง",
+  ja: "Clausaは医師でも認可を受けた保険代理店でもありません。これはご自身の書類の読み取りであり、医療上の助言や補償の判断ではありません。何が補償されるかは保険会社が決定します。",
+  es: 'Clausa no es médico ni agente de seguros autorizado. Esto es una lectura de sus propios documentos, no un consejo médico ni una decisión de cobertura. Su aseguradora decide qué está cubierto.',
 };
 
 export function disclaimerFor(locale: string): string {
@@ -74,4 +74,4 @@ export function disclaimerFor(locale: string): string {
 }
 
 export const DISCLAIMER =
-  'Covera is not a doctor and not a licensed insurance agent. This is a reading of your own documents, not medical advice and not a coverage decision. Your insurer decides what is covered.';
+  'Clausa is not a doctor and not a licensed insurance agent. This is a reading of your own documents, not medical advice and not a coverage decision. Your insurer decides what is covered.';

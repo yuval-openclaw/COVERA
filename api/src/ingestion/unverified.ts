@@ -9,7 +9,7 @@ import { verifyPolicyCitations, type CitationViolation, type PageIndex } from '.
 /** At most this share of cited fields may be unverified before the whole document is refused. */
 const MAX_UNVERIFIED_SHARE = 0.25;
 const UNVERIFIED_NOTE =
-  'Covera read something here but could not match it exactly to the page, so no figure is shown. Check your policy document or ask your insurer.';
+  'Clausa read something here but could not match it exactly to the page, so no figure is shown. Check your policy document or ask your insurer.';
 
 export function downgradeUnproven(
   policy: ExtractedPolicy,

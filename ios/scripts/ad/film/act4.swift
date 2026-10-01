@@ -4,7 +4,7 @@ import ImageIO
 // Act four, 24.0–29.6 s: the real app, then the name.
 //  24.00  "In your language." — the phone rises; a cut on every eighth note, eight languages
 //  26.10  the phone drops away; the full stop falls and lands on the beat at 26.4
-//  26.50  "Covera." slides out from behind it; 27.15 "Your policies, read back to you."
+//  26.50  "Clausa." slides out from behind it; 27.15 "Your policies, read back to you."
 //  27.90  "Not medical, legal or insurance advice." / "Sample data shown."
 // The screens are simulator screenshots of the Debug build's sample data, nothing mocked.
 

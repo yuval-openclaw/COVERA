@@ -2,7 +2,7 @@ import AppKit
 
 // Act two, 9.6–16.8 s: how it works, on paper.
 //   9.60  "Add your policy." — the document lands
-//  10.72  "Covera reads every page." — a scan passes over it
+//  10.72  "Clausa reads every page." — a scan passes over it
 //  11.70  "48 pages · read and stored"
 //  12.00  zoom into page 12; "Every figure, from your own policy."
 //  12.90  the sentence is highlighted; 13.6 its figure lifts into a card
@@ -10,7 +10,7 @@ import AppKit
 // The figure is the sample policy's own: page 12, §21 says claims are due within 90 days.
 
 let addPolicy = Words("Add your policy.", fitted("Add your policy.", 108) { serif($0, .medium) }, C.ink)
-let readsA = Words("Covera reads", serif(108, .medium), C.ink)
+let readsA = Words("Clausa reads", serif(108, .medium), C.ink)
 let readsB = Words("every page.", serif(108, .medium), C.ink)
 let figureA = Words("Every figure,", serif(98, .medium), C.ink)
 let figureB = Words("from your own policy.", fitted("from your own policy.", 98) { serif($0, .medium) }, C.ink)
@@ -87,7 +87,7 @@ let excerpt = CGRect(x: 90, y: 480, width: 900, height: 470)
 let result = CGRect(x: 90, y: 1050, width: 900, height: 560)
 let sentence1 = text("A claim must be submitted within", serif(44, .regular), C.ink)
 let sentence90 = text("90 days", serif(44, .regular), C.ink)
-let sentence90Blue = text("90 days", serif(44, .semibold), C.cited)
+let sentence90Blue = text("90 days", serif(44, .regular), C.cited)  // same weight, so "of" keeps its space
 let sentenceEnd = text(" of the operation.", serif(44, .regular), C.ink)
 let bigFigure = text("90 days", serif(150, .medium), C.cited)
 let quote = paragraph("“A claim must be submitted within 90 days of the operation.”", serif(31, .regular, italic: true),

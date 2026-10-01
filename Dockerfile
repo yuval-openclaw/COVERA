@@ -1,4 +1,4 @@
-# Covera API — production image.
+# Clausa API — production image.
 #
 # At the repository root so Fly.io (and anything else that looks there) finds
 # it; it builds the API in api/. Run every command from the repository root.

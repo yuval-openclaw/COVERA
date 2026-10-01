@@ -316,7 +316,7 @@ struct ShareSheet: UIViewControllerRepresentable {
 final class AccountModel {
     /// Kept in step with the server constant; the server sends its own copy with
     /// every plan, and this is only for screens that show no plan.
-    let disclaimer = String(localized: "Covera is not a doctor and not a licensed insurance agent. This is a reading of your own documents, not medical advice and not a coverage decision. Your insurer decides what is covered.")
+    let disclaimer = String(localized: "Clausa is not a doctor and not a licensed insurance agent. This is a reading of your own documents, not medical advice and not a coverage decision. Your insurer decides what is covered.")
 
     private(set) var email: String?
 

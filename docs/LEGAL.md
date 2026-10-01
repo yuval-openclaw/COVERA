@@ -12,7 +12,7 @@ publishing and `site/check.sh --launch` gates release.
 - After sign-in, before anything else, three separate off-by-default
   agreements (`ConsentView`): the Terms of Use with 18+ confirmation (makes the
   liability limits enforceable), consent to health-data processing (kept
-  separate, as the GDPR requires), and acknowledgment that Covera is not advice.
+  separate, as the GDPR requires), and acknowledgment that Clausa is not advice.
   Shown again whenever `Legal.version` changes.
 - The server refuses uploads, plans and chat from any account without all
   three on record (`requireConsent`), so no old or modified client can skip it.
@@ -51,9 +51,11 @@ Privacy Policy URL is https://covera-legal.vercel.app/privacy.html.
 2. **Operate through a company.** As a private individual, a judgment can reach
    personal assets. Incorporate, then replace the owner name in `site/`. Add
    professional liability and cyber insurance.
-3. **Trademark.** "Covera Health" is an existing US health-technology company.
-   Run a trademark search in Israel, the EU and the US before investing in the
-   name.
+3. **Trademark.** "Covera Health" is an existing US health-technology company
+   with a registered US trademark ("COVERA HEALTH" with a C design) for
+   health-data services, which is why the app was renamed Covera → Clausa on
+   2026-10-01. Before launch, run a trademark search for "Clausa" in Israel, the
+   EU and the US; a web search found no conflict, which is not a clearance.
 4. **Gemini paid tier.** The policy promises documents are not used for
    training. That is true only on a billing-enabled Gemini project; confirm it,
    accept Google's data processing terms, and rotate the key that was pasted

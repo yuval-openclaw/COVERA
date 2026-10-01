@@ -384,7 +384,7 @@ private struct HomePolicySheet: View {
         VStack(alignment: .leading, spacing: Theme.Spacing.block) {
             PolicyCard(document: document, height: 190)
             Text(document.isReady
-                 ? String(localized: "Every figure Covera quotes from this policy links back to its page.")
+                 ? String(localized: "Every figure Clausa quotes from this policy links back to its page.")
                  : document.statusDescription)
                 .font(.subheadline)
                 .foregroundStyle(Theme.Palette.secondaryInk)

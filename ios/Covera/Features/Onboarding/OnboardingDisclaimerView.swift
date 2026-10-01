@@ -19,17 +19,17 @@ struct OnboardingDisclaimerView: View {
         (
             "doc.text.magnifyingglass",
             String(localized: "It reads your documents back to you"),
-            String(localized: "Every figure it shows — a percentage, a cap, a deadline — is quoted from a page of your own policy, with the page number attached. If your policy does not say something, Covera says so and tells you what to ask your insurer.")
+            String(localized: "Every figure it shows — a percentage, a cap, a deadline — is quoted from a page of your own policy, with the page number attached. If your policy does not say something, Clausa says so and tells you what to ask your insurer.")
         ),
         (
             "stethoscope",
             String(localized: "It is not medical advice"),
-            String(localized: "Covera is not a doctor. It will not tell you whether to have a procedure, and it does not know your medical history.")
+            String(localized: "Clausa is not a doctor. It will not tell you whether to have a procedure, and it does not know your medical history.")
         ),
         (
             "building.columns",
             String(localized: "It is not a licensed insurance agent"),
-            String(localized: "Covera cannot approve or deny anything. Your insurer decides what is covered. Where the wording is ambiguous, you see both readings rather than a guess.")
+            String(localized: "Clausa cannot approve or deny anything. Your insurer decides what is covered. Where the wording is ambiguous, you see both readings rather than a guess.")
         ),
         (
             "lock",
@@ -50,7 +50,7 @@ struct OnboardingDisclaimerView: View {
                         .foregroundStyle(Theme.Palette.ink)
                         .accessibilityAddTraits(.isHeader)
 
-                    Text(String(localized: "Four things to know about what Covera is — and what it is not. Confirm each one to continue."))
+                    Text(String(localized: "Four things to know about what Clausa is — and what it is not. Confirm each one to continue."))
                         .font(.body)
                         .foregroundStyle(Theme.Palette.secondaryInk)
                         .fixedSize(horizontal: false, vertical: true)

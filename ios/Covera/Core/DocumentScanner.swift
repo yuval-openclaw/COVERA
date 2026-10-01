@@ -78,7 +78,7 @@ enum ScanError: LocalizedError {
     case empty
 
     var errorDescription: String? {
-        String(localized: "The scan had no pages Covera could use. Try again in better light.")
+        String(localized: "The scan had no pages Clausa could use. Try again in better light.")
     }
 }
 

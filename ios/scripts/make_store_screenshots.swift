@@ -17,6 +17,8 @@ let shots: [(file: String, headline: String)] = [
     ("calllog", "A record of\nevery call you make."),
 ]
 let rawDir = CommandLine.arguments[1], outDir = CommandLine.arguments[2]
+CTFontManagerRegisterFontsForURL(URL(fileURLWithPath: CommandLine.arguments[0]).deletingLastPathComponent()
+    .appendingPathComponent("fonts/Newsreader.ttf") as CFURL, .process, nil)
 let space = CGColorSpace(name: CGColorSpace.sRGB)!
 
 for (index, shot) in shots.enumerated() {
@@ -37,7 +39,10 @@ for (index, shot) in shots.enumerated() {
 
     // Headline.
     let style = NSMutableParagraphStyle(); style.alignment = .center; style.lineSpacing = 10
-    let font = NSFont(name: "NewYork-Regular", size: 96) ?? NSFont(name: "Georgia", size: 96)!
+    // Newsreader (SIL OFL): store screenshots are marketing, where Apple's New
+    // York may not be used. The app's own screen, below, keeps its system fonts.
+    let font = NSFont(descriptor: NSFontDescriptor(fontAttributes: [.family: "Newsreader",
+        NSFontDescriptor.AttributeName(kCTFontVariationAttribute as String): [0x7767_6874: 420, 0x6F70_737A: 72]]), size: 96)!
     let text = NSAttributedString(string: shot.headline, attributes: [
         .font: font, .foregroundColor: NSColor(red: 0x1C/255.0, green: 0x1B/255.0, blue: 0x20/255.0, alpha: 1), .paragraphStyle: style])
     let box = text.boundingRect(with: NSSize(width: 1160, height: 600), options: [.usesLineFragmentOrigin])

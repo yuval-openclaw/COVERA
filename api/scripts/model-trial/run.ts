@@ -10,7 +10,7 @@
  *
  * A model that chats fluently in Hebrew can still fail this. Reproducing a
  * string character for character out of a right-to-left page is a different
- * skill from speaking the language, and it is the one Covera depends on.
+ * skill from speaking the language, and it is the one Clausa depends on.
  *
  *   npx tsx scripts/model-trial/run.ts mistral mistral-large-latest
  *   npx tsx scripts/model-trial/run.ts gemini  gemini-2.5-pro
@@ -150,7 +150,7 @@ function score(provider: string, model: string, text: string, usage: unknown): v
   console.log(`  usage: ${JSON.stringify(usage)}`);
   console.log(
     `\n  A model is only usable here if the second number matches the first.\n` +
-      `  A right figure with an unfindable quote is exactly what Covera refuses to show.\n`,
+      `  A right figure with an unfindable quote is exactly what Clausa refuses to show.\n`,
   );
 }
 

@@ -1,4 +1,4 @@
-"""Score for the Covera ad: 100 BPM, 12 bars (28.8 s) plus a tail, B minor
+"""Score for the Clausa ad: 100 BPM, 12 bars (28.8 s) plus a tail, B minor
 resolving to D major on the logo. Every effect sits on a frame of the film;
 the times here are the same ones the renderer animates on.
 

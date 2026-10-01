@@ -12,7 +12,7 @@ const COLUMN: Record<Provider, 'google_sub' | 'apple_sub'> = { google: 'google_s
  * Signs a verified Google or Apple identity in, linking it to the account that
  * holds its address when there is one.
  *
- * Covera does not verify email addresses at registration, so a password on an
+ * Clausa does not verify email addresses at registration, so a password on an
  * account proves nothing about who owns its address. Linking a provider to it
  * as-is let anyone register a victim's address first, wait for the victim to
  * sign in with Google or Apple and upload policies, and then read them with

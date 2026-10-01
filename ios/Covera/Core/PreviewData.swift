@@ -38,7 +38,7 @@ enum PreviewData {
     private static let documentID = "3f1c2a9e-5b7d-4e21-9c3a-8d6f0b1e2a47"
 
     static let plan = GuidanceResponse(
-        disclaimer: "Covera is not a doctor and not a licensed insurance agent. This is a reading of your own documents, not medical advice and not a coverage decision. Your insurer decides what is covered.",
+        disclaimer: "Clausa is not a doctor and not a licensed insurance agent. This is a reading of your own documents, not medical advice and not a coverage decision. Your insurer decides what is covered.",
         clarifyingQuestions: [
             ClarifyingQuestion(
                 question: "Is the surgeon in your insurer’s network?",
