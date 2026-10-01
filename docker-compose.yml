@@ -1,0 +1,50 @@
+# The whole server locally, with one command:
+#
+#   docker compose up --build
+#
+# Postgres with pgvector, the migrations, then the API on http://localhost:3000.
+# Secrets come from api/.env (COVERA_GEMINI_API_KEY, DOCUMENT_ENCRYPTION_KEY);
+# the database address is overridden here to point at the container.
+services:
+  db:
+    image: pgvector/pgvector:pg17
+    environment:
+      POSTGRES_USER: clausa
+      POSTGRES_PASSWORD: local-only
+      POSTGRES_DB: clausa
+    volumes:
+      - db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "clausa"]
+      interval: 5s
+      retries: 12
+
+  migrate:
+    build: ./api
+    command: ["node", "dist/db/migrate.js"]
+    env_file: api/.env
+    environment:
+      DATABASE_URL: postgres://clausa:local-only@db:5432/clausa
+    depends_on:
+      db:
+        condition: service_healthy
+
+  api:
+    build: ./api
+    env_file: api/.env
+    environment:
+      DATABASE_URL: postgres://clausa:local-only@db:5432/clausa
+      STORAGE_DRIVER: local
+      STORAGE_LOCAL_PATH: /app/storage
+    ports:
+      - "3000:3000"
+    volumes:
+      # Encrypted documents survive restarts here; production uses S3 instead.
+      - documents:/app/storage
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+
+volumes:
+  db:
+  documents:

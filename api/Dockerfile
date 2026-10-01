@@ -1,8 +1,9 @@
 # Covera API — production image.
 #
-# Build:   docker build -t covera-api api/
-# Migrate: docker run --env-file prod.env covera-api node dist/db/migrate.js
-# Run:     docker run --env-file prod.env -p 3000:3000 covera-api
+# Build:   docker build -t clausa-api api/
+# Migrate: docker run --env-file prod.env clausa-api node dist/db/migrate.js
+# Run:     docker run --env-file prod.env -p 3000:3000 clausa-api
+# Locally: docker compose up --build   (from the repository root)
 #
 # Needs Postgres with the pgvector extension, and S3-compatible storage
 # (STORAGE_DRIVER=s3): a container's own disk is lost on every deploy.
@@ -23,6 +24,9 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci --omit=dev && npm cache clean --force
 COPY --from=build /app/dist ./dist
+# The local document store, owned by the user the server runs as, so a volume
+# mounted here (docker-compose.yml) is writable. Production uses S3 instead.
+RUN mkdir -p /app/storage && chown node:node /app/storage
 # Health documents pass through this process; it has no reason to run as root.
 USER node
 EXPOSE 3000
