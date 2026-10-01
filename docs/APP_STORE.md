@@ -83,3 +83,19 @@ account, legal and asset work.
   path directly.
 - **Privacy manifest drift.** If a data type is added server-side, the manifest
   and the nutrition label must both be updated or the next release is rejected.
+
+## Accessibility Nutrition Labels (App Store Connect)
+
+Declare a feature only when someone relying on it can complete the app's common tasks — the same
+rule `site/accessibility.html` follows. Checked on 2026-10-01 (iOS 26 simulator):
+
+| Feature | Declare? | Why |
+|---|---|---|
+| Sufficient Contrast | **Yes** | Every text colour clears WCAG AA on `surface` and `background` (Theme.swift) |
+| Differentiate Without Color Alone | **Yes** | Every coloured chip also says what it means in words |
+| Reduced Motion | **Yes** | `Theme.Motion` honours Reduce Motion |
+| Larger Text | **Not yet** | Screens scale and scroll at AX5, but plan action labels and Ask suggestions truncate |
+| VoiceOver | **Not yet** | Labels exist; no full screen-by-screen VoiceOver pass yet |
+| Voice Control | **Not yet** | Untested |
+| Dark Interface | No | The app has one appearance, light |
+| Captions / Audio Descriptions | No | The app plays no media |
