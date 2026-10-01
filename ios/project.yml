@@ -41,7 +41,7 @@ targets:
         SUPPORTS_MACCATALYST: NO
         # Lets the build list every String(localized:) key for translation.
         SWIFT_EMIT_LOC_STRINGS: YES
-        CoveraLegalBaseURL: https://covera-legal.vercel.app
+        CoveraLegalBaseURL: https://clausa-legal.vercel.app
         # From Google Cloud Console → Credentials → OAuth client (iOS). The server's
         # GOOGLE_IOS_CLIENT_ID must match. Empty leaves Google sign-in switched off.
         COVERA_GOOGLE_CLIENT_ID: "641446426848-ikfdgfdqsg5v18814o4k0m1q2llgg5np.apps.googleusercontent.com"

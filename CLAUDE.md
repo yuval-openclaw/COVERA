@@ -156,7 +156,9 @@ out of release builds — keep it that way.
 describe what the code does — change it in the same commit as any change to collected data,
 processors or retention. `site/check.sh` refuses to pass while a `[[BLANK]]` remains;
 `site/check.sh --launch` also fails on pre-release statements. Preview with `covera-site` in
-`.claude/launch.json`; deploy with `vercel deploy site --prod` after `vercel login`.
+`.claude/launch.json`; deploy with `vercel deploy site --prod` after `vercel login`. It is live at
+https://clausa-legal.vercel.app (Vercel project `clausa-legal`); the old project `covera-legal` now
+holds only a permanent redirect to it, so links from before the rename still work.
 
 The app links to the pages via `Legal` (`Core/Legal.swift`, base URL from `CoveraLegalBaseURL`
 in `project.yml`). Consent to health-data processing is explicit and versioned: bump

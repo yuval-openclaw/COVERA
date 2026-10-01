@@ -16,7 +16,7 @@ enum Legal {
            let url = URL(string: value), url.scheme == "https" {
             return url
         }
-        return URL(string: "https://covera-legal.vercel.app")!
+        return URL(string: "https://clausa-legal.vercel.app")!
     }
 
     static var privacy: URL { baseURL.appendingPathComponent("privacy.html") }

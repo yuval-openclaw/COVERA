@@ -9,9 +9,9 @@ nothing that sounds like advice.
 
 | Field | Value |
 | --- | --- |
-| Privacy Policy URL | https://covera-legal.vercel.app/privacy.html |
-| Support URL | https://covera-legal.vercel.app/support.html |
-| Marketing URL (optional) | https://covera-legal.vercel.app |
+| Privacy Policy URL | https://clausa-legal.vercel.app/privacy.html |
+| Support URL | https://clausa-legal.vercel.app/support.html |
+| Marketing URL (optional) | https://clausa-legal.vercel.app |
 | Copyright | 2026 Eyal Baruch |
 
 ## Category and age
@@ -66,7 +66,7 @@ nothing that sounds like advice.
 >
 > Clausa is not a doctor, a lawyer or a licensed insurance agent, and it does not give medical, legal or insurance advice. It quotes your own documents; your insurer decides what is covered.
 >
-> Terms of Use: https://covera-legal.vercel.app/terms.html
+> Terms of Use: https://clausa-legal.vercel.app/terms.html
 
 **What's New** (first release):
 > The first release of Clausa.

@@ -37,10 +37,10 @@ publishing and `site/check.sh --launch` gates release.
 
 ## Published
 
-Live at https://covera-legal.vercel.app (Vercel project `covera-legal`), owner
+Live at https://clausa-legal.vercel.app (Vercel project `clausa-legal`; the old covera-legal.vercel.app address redirects here), owner
 Eyal Baruch, contact covera.privacy@gmail.com. Redeploy after any change with
 `cd site && ./check.sh && vercel deploy --prod`. For App Store Connect, the
-Privacy Policy URL is https://covera-legal.vercel.app/privacy.html.
+Privacy Policy URL is https://clausa-legal.vercel.app/privacy.html.
 
 ## Before release — highest risk first
 
