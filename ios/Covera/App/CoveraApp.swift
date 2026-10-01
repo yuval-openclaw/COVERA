@@ -110,7 +110,7 @@ struct RootView: View {
         #endif
         _guidance = State(initialValue: GuidanceModel())
         _documents = State(initialValue: DocumentsModel())
-        _callLog = State(initialValue: CallLogStore())
+        _callLog = State(initialValue: CallLogStore(accountID: Session.shared.accountID))
     }
 
     var body: some View {

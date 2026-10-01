@@ -38,6 +38,13 @@ struct CallLogView: View {
                         .accessibilityLabel(String(localized: "Add a contact"))
                     }
 
+                    if let problem = store.problem {
+                        Label(problem, systemImage: "exclamationmark.circle")
+                            .font(.subheadline)
+                            .foregroundStyle(Theme.Palette.caution)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+
                     if rows.isEmpty {
                         emptyState.appearIn(1)
                     } else {
