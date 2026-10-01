@@ -1,5 +1,8 @@
-# Fly.io: the Clausa API. `fly launch` fills in `app` and `primary_region`;
-# secrets are set with `fly secrets set` (see docs/DEPLOY.md), never here.
+# Fly.io: the Clausa API. Deploy from the repository root with `fly deploy`.
+# Secrets are set with `fly secrets set` (see docs/DEPLOY.md), never here.
+app = "clausa"
+primary_region = "cdg"
+
 [build]
   dockerfile = "Dockerfile"
 
