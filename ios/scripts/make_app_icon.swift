@@ -1,6 +1,7 @@
 import AppKit
 
-// Covera's app icon: the wordmark's serif "C" and blue full stop, on black.
+// Covera's app icon: the wordmark's serif "C" and blue full stop, on the
+// app's warm paper — the light theme, so the icon and the app are one thing.
 // 1024x1024, fully opaque (App Store icons may not have an alpha channel);
 // iOS applies the rounded corners itself.
 let side = 1024
@@ -17,20 +18,20 @@ func rgb(_ hex: Int, _ a: CGFloat = 1) -> CGColor {
             blue: CGFloat(hex & 0xFF) / 255, alpha: a)
 }
 
-// Black, lifted by a soft cool glow from the upper left — the app's surface.
-ctx.setFillColor(rgb(0x000000)); ctx.fill(rect)
+// Warm paper, with the faint apricot light the app sits under, from the upper left.
+ctx.setFillColor(rgb(0xF7F2EC)); ctx.fill(rect)
 let glow = CGGradient(colorsSpace: CGColorSpace(name: CGColorSpace.sRGB),
-                      colors: [rgb(0x1C1F2A), rgb(0x0A0A0D), rgb(0x000000)] as CFArray,
-                      locations: [0, 0.55, 1])!
-ctx.drawRadialGradient(glow, startCenter: CGPoint(x: 330, y: 760), startRadius: 0,
-                       endCenter: CGPoint(x: 330, y: 760), endRadius: 900, options: [])
+                      colors: [rgb(0xFBE0CC), rgb(0xF9EADF), rgb(0xF7F2EC)] as CFArray,
+                      locations: [0, 0.5, 1])!
+ctx.drawRadialGradient(glow, startCenter: CGPoint(x: 300, y: 800), startRadius: 0,
+                       endCenter: CGPoint(x: 300, y: 800), endRadius: 950, options: [.drawsAfterEndLocation])
 
 // The letter, in the app's serif.
 let font = NSFont(name: "NewYorkLarge-Semibold", size: 700)
     ?? NSFont(name: "NewYork-Semibold", size: 700)
     ?? NSFont(name: "Georgia-Bold", size: 700)!
 let letter = NSAttributedString(string: "C", attributes: [
-    .font: font, .foregroundColor: NSColor(cgColor: rgb(0xF4F4F6))!, .kern: 0,
+    .font: font, .foregroundColor: NSColor(cgColor: rgb(0x1C1B20))!, .kern: 0,
 ])
 let size = letter.size()
 let origin = CGPoint(x: (CGFloat(side) - size.width) / 2 - 60, y: (CGFloat(side) - size.height) / 2 + 10)
@@ -39,7 +40,7 @@ letter.draw(at: origin)
 // The full stop, in the blue that means "cited" throughout the app.
 let dot: CGFloat = 104
 let dotRect = CGRect(x: origin.x + size.width + 18, y: origin.y + font.descender * -1 + 38, width: dot, height: dot)
-ctx.setFillColor(rgb(0x93B4FF))
+ctx.setFillColor(rgb(0x2A5BD7))
 ctx.fillEllipse(in: dotRect)
 
 NSGraphicsContext.restoreGraphicsState()

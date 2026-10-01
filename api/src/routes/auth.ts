@@ -1,3 +1,4 @@
+import { insertPasswordSession, signInWithProvider } from '../auth/link.js';
 import { randomBytes } from 'node:crypto';
 import type { FastifyInstance, FastifyRequest } from 'fastify';
 import { z } from 'zod';
@@ -144,7 +145,12 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
       // One message for every failure: which emails have accounts is private.
       return reply.status(401).send({ error: 'Email or password is incorrect.' });
     }
-    return reply.send(await startSession(user.id, email));
+    const token = newSessionToken();
+    if (!(await insertPasswordSession(pool, user.id, user.password_hash, hashToken(token), SESSION_DAYS))) {
+      // The password was removed while this login was being checked.
+      return reply.status(401).send({ error: 'Email or password is incorrect.' });
+    }
+    return reply.send({ token, user: { id: user.id, email } });
   });
 
   app.post('/auth/google', async (request, reply) => {
@@ -166,26 +172,12 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
     }
 
     // The Google account id is the stable identity; the address can change.
-    const known = await pool.query<{ id: string; email: string }>(
-      `SELECT id, email FROM users WHERE google_sub = $1 AND deleted_at IS NULL`,
-      [identity.sub],
-    );
-    if (known.rows[0]) return reply.send(await startSession(known.rows[0].id, known.rows[0].email));
-
-    // New to Covera, or an existing email account signing in with Google for
-    // the first time. Google has verified the address, so they are linked.
-    const { rows } = await pool.query<{ id: string }>(
-      `INSERT INTO users (email, google_sub) VALUES ($1, $2)
-       ON CONFLICT (email) DO UPDATE SET google_sub = EXCLUDED.google_sub
-         WHERE users.google_sub IS NULL AND users.deleted_at IS NULL
-       RETURNING id`,
-      [identity.email, identity.sub],
-    );
-    const user = rows[0];
-    if (!user) {
+    // Linking to an existing account by address is in signInWithProvider.
+    const linked = await signInWithProvider(pool, 'google', identity.sub, identity.email);
+    if (!linked.ok) {
       return reply.status(409).send({ error: 'This email is already linked to a different Google account.' });
     }
-    return reply.send(await startSession(user.id, identity.email));
+    return reply.send(await startSession(linked.userId, linked.email));
   });
 
   // Required by App Review (Guideline 4.8) wherever Google sign-in is offered,
@@ -212,31 +204,17 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
       return reply.status(401).send({ error: 'Apple sign-in could not be verified. Try again.' });
     }
 
-    const known = await pool.query<{ id: string; email: string }>(
-      `SELECT id, email FROM users WHERE apple_sub = $1 AND deleted_at IS NULL`,
-      [identity.sub],
-    );
-    if (known.rows[0]) return reply.send(await startSession(known.rows[0].id, known.rows[0].email));
-
     // Apple can withhold the address entirely. Rather than refuse the sign-in,
     // the account gets an address nobody can send to — the subject is what
     // signs them back in, and Account still offers export and deletion.
     const email = identity.email ?? `apple-${randomBytes(9).toString('hex')}@appleid.covera.invalid`;
 
-    // New to Covera, or an existing account signing in with Apple for the first
-    // time. Apple verified the address, so the two are the same person.
-    const { rows } = await pool.query<{ id: string }>(
-      `INSERT INTO users (email, apple_sub) VALUES ($1, $2)
-       ON CONFLICT (email) DO UPDATE SET apple_sub = EXCLUDED.apple_sub
-         WHERE users.apple_sub IS NULL AND users.deleted_at IS NULL
-       RETURNING id`,
-      [email, identity.sub],
-    );
-    const user = rows[0];
-    if (!user) {
+    // Linking to an existing account by address is in signInWithProvider.
+    const linked = await signInWithProvider(pool, 'apple', identity.sub, email);
+    if (!linked.ok) {
       return reply.status(409).send({ error: 'This email is already linked to a different Apple account.' });
     }
-    return reply.send(await startSession(user.id, email));
+    return reply.send(await startSession(linked.userId, linked.email));
   });
 
   app.post('/auth/logout', async (request, reply) => {

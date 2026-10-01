@@ -98,11 +98,8 @@ entitlements the Keychain keeps nothing: the saved account id disappears and eve
 "not connected", which looks like a server problem and is not one.
 
 Live API on the simulator: start the API (`covera-api` in `.claude/launch.json`), launch without
-`-CoveraDemo`, and sign in with email and password. A fresh sign-in skips the Face ID prompt; on
-later launches the lock is real. Enrol simulated Face ID once with
-`xcrun simctl spawn booted notifyutil -s com.apple.BiometricKit.enrollmentChanged 1` followed by
-`... notifyutil -p com.apple.BiometricKit.enrollmentChanged`, then pass each prompt with
-`... notifyutil -p com.apple.BiometricKit_Sim.pearl.match`.
+`-CoveraDemo`, and sign in with email and password. The Policies tab asks for its code the first
+time and after every return from the background.
 
 ## Authentication
 
@@ -115,6 +112,10 @@ Sign in with Apple needs no server configuration: Apple's identity token is veri
 their published keys (`auth/apple.ts`, no JWT library), the audience is the bundle id
 (`APPLE_BUNDLE_ID`), and replay is blocked by a nonce the app generates and the server re-hashes.
 Apple may withhold the address, so `apple_sub` (migration 008) is the identity, as `google_sub` is.
+No address is verified at registration, so a password proves nothing about who owns its address:
+when Google or Apple proves an address that a password account holds, `auth/link.ts` removes that
+password and every session before linking (migration 009 did the same to accounts already linked).
+`npm run test:db` runs the database tests for it against the local Postgres.
 The button is Apple's own and must stay above any other provider's.
 
 Google sign-in is **configured and live** (iOS OAuth client, bundle id `com.covera.app`):
@@ -127,6 +128,16 @@ audience, issuer, expiry and verified email with Google.
 
 `-CoveraDemo` (Debug builds only) loads the fictional sample plan and library from
 `Core/PreviewData.swift` and skips the device lock, for screenshots and design review.
+Add `-CoveraDemoLocked` to keep the real policy code over the sample data.
+
+There is no Face ID. By the owner's decision (2026-10-01) the only lock is a 6-digit code the
+person chooses, in front of the Policies tab alone (`Core/PolicyLock.swift`,
+`Features/Dashboard/PolicyLockView.swift`); Home, Ask, plans and the call log open without it.
+While locked, the library is not in the view tree, so a sheet open over it goes too. Only a
+salted PBKDF2 hash is stored, in the Keychain, this device only. It locks again on every trip to
+the background. Signing out clears it, which is also how a forgotten code is replaced; ten wrong
+tries in a row sign the account out. After choosing it the person is asked to save it, and
+skipping asks once more.
 Sample data must obey the citation rule like real data does. `#if DEBUG` keeps all of it
 out of release builds — keep it that way.
 

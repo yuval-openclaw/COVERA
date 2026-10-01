@@ -65,13 +65,25 @@ export async function ingestPolicyDocument(params: {
 
   const documentId = randomUUID();
   const key = documentKey(userId, documentId);
-  await documentStore.put(key, file, contentType);
 
+  // The row first, then the file. Account deletion finds files through their
+  // rows, so a file written first and then left without one — an INSERT that
+  // failed, a process that died in between — was a health document nothing
+  // would ever delete. This way round every stored file has a row from before
+  // it exists; a row whose file never arrived is harmless, and deleting it
+  // tolerates the missing file.
   await pool.query(
     `INSERT INTO documents (id, user_id, storage_key, original_filename, content_type, byte_size, sha256, status)
      VALUES ($1, $2, $3, $4, $5, $6, $7, 'extracting')`,
     [documentId, userId, key, filename, contentType, file.byteLength, sha256],
   );
+  try {
+    await documentStore.put(key, file, contentType);
+  } catch (error) {
+    await documentStore.delete(key).catch(() => undefined);
+    await pool.query(`DELETE FROM documents WHERE id = $1 AND user_id = $2`, [documentId, userId]);
+    throw error;
+  }
 
   try {
     // Model calls take minutes, so no database transaction is held open across
@@ -157,7 +169,15 @@ async function findPreviousVersion(
   userId: string,
   policy: ExtractedPolicy,
 ): Promise<{ policyId: string; policyGroupId: string; version: number; extraction: ExtractedPolicy } | null> {
-  if (policy.policy_number.status !== 'stated') return null;
+  // A renewal replaces the version before it only when the documents prove
+  // both that it is the same policy and that it is newer: the same stated
+  // number and type, the same stated insurer, and a stated effective date
+  // after the active version's. Anything less leaves both active, side by
+  // side — an older policy uploaded after its renewal used to hide the
+  // renewal and present expired cover as current.
+  if (policy.policy_number.status !== 'stated' || policy.insurer_name.status !== 'stated') return null;
+  const effective = dateOf(policy.effective_date);
+  if (!effective) return null;
 
   const result = await pool.query<{
     id: string;
@@ -171,9 +191,13 @@ async function findPreviousVersion(
        AND policy_type = $2
        AND superseded_by IS NULL
        AND extraction -> 'policy_number' ->> 'value' = $3
+       AND extraction -> 'insurer_name' ->> 'status' = 'stated'
+       AND lower(trim(extraction -> 'insurer_name' ->> 'value')) = lower(trim($4))
+       AND effective_date IS NOT NULL
+       AND effective_date < $5::date
      ORDER BY version DESC
      LIMIT 1`,
-    [userId, policy.policy_type, policy.policy_number.value],
+    [userId, policy.policy_type, policy.policy_number.value, policy.insurer_name.value, effective],
   );
 
   const row = result.rows[0];

@@ -99,16 +99,23 @@ struct GoogleLogo: View {
 /// Google's dark sign-in button surface: a near-black fill with a light hairline,
 /// which is what their dark theme specifies, and a capsule so it pairs with the
 /// Sign in with Apple button above it.
+/// Google's dark-theme button colours (fill #131314, stroke #8E918F, label
+/// #E3E3E3), opaque as their guidelines require, so it pairs with Apple's
+/// black button.
+enum ProviderButton {
+    static let fill = Color(red: 0x13 / 255, green: 0x13 / 255, blue: 0x14 / 255)
+    static let pressed = Color(red: 0x2A / 255, green: 0x2A / 255, blue: 0x2C / 255)
+    static let outline = Color(red: 0x8E / 255, green: 0x91 / 255, blue: 0x8F / 255)
+    static let label = Color(red: 0xE3 / 255, green: 0xE3 / 255, blue: 0xE3 / 255)
+}
+
 struct GoogleButtonStyle: ButtonStyle {
     @Environment(\.isEnabled) private var isEnabled
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .background(
-                configuration.isPressed ? Theme.Palette.inset : Theme.Palette.elevated,
-                in: Capsule()
-            )
-            .overlay(Capsule().strokeBorder(Theme.Palette.hairline, lineWidth: 0.5))
+            .background(configuration.isPressed ? ProviderButton.pressed : ProviderButton.fill, in: Capsule())
+            .overlay(Capsule().strokeBorder(ProviderButton.outline, lineWidth: 1))
             .opacity(isEnabled ? 1 : 0.4)
             .contentShape(Capsule())
             .scaleEffect(configuration.isPressed ? 0.99 : 1)
