@@ -5,7 +5,7 @@
 > break things or sign people out: the `ios/Covera/` folder, the Xcode target and scheme, type names
 > like `CoveraApp`, the bundle id `com.covera.app` (Google sign-in is registered to it), Keychain and
 > UserDefaults keys (`covera.*`), launch flags (`-CoveraDemo`) and `COVERA_GEMINI_API_KEY`. Logos and
-> marketing use Newsreader (`ios/scripts/fonts`, SIL OFL), never Apple's New York or SF, whose licence
+> marketing use Newsreader and Inter (`ios/scripts/fonts`, SIL OFL), never Apple's New York or SF, whose licence
 > forbids logos and marketing.
 
 Users upload their health insurance policies. The app remembers them accurately and, during
