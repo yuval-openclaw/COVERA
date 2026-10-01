@@ -27,7 +27,7 @@ enum C {
 let newsreader: Void = {
     let fonts = URL(fileURLWithPath: #filePath).deletingLastPathComponent()
         .appendingPathComponent("../../fonts").standardized
-    for name in ["Newsreader.ttf", "Newsreader-Italic.ttf"] {
+    for name in ["Newsreader.ttf", "Newsreader-Italic.ttf", "Inter.ttf"] {
         CTFontManagerRegisterFontsForURL(fonts.appendingPathComponent(name) as CFURL, .process, nil)
     }
 }()
@@ -46,8 +46,17 @@ func serif(_ size: CGFloat, _ weight: NSFont.Weight = .medium, italic: Bool = fa
     return font as CTFont
 }
 
+/// Inter (SIL Open Font License) for labels, in place of Apple's SF Pro, which
+/// may not be used in marketing either.
 func sans(_ size: CGFloat, _ weight: NSFont.Weight = .regular) -> CTFont {
-    NSFont.systemFont(ofSize: size, weight: weight) as CTFont
+    _ = newsreader
+    let wght: Double = weight == .regular ? 400 : weight == .medium ? 500 : weight == .semibold ? 600 : 700
+    let descriptor = NSFontDescriptor(fontAttributes: [.family: "Inter",
+        NSFontDescriptor.AttributeName(kCTFontVariationAttribute as String): [NSNumber(value: 0x7767_6874): NSNumber(value: wght)]])
+    guard let font = NSFont(descriptor: descriptor, size: size), font.familyName == "Inter" else {
+        fatalError("Inter is not in ios/scripts/fonts")
+    }
+    return font as CTFont
 }
 
 func attrs(_ font: CTFont, _ color: CGColor, kern: CGFloat = 0) -> [NSAttributedString.Key: Any] {
