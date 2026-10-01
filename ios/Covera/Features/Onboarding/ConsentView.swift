@@ -147,13 +147,28 @@ struct ConsentView: View {
                 .fixedSize(horizontal: false, vertical: true)
 
             if birthDate != nil && !isOldEnough {
-                Label(
-                    String(localized: "You need to be 18 or over to use Clausa."),
-                    systemImage: "exclamationmark.circle"
-                )
-                .font(.footnote)
-                .foregroundStyle(Theme.Palette.caution)
-                .fixedSize(horizontal: false, vertical: true)
+                VStack(alignment: .leading, spacing: Theme.Spacing.step) {
+                    Label(
+                        String(localized: "You need to be 18 or over to use Clausa."),
+                        systemImage: "exclamationmark.circle"
+                    )
+                    .font(.footnote)
+                    .foregroundStyle(Theme.Palette.caution)
+                    .fixedSize(horizontal: false, vertical: true)
+
+                    // The account already exists by now — an email address, or
+                    // an Apple or Google identity. Someone under 18 must be able
+                    // to remove it here and now: once we know a user is a child,
+                    // keeping what they gave us is not an option (COPPA, GDPR).
+                    Button(role: .destructive) {
+                        Task { await deleteUnderage() }
+                    } label: {
+                        Text(String(localized: "Delete my account"))
+                            .font(.footnote.weight(.semibold))
+                    }
+                    .tint(Theme.Palette.caution)
+                    .disabled(isSaving)
+                }
                 .transition(Theme.Motion.unfold)
             }
         }
@@ -197,6 +212,19 @@ struct ConsentView: View {
             }
         }
         .coveraCard()
+    }
+
+    /// Removes the account that was just created, for someone under 18.
+    private func deleteUnderage() async {
+        isSaving = true
+        defer { isSaving = false }
+        do {
+            try await APIClient.shared.deleteAccount()
+            await Session.shared.signOut()
+            AuthState.shared.didSignOut()
+        } catch {
+            errorMessage = (error as? APIError)?.errorDescription ?? error.localizedDescription
+        }
     }
 
     private func agree() async {
