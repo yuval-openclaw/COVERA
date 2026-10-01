@@ -71,27 +71,37 @@ final class PolicyLock {
     /// forgotten code is replaced: sign back in and choose a new one.
     func reset() {
         SecItemDelete(Self.query as CFDictionary)
-        failures = 0
+        SecItemDelete(Self.failuresQuery as CFDictionary)
         state = exempt ? .unlocked : .needsCode
     }
 
     // MARK: - Storage
 
-    /// Consecutive wrong tries, kept across launches so quitting the app does
-    /// not buy another ten.
+    /// Consecutive wrong tries. Kept in the Keychain beside the code, not in
+    /// UserDefaults: deleting and reinstalling the app clears UserDefaults but
+    /// not the Keychain, so a counter there would hand out ten more tries while
+    /// the code — and the session — survived.
     private var failures: Int {
-        get { UserDefaults.standard.integer(forKey: "covera.policyCodeFailures") }
-        set { UserDefaults.standard.set(newValue, forKey: "covera.policyCodeFailures") }
+        get { Self.read(Self.failuresQuery).flatMap { Int(String(decoding: $0, as: UTF8.self)) } ?? 0 }
+        set { try? Self.write(Data(String(newValue).utf8), to: Self.failuresQuery) }
     }
 
-    private static let query: [String: Any] = [
-        kSecClass as String: kSecClassGenericPassword,
-        kSecAttrService as String: "com.covera.app",
-        kSecAttrAccount as String: "covera.policy-code",
-    ]
+    private static let query = item("covera.policy-code")
+    private static let failuresQuery = item("covera.policy-code-failures")
 
-    private static func readStored() -> Data? {
-        var q = query
+    private static func item(_ account: String) -> [String: Any] {
+        [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrService as String: "com.covera.app",
+            kSecAttrAccount as String: account,
+        ]
+    }
+
+    private static func readStored() -> Data? { read(query) }
+    private static func writeStored(_ data: Data) throws { try write(data, to: query) }
+
+    private static func read(_ base: [String: Any]) -> Data? {
+        var q = base
         q[kSecReturnData as String] = true
         q[kSecMatchLimit as String] = kSecMatchLimitOne
         var item: CFTypeRef?
@@ -99,9 +109,9 @@ final class PolicyLock {
         return item as? Data
     }
 
-    private static func writeStored(_ data: Data) throws {
-        SecItemDelete(query as CFDictionary)
-        var q = query
+    private static func write(_ data: Data, to base: [String: Any]) throws {
+        SecItemDelete(base as CFDictionary)
+        var q = base
         q[kSecValueData as String] = data
         q[kSecAttrAccessible as String] = kSecAttrAccessibleWhenUnlockedThisDeviceOnly
         let status = SecItemAdd(q as CFDictionary, nil)
