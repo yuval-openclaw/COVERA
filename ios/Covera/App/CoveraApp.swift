@@ -2,8 +2,11 @@ import SwiftUI
 
 @main
 struct CoveraApp: App {
-    @State private var lock = AppLock()
+    @State private var policyLock = PolicyLock()
     @State private var auth = AuthState.shared
+    /// The signed-in account's plan, library and call log, replaced on
+    /// sign-out because they belong to that account.
+    @State private var workspace = Workspace()
     // The first-launch explanation of what Covera is. Agreement to the terms is
     // separate and per account (ConsentView, after sign-in).
     @AppStorage("covera.onboardingSeen") private var disclaimerAccepted = false
@@ -18,10 +21,7 @@ struct CoveraApp: App {
                     // anyone uploads a medical document.
                     OnboardingDisclaimerView(onAccept: { disclaimerAccepted = true })
                 } else if !auth.isSignedIn && !isDemo {
-                    LoginView(onSignedIn: {
-                        lock.grantAfterSignIn()
-                        auth.didSignIn()
-                    })
+                    LoginView(onSignedIn: { auth.didSignIn() })
                     .transition(Theme.Motion.arrive)
                 } else if !isDemo && auth.hasAgreed != true {
                     // After sign-in and before anything else: the three
@@ -38,20 +38,18 @@ struct CoveraApp: App {
                             .task { await auth.refreshAgreement(version: Legal.version) }
                     }
                 } else {
-                    RootView(lock: lock)
+                    RootView(policyLock: policyLock, workspace: workspace)
                 }
             }
             .overlay {
                 // The app-switcher snapshot is taken as the app goes inactive,
                 // before `.background` arrives. Covering the screen here keeps
-                // policy text out of that snapshot without re-locking — which
-                // matters, because the Face ID sheet itself makes the app
-                // inactive and a lock here would fight its own unlock.
+                // policy text out of that snapshot; the code itself is asked
+                // for only after a real trip to the background.
                 if scenePhase != .active && disclaimerAccepted {
                     PrivacyShield()
                 }
             }
-            .animation(Theme.Motion.appear, value: lock.state)
             .animation(Theme.Motion.appear, value: disclaimerAccepted)
             .animation(Theme.Motion.appear, value: auth.isSignedIn)
             .animation(Theme.Motion.appear, value: auth.hasAgreed)
@@ -63,10 +61,44 @@ struct CoveraApp: App {
             .environment(\.layoutDirection, (AppLanguage(rawValue: language) ?? .en).isRightToLeft ? .rightToLeft : .leftToRight)
         }
         .onChange(of: scenePhase) { _, phase in
-            // Re-lock as soon as the app leaves the foreground, so a document is
-            // never sitting open in the app switcher.
-            if phase == .background { lock.lock() }
+            // Close the policies again as soon as the app leaves the
+            // foreground, so they are never open in the app switcher.
+            if phase == .background { policyLock.lock() }
         }
+        .onChange(of: auth.isSignedIn) { _, signedIn in
+            // Sign-out, or a session the server rejected: nothing of this
+            // account's may carry over to the next one, including its code.
+            if !signedIn {
+                workspace = Workspace()
+                policyLock.reset()
+            }
+        }
+    }
+}
+
+/// What one signed-in account has open: its plan, its library, its call log,
+/// and where it was in the app. Replaced when the account signs out.
+@MainActor
+@Observable
+final class Workspace {
+    var tab: AppTab = .home
+    var showingGuidance = false
+    let guidance: GuidanceModel
+    let documents: DocumentsModel
+    let callLog: CallLogStore
+
+    init() {
+        #if DEBUG
+        if PreviewData.isDemo {
+            guidance = PreviewData.guidanceModel()
+            documents = DocumentsModel(sample: PreviewData.documents)
+            callLog = CallLogStore(sample: PreviewData.callLog)
+            return
+        }
+        #endif
+        guidance = GuidanceModel()
+        documents = DocumentsModel()
+        callLog = CallLogStore()
     }
 }
 
@@ -88,44 +120,29 @@ enum AppTab: Hashable {
 /// as one focused flow presented over whichever screen started it. The plan
 /// survives closing the flow, so Home can offer to pick it up again.
 struct RootView: View {
-    let lock: AppLock
-    @State private var tab: AppTab = .home
-    @State private var guidance: GuidanceModel
-    @State private var documents: DocumentsModel
-    @State private var callLog: CallLogStore
-    @State private var showingGuidance = false
+    let policyLock: PolicyLock
+    @Bindable var workspace: Workspace
     // Tabs are re-identified on a language change so every string redraws,
     // while the tab, the plan and the library survive it.
     @AppStorage(AppLanguage.storageKey) private var language = AppLanguage.en.rawValue
 
-    init(lock: AppLock) {
-        self.lock = lock
-        #if DEBUG
-        if PreviewData.isDemo {
-            _guidance = State(initialValue: PreviewData.guidanceModel())
-            _documents = State(initialValue: DocumentsModel(sample: PreviewData.documents))
-            _callLog = State(initialValue: CallLogStore(sample: PreviewData.callLog))
-            return
-        }
-        #endif
-        _guidance = State(initialValue: GuidanceModel())
-        _documents = State(initialValue: DocumentsModel())
-        _callLog = State(initialValue: CallLogStore())
-    }
+    private var guidance: GuidanceModel { workspace.guidance }
+    private var documents: DocumentsModel { workspace.documents }
+    private var callLog: CallLogStore { workspace.callLog }
 
     var body: some View {
-        TabView(selection: $tab) {
+        TabView(selection: $workspace.tab) {
             HomeView(
                 guidance: guidance,
                 documents: documents,
                 callLog: callLog,
-                onOpenGuidance: { showingGuidance = true },
+                onOpenGuidance: { workspace.showingGuidance = true },
                 onNewGuidance: {
                     guidance.reset()
-                    showingGuidance = true
+                    workspace.showingGuidance = true
                 },
-                onShowPolicies: { tab = .policies },
-                onShowAccount: { tab = .account }
+                onShowPolicies: { workspace.tab = .policies },
+                onShowAccount: { workspace.tab = .account }
             )
             .tabItem { Label(String(localized: "Home"), systemImage: "house") }
             .tag(AppTab.home)
@@ -136,29 +153,31 @@ struct RootView: View {
                 .tag(AppTab.ask)
                 .id(language)
 
-            DocumentsView(
-                model: documents,
-                callLog: callLog,
-                onStartGuidance: { showingGuidance = true }
-            )
+            PolicyGate(lock: policyLock) {
+                DocumentsView(
+                    model: documents,
+                    callLog: callLog,
+                    onStartGuidance: { workspace.showingGuidance = true }
+                )
+            }
                 .tabItem { Label(String(localized: "Policies"), systemImage: "doc.text") }
                 .tag(AppTab.policies)
                 .id(language)
 
-            AccountView(lock: lock)
+            AccountView()
                 .tabItem { Label(String(localized: "Account"), systemImage: "person.crop.circle") }
                 .tag(AppTab.account)
                 .id(language)
         }
         .tint(Theme.Palette.ink)
         .environment(\.locale, Locale(identifier: language))
-        .fullScreenCover(isPresented: $showingGuidance) {
+        .fullScreenCover(isPresented: $workspace.showingGuidance) {
             GuidanceFlowView(
                 model: guidance,
-                onClose: { showingGuidance = false },
+                onClose: { workspace.showingGuidance = false },
                 onOpenAccount: {
-                    showingGuidance = false
-                    tab = .account
+                    workspace.showingGuidance = false
+                    workspace.tab = .account
                 }
             )
             .coveraLayoutDirection()
@@ -172,9 +191,9 @@ struct RootView: View {
         #if DEBUG
         .onAppear {
             switch PreviewData.shot {
-            case "plan": showingGuidance = true
-            case "policies": tab = .policies
-            case "ask": tab = .ask
+            case "plan": workspace.showingGuidance = true
+            case "policies": workspace.tab = .policies
+            case "ask": workspace.tab = .ask
             default: break
             }
         }
@@ -200,53 +219,5 @@ private struct PrivacyShield: View {
             Wordmark(size: .title)
         }
         .accessibilityHidden(true)
-    }
-}
-
-struct LockScreen: View {
-    let lock: AppLock
-
-    var body: some View {
-        VStack(spacing: 0) {
-            Spacer()
-
-            Image(systemName: "lock")
-                .font(.system(size: 30, weight: .light))
-                .foregroundStyle(Theme.Palette.ink)
-                .frame(width: 76, height: 76)
-                .background(Theme.Palette.elevated, in: Circle())
-                .overlay(Circle().strokeBorder(Theme.Palette.hairline, lineWidth: 0.5))
-                .accessibilityHidden(true)
-
-            Text(String(localized: "Locked"))
-                .font(Theme.Typeface.display(.largeTitle))
-                .foregroundStyle(Theme.Palette.ink)
-                .padding(.top, Theme.Spacing.block + 4)
-
-            Text(String(localized: "Your insurance documents are behind Face ID or your passcode."))
-                .font(.subheadline)
-                .foregroundStyle(Theme.Palette.secondaryInk)
-                .multilineTextAlignment(.center)
-                .fixedSize(horizontal: false, vertical: true)
-                .padding(.top, Theme.Spacing.tight)
-
-            Spacer()
-
-            Button {
-                Task { await lock.unlock() }
-            } label: {
-                Label(String(localized: "Unlock"), systemImage: "faceid")
-            }
-            .buttonStyle(PrimaryButtonStyle())
-
-            Wordmark(size: .headline)
-                .padding(.top, Theme.Spacing.block)
-        }
-        .padding(.horizontal, Theme.Spacing.screen + 12)
-        .padding(.bottom, Theme.Spacing.block)
-        .frame(maxWidth: 460)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .coveraScreen()
-        .task { await lock.unlock() }
     }
 }

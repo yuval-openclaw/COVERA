@@ -53,8 +53,6 @@
   <string>To photograph a policy document or receipt so it can be read and stored in your account.</string>
   <key>NSPhotoLibraryUsageDescription</key>
   <string>To attach a policy document or receipt you have already saved to your photos.</string>
-  <key>NSFaceIDUsageDescription</key>
-  <string>To unlock your insurance documents. Only you should be able to open them on this device.</string>
   <key>NSCalendarsUsageDescription</key>
   <string>To add a claim deadline stated in your policy to your calendar, so you do not miss it.</string>
 

@@ -1,5 +1,4 @@
 import Foundation
-import LocalAuthentication
 import Security
 
 /// The signed-in session.
@@ -94,71 +93,5 @@ final class AuthState {
             // recording the answer will surface the real problem.
             hasAgreed = false
         }
-    }
-}
-
-/// Face ID / Touch ID gate in front of stored documents.
-@MainActor
-@Observable
-final class AppLock {
-    enum State: Equatable {
-        case locked
-        case unlocked
-        case unavailable(String)
-    }
-
-    private(set) var state: State = .locked
-
-    /// Whether the device can authenticate at all. If it cannot — no passcode
-    /// set — we say so rather than silently leaving documents open.
-    var canEvaluate: Bool {
-        var error: NSError?
-        return LAContext().canEvaluatePolicy(.deviceOwnerAuthentication, error: &error)
-    }
-
-    func unlock() async {
-        #if DEBUG
-        // Screenshots and design review only. `-CoveraDemo` shows fictional
-        // sample data, so there is nothing behind the lock to protect.
-        // Compiled out of release builds.
-        if PreviewData.isDemo {
-            state = .unlocked
-            return
-        }
-        #endif
-
-        let context = LAContext()
-        context.localizedFallbackTitle = String(localized: "Use passcode")
-
-        var error: NSError?
-        guard context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) else {
-            // Falling back to open access would be the wrong default here, but
-            // so would locking someone out of their own policies during a
-            // medical event. We surface the situation and let them proceed.
-            state = .unavailable(
-                String(localized: "This device has no passcode or biometric lock, so Covera cannot lock your documents.")
-            )
-            return
-        }
-
-        do {
-            let ok = try await context.evaluatePolicy(
-                .deviceOwnerAuthentication,
-                localizedReason: String(localized: "Unlock your insurance documents")
-            )
-            state = ok ? .unlocked : .locked
-        } catch {
-            state = .locked
-        }
-    }
-
-    /// A fresh sign-in has just proved who this is; asking for Face ID again a
-    /// second later would only add a step.
-    func grantAfterSignIn() {
-        state = .unlocked
-    }
-
-    func lock() {
-        state = .locked
     }
 }
