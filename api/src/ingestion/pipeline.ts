@@ -65,13 +65,25 @@ export async function ingestPolicyDocument(params: {
 
   const documentId = randomUUID();
   const key = documentKey(userId, documentId);
-  await documentStore.put(key, file, contentType);
 
+  // The row first, then the file. Account deletion finds files through their
+  // rows, so a file written first and then left without one — an INSERT that
+  // failed, a process that died in between — was a health document nothing
+  // would ever delete. This way round every stored file has a row from before
+  // it exists; a row whose file never arrived is harmless, and deleting it
+  // tolerates the missing file.
   await pool.query(
     `INSERT INTO documents (id, user_id, storage_key, original_filename, content_type, byte_size, sha256, status)
      VALUES ($1, $2, $3, $4, $5, $6, $7, 'extracting')`,
     [documentId, userId, key, filename, contentType, file.byteLength, sha256],
   );
+  try {
+    await documentStore.put(key, file, contentType);
+  } catch (error) {
+    await documentStore.delete(key).catch(() => undefined);
+    await pool.query(`DELETE FROM documents WHERE id = $1 AND user_id = $2`, [documentId, userId]);
+    throw error;
+  }
 
   try {
     // Model calls take minutes, so no database transaction is held open across
