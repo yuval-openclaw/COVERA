@@ -1,0 +1,64 @@
+# Every push to main and every pull request: the API's checks, its database
+# tests against a real Postgres with pgvector, and the production Docker image —
+# built, started, and asked for /health. Nothing here talks to Gemini or holds
+# a real secret: the key below is a placeholder no code path calls in tests.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  api:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: pgvector/pgvector:pg17
+        env:
+          POSTGRES_USER: clausa
+          POSTGRES_PASSWORD: ci-only
+          POSTGRES_DB: clausa
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U clausa"
+          --health-interval 5s --health-timeout 5s --health-retries 12
+    env:
+      DATABASE_URL: postgres://clausa:ci-only@localhost:5432/clausa
+      COVERA_GEMINI_API_KEY: ci-placeholder-never-called
+      DOCUMENT_ENCRYPTION_KEY: "0000000000000000000000000000000000000000000000000000000000000000"
+    defaults:
+      run:
+        working-directory: api
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: api/package-lock.json
+      - run: npm ci
+      - run: npm run typecheck
+      - name: Migrate the test database
+        run: npx tsx src/db/migrate.ts
+      - name: Tests, including the database tests (DATABASE_URL is set)
+        run: npm test
+      - run: npm audit --omit=dev --audit-level=high
+
+      - name: Build the production image
+        working-directory: .
+        run: docker build -t clausa-api .
+      - name: The image starts and answers /health
+        run: |
+          docker run -d --name api --network host \
+            -e DATABASE_URL -e COVERA_GEMINI_API_KEY -e DOCUMENT_ENCRYPTION_KEY \
+            -e HOST=127.0.0.1 -e PORT=3000 clausa-api
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:3000/health; then echo; exit 0; fi
+            sleep 1
+          done
+          docker logs api
+          exit 1
