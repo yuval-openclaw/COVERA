@@ -142,22 +142,18 @@ struct LoginView: View {
         } onCompletion: { result in
             Task { if await model.continueWithApple(result) { onSignedIn() } }
         }
-        // Apple's guidance: a white button on a dark background. The colour is
-        // theirs and may not be replaced, so this only takes the pure white off
-        // it — enough that it sits in the screen instead of glaring out of it,
-        // and far short of restyling their button.
-        .signInWithAppleButtonStyle(.white)
+        // Apple's black style, untouched apart from the corner radius, which
+        // its guidelines allow. White is for dark backgrounds and may not be
+        // given an outline of ours; on warm paper, black is the style meant.
+        .signInWithAppleButtonStyle(.black)
         .frame(height: 50)
-        .colorMultiply(Color(white: 0.9))
         .clipShape(Capsule())
         .disabled(model.isWorking)
         .opacity(model.isWorking ? 0.4 : 1)
     }
 
-    /// Google's dark sign-in button: their real mark, their wording, on a
-    /// surface dark enough to sit under Apple's white one without competing.
-    /// The height and the capsule match the Apple button above it, so the two
-    /// read as one pair rather than two borrowed components.
+    /// Google's dark sign-in button, to their dark-theme specification, beside
+    /// Apple's black one: same height and capsule, so the two read as a pair.
     private var googleButton: some View {
         Button {
             focus = nil
@@ -170,13 +166,10 @@ struct LoginView: View {
             // reading as one object.
             HStack(spacing: 10) {
                 GoogleLogo(size: 19)
-                    // Google requires the mark on white, and a circle keeps it
-                    // from reading as a second, smaller button.
-                    .padding(6)
-                    .background(Color.white, in: Circle())
                 Text(String(localized: "Continue with Google"))
-                    .font(.system(size: 17, weight: .medium))
-                    .foregroundStyle(Theme.Palette.ink)
+                    // The size Apple's button sets its own label in, beside it.
+                    .font(.system(size: 19, weight: .medium))
+                    .foregroundStyle(ProviderButton.label)
                     .lineLimit(1)
                     .minimumScaleFactor(0.8)
             }
