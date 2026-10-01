@@ -1,0 +1,9 @@
+# Only api/ goes into the image. Everything else — and every secret — stays out
+# of the build context entirely.
+*
+!api/package.json
+!api/package-lock.json
+!api/tsconfig.json
+!api/tsconfig.build.json
+!api/src/**
+api/src/**/*.test.ts

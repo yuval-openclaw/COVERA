@@ -1,0 +1,32 @@
+# Fly.io: the Clausa API. `fly launch` fills in `app` and `primary_region`;
+# secrets are set with `fly secrets set` (see docs/DEPLOY.md), never here.
+[build]
+  dockerfile = "Dockerfile"
+
+[deploy]
+  # Every release migrates the database before traffic moves to it.
+  release_command = "node dist/db/migrate.js"
+
+[env]
+  NODE_ENV = "production"
+  HOST = "0.0.0.0"
+  PORT = "3000"
+  # Fly's proxy is exactly one hop in front; never "true" (see docs/DEPLOY.md).
+  TRUST_PROXY = "1"
+  # A machine's disk is lost on every deploy: documents go to S3-compatible
+  # storage (Cloudflare R2), with S3_BUCKET, S3_ENDPOINT and keys as secrets.
+  STORAGE_DRIVER = "s3"
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 0
+
+  [[http_service.checks]]
+    method = "GET"
+    path = "/health"
+    interval = "30s"
+    timeout = "5s"
+    grace_period = "20s"

@@ -6,7 +6,7 @@ recognise each other's data protection, and it keeps GDPR transfers simple.
 
 | Piece | Needs | Examples |
 | --- | --- | --- |
-| API | runs `api/Dockerfile`, HTTPS, a proxy in front | Railway, Render, Fly.io |
+| API | runs the root `Dockerfile` (`fly.toml` for Fly.io), HTTPS, a proxy in front | Railway, Render, Fly.io |
 | Database | Postgres 17 **with pgvector** | Neon, Supabase, Railway Postgres |
 | File storage | S3-compatible bucket, private | Cloudflare R2, AWS S3 |
 
@@ -33,7 +33,7 @@ on every deploy, and the documents with it.
 ## Steps
 
 1. Create the database, then run migrations once against it:
-   `docker run --env-file prod.env covera-api node dist/db/migrate.js`
+   `docker run --env-file api/prod.env clausa-api node dist/db/migrate.js` (on Fly.io, `fly.toml` runs this on every release)
    (or, without Docker: `cd api && npm run build && node --env-file=prod.env dist/db/migrate.js`).
 2. Create the bucket, private, with a key that can only reach it.
 3. Deploy `api/` with the variables above. Check `https://<your-api>/health`

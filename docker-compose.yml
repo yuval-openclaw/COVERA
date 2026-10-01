@@ -20,7 +20,7 @@ services:
       retries: 12
 
   migrate:
-    build: ./api
+    build: .
     command: ["node", "dist/db/migrate.js"]
     env_file: api/.env
     environment:
@@ -30,7 +30,7 @@ services:
         condition: service_healthy
 
   api:
-    build: ./api
+    build: .
     env_file: api/.env
     environment:
       DATABASE_URL: postgres://clausa:local-only@db:5432/clausa
