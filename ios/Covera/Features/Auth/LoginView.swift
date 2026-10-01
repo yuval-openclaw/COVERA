@@ -142,22 +142,21 @@ struct LoginView: View {
         } onCompletion: { result in
             Task { if await model.continueWithApple(result) { onSignedIn() } }
         }
-        // Apple's guidance: a white button on a dark background. The colour is
-        // theirs and may not be replaced, so this only takes the pure white off
-        // it — enough that it sits in the screen instead of glaring out of it,
-        // and far short of restyling their button.
+        // Apple's own white style, untinted — the colour is theirs and may not
+        // be replaced. The outline is drawn here rather than with
+        // `.whiteOutline`, whose square-cornered stroke the capsule would cut;
+        // it is the same outline the Google button wears, so the two match.
         .signInWithAppleButtonStyle(.white)
         .frame(height: 50)
-        .colorMultiply(Color(white: 0.9))
         .clipShape(Capsule())
+        .overlay(Capsule().strokeBorder(ProviderButton.outline, lineWidth: 1))
         .disabled(model.isWorking)
         .opacity(model.isWorking ? 0.4 : 1)
     }
 
-    /// Google's dark sign-in button: their real mark, their wording, on a
-    /// surface dark enough to sit under Apple's white one without competing.
-    /// The height and the capsule match the Apple button above it, so the two
-    /// read as one pair rather than two borrowed components.
+    /// Google's light sign-in button: their real mark and wording, in the same
+    /// white, outline, height and capsule as the Apple button above it, so the
+    /// two read as one pair rather than two borrowed components.
     private var googleButton: some View {
         Button {
             focus = nil
@@ -169,13 +168,11 @@ struct LoginView: View {
             // across the middle of a full-width button and the pair stopped
             // reading as one object.
             HStack(spacing: 10) {
+                // Google requires its mark on white; the button now is white.
                 GoogleLogo(size: 19)
-                    // Google requires the mark on white, and a circle keeps it
-                    // from reading as a second, smaller button.
-                    .padding(6)
-                    .background(Color.white, in: Circle())
                 Text(String(localized: "Continue with Google"))
-                    .font(.system(size: 17, weight: .medium))
+                    // The size Apple's button sets its own label in, beside it.
+                    .font(.system(size: 19, weight: .medium))
                     .foregroundStyle(Theme.Palette.ink)
                     .lineLimit(1)
                     .minimumScaleFactor(0.8)
