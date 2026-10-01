@@ -1,4 +1,4 @@
-import { signInWithProvider } from '../auth/link.js';
+import { insertPasswordSession, signInWithProvider } from '../auth/link.js';
 import { randomBytes } from 'node:crypto';
 import type { FastifyInstance, FastifyRequest } from 'fastify';
 import { z } from 'zod';
@@ -145,7 +145,12 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
       // One message for every failure: which emails have accounts is private.
       return reply.status(401).send({ error: 'Email or password is incorrect.' });
     }
-    return reply.send(await startSession(user.id, email));
+    const token = newSessionToken();
+    if (!(await insertPasswordSession(pool, user.id, user.password_hash, hashToken(token), SESSION_DAYS))) {
+      // The password was removed while this login was being checked.
+      return reply.status(401).send({ error: 'Email or password is incorrect.' });
+    }
+    return reply.send({ token, user: { id: user.id, email } });
   });
 
   app.post('/auth/google', async (request, reply) => {

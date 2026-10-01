@@ -81,3 +81,42 @@ export async function signInWithProvider(
     client.release();
   }
 }
+
+/**
+ * Creates a password session only if the password just verified is still the
+ * account's. Verifying and inserting were separate steps, and provider linking
+ * (above) could remove the password and every session between them, letting a
+ * login that had already passed the check mint a session afterwards. The row
+ * is locked and the hash re-read in the transaction that inserts the session.
+ */
+export async function insertPasswordSession(
+  pool: Pool,
+  userId: string,
+  verifiedHash: string,
+  tokenHash: string,
+  days: number,
+): Promise<boolean> {
+  const client = await pool.connect();
+  try {
+    await client.query('BEGIN');
+    const { rows } = await client.query<{ password_hash: string | null }>(
+      `SELECT password_hash FROM users WHERE id = $1 AND deleted_at IS NULL FOR UPDATE`,
+      [userId],
+    );
+    if (rows[0]?.password_hash !== verifiedHash) {
+      await client.query('ROLLBACK');
+      return false;
+    }
+    await client.query(
+      `INSERT INTO sessions (user_id, token_hash, expires_at) VALUES ($1, $2, now() + make_interval(days => $3))`,
+      [userId, tokenHash, days],
+    );
+    await client.query('COMMIT');
+    return true;
+  } catch (error) {
+    await client.query('ROLLBACK').catch(() => undefined);
+    throw error;
+  } finally {
+    client.release();
+  }
+}

@@ -3,7 +3,7 @@
 import { randomBytes } from 'node:crypto';
 import pg from 'pg';
 import { afterAll, describe, expect, it } from 'vitest';
-import { signInWithProvider } from './link.js';
+import { insertPasswordSession, signInWithProvider } from './link.js';
 
 const url = process.env.DATABASE_URL;
 const pool = url ? new pg.Pool({ connectionString: url }) : undefined;
@@ -73,6 +73,33 @@ suite('signInWithProvider (database)', () => {
     for (const r of results) expect(r).toMatchObject({ ok: true, userId: attacker });
     const rows = await pool!.query(`SELECT 1 FROM users WHERE email = $1`, [email]);
     expect(rows.rowCount).toBe(1);
+    expect(await credentials(attacker)).toEqual({ password: null, sessions: 0 });
+  });
+
+  it('a password checked before the owner links cannot open a session after it', async () => {
+    const email = address();
+    const attacker = await preregister(email);
+    // The login verified this hash; then the owner signs in with Google.
+    await signInWithProvider(pool!, 'google', `g-${randomBytes(4).toString('hex')}`, email);
+    const created = await insertPasswordSession(pool!, attacker, 'scrypt$attacker', randomBytes(32).toString('hex'), 1);
+    expect(created).toBe(false);
+    expect((await credentials(attacker)).sessions).toBe(0);
+  });
+
+  it('a password still in place opens a session as before', async () => {
+    const email = address();
+    const id = await preregister(email);
+    expect(await insertPasswordSession(pool!, id, 'scrypt$attacker', randomBytes(32).toString('hex'), 1)).toBe(true);
+  });
+
+  it('a login racing the link never leaves a session behind', async () => {
+    const email = address();
+    const attacker = await preregister(email);
+    await pool!.query(`DELETE FROM sessions WHERE user_id = $1`, [attacker]);
+    await Promise.all([
+      signInWithProvider(pool!, 'google', `g-${randomBytes(4).toString('hex')}`, email),
+      insertPasswordSession(pool!, attacker, 'scrypt$attacker', randomBytes(32).toString('hex'), 1),
+    ]);
     expect(await credentials(attacker)).toEqual({ password: null, sessions: 0 });
   });
 });
