@@ -99,13 +99,14 @@ struct GoogleLogo: View {
 /// Google's dark sign-in button surface: a near-black fill with a light hairline,
 /// which is what their dark theme specifies, and a capsule so it pairs with the
 /// Sign in with Apple button above it.
-/// What the two sign-in providers share, so their buttons read as a pair:
-/// Apple's white button, and Google's light one in the same white and outline.
+/// Google's dark-theme button colours (fill #131314, stroke #8E918F, label
+/// #E3E3E3), opaque as their guidelines require, so it pairs with Apple's
+/// black button.
 enum ProviderButton {
-    static let fill = Color.white
-    static let pressed = Color(white: 0.95)
-    /// Google's light-theme stroke, #747775 at a weight that suits the paper.
-    static let outline = Color(red: 0x74 / 255, green: 0x77 / 255, blue: 0x75 / 255).opacity(0.45)
+    static let fill = Color(red: 0x13 / 255, green: 0x13 / 255, blue: 0x14 / 255)
+    static let pressed = Color(red: 0x2A / 255, green: 0x2A / 255, blue: 0x2C / 255)
+    static let outline = Color(red: 0x8E / 255, green: 0x91 / 255, blue: 0x8F / 255)
+    static let label = Color(red: 0xE3 / 255, green: 0xE3 / 255, blue: 0xE3 / 255)
 }
 
 struct GoogleButtonStyle: ButtonStyle {

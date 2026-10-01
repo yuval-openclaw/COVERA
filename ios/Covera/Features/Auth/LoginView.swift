@@ -142,21 +142,18 @@ struct LoginView: View {
         } onCompletion: { result in
             Task { if await model.continueWithApple(result) { onSignedIn() } }
         }
-        // Apple's own white style, untinted — the colour is theirs and may not
-        // be replaced. The outline is drawn here rather than with
-        // `.whiteOutline`, whose square-cornered stroke the capsule would cut;
-        // it is the same outline the Google button wears, so the two match.
-        .signInWithAppleButtonStyle(.white)
+        // Apple's black style, untouched apart from the corner radius, which
+        // its guidelines allow. White is for dark backgrounds and may not be
+        // given an outline of ours; on warm paper, black is the style meant.
+        .signInWithAppleButtonStyle(.black)
         .frame(height: 50)
         .clipShape(Capsule())
-        .overlay(Capsule().strokeBorder(ProviderButton.outline, lineWidth: 1))
         .disabled(model.isWorking)
         .opacity(model.isWorking ? 0.4 : 1)
     }
 
-    /// Google's light sign-in button: their real mark and wording, in the same
-    /// white, outline, height and capsule as the Apple button above it, so the
-    /// two read as one pair rather than two borrowed components.
+    /// Google's dark sign-in button, to their dark-theme specification, beside
+    /// Apple's black one: same height and capsule, so the two read as a pair.
     private var googleButton: some View {
         Button {
             focus = nil
@@ -168,12 +165,11 @@ struct LoginView: View {
             // across the middle of a full-width button and the pair stopped
             // reading as one object.
             HStack(spacing: 10) {
-                // Google requires its mark on white; the button now is white.
                 GoogleLogo(size: 19)
                 Text(String(localized: "Continue with Google"))
                     // The size Apple's button sets its own label in, beside it.
                     .font(.system(size: 19, weight: .medium))
-                    .foregroundStyle(Theme.Palette.ink)
+                    .foregroundStyle(ProviderButton.label)
                     .lineLimit(1)
                     .minimumScaleFactor(0.8)
             }
