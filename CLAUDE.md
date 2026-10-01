@@ -115,6 +115,10 @@ Sign in with Apple needs no server configuration: Apple's identity token is veri
 their published keys (`auth/apple.ts`, no JWT library), the audience is the bundle id
 (`APPLE_BUNDLE_ID`), and replay is blocked by a nonce the app generates and the server re-hashes.
 Apple may withhold the address, so `apple_sub` (migration 008) is the identity, as `google_sub` is.
+No address is verified at registration, so a password proves nothing about who owns its address:
+when Google or Apple proves an address that a password account holds, `auth/link.ts` removes that
+password and every session before linking (migration 009 did the same to accounts already linked).
+`npm run test:db` runs the database tests for it against the local Postgres.
 The button is Apple's own and must stay above any other provider's.
 
 Google sign-in is **configured and live** (iOS OAuth client, bundle id `com.covera.app`):
