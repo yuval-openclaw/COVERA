@@ -157,7 +157,15 @@ async function findPreviousVersion(
   userId: string,
   policy: ExtractedPolicy,
 ): Promise<{ policyId: string; policyGroupId: string; version: number; extraction: ExtractedPolicy } | null> {
-  if (policy.policy_number.status !== 'stated') return null;
+  // A renewal replaces the version before it only when the documents prove
+  // both that it is the same policy and that it is newer: the same stated
+  // number and type, the same stated insurer, and a stated effective date
+  // after the active version's. Anything less leaves both active, side by
+  // side — an older policy uploaded after its renewal used to hide the
+  // renewal and present expired cover as current.
+  if (policy.policy_number.status !== 'stated' || policy.insurer_name.status !== 'stated') return null;
+  const effective = dateOf(policy.effective_date);
+  if (!effective) return null;
 
   const result = await pool.query<{
     id: string;
@@ -171,9 +179,13 @@ async function findPreviousVersion(
        AND policy_type = $2
        AND superseded_by IS NULL
        AND extraction -> 'policy_number' ->> 'value' = $3
+       AND extraction -> 'insurer_name' ->> 'status' = 'stated'
+       AND lower(trim(extraction -> 'insurer_name' ->> 'value')) = lower(trim($4))
+       AND effective_date IS NOT NULL
+       AND effective_date < $5::date
      ORDER BY version DESC
      LIMIT 1`,
-    [userId, policy.policy_type, policy.policy_number.value],
+    [userId, policy.policy_type, policy.policy_number.value, policy.insurer_name.value, effective],
   );
 
   const row = result.rows[0];
