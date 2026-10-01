@@ -142,9 +142,18 @@ export async function buildGuidance(params: {
   // asked for: withholding a step must also retract any figure the summary drew
   // from it.
   const supported = supportedNumbers(plan.steps, unverified);
+  // Never quote a withheld step back: its text is the unsupported claim.
   const withheld = unverified.map(
-    (u) => `A step about "${truncate(u.step.action)}" was withheld: ${u.reason}`,
+    () => 'A step was withheld because a figure in it could not be traced to your documents.',
   );
+
+  // Clarifying questions are shown to the user like any other prose, so they
+  // are held to the same rule.
+  const safeQuestions = plan.clarifying_questions.filter((q) => {
+    if (unsupportedFiguresIn(`${q.question} ${q.why}`, supported).length === 0) return true;
+    withheld.push('A clarifying question was withheld because it stated a figure no quote supports.');
+    return false;
+  });
 
   let summary = plan.summary;
   if (unsupportedFiguresIn(summary, supported).length > 0) {
@@ -179,7 +188,8 @@ export async function buildGuidance(params: {
     plan: {
       ...plan,
       summary,
-      steps: renumber(safeSteps),
+      clarifying_questions: safeQuestions,
+      steps: renumber(safeSteps).map((step) => withVerifiedPhone(step, contacts)),
       conflicts: safeConflicts,
       phone_script: phoneScript,
       draft_claim_email: draftEmail,
@@ -187,6 +197,22 @@ export async function buildGuidance(params: {
     withheld,
     usedOcrPages: snippets.some((s) => s.ocr),
   };
+}
+
+/**
+ * The number a "not stated" step tells the user to call is chosen here, from
+ * the phone their own policy states, never taken from the model: the app turns
+ * it straight into a call. A number that matches no policy on file is dropped.
+ */
+function withVerifiedPhone<T extends { basis: GuidancePlan['steps'][number]['basis'] }>(
+  step: T,
+  contacts: { phone: string | null }[],
+): T {
+  if (step.basis.kind !== 'not_stated' || step.basis.insurer_phone === null) return step;
+  const digits = (value: string) => value.replace(/[^0-9*#+]/g, '');
+  const claimed = digits(step.basis.insurer_phone);
+  const match = contacts.find((c) => c.phone !== null && digits(c.phone) === claimed && claimed.length > 0);
+  return { ...step, basis: { ...step.basis, insurer_phone: match?.phone ?? null } };
 }
 
 /** Figures asserted in prose that no surviving citation supports. */
