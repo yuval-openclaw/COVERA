@@ -1,5 +1,5 @@
 #!/bin/zsh
-# Renders the Covera ad to docs/app-store/video/covera-ad.mp4: 29.6 s, 1080×1920,
+# Renders the Clausa ad to docs/app-store/video/clausa-ad.mp4: 29.6 s, 1080×1920,
 # 30 fps, with its score. Everything is generated here — the music is synthesised
 # (synth.py, arrange.py), the motion graphics are drawn frame by frame (film/),
 # and the phone shows the real app's sample data in eight languages.
@@ -23,5 +23,5 @@ python3 $here/arrange.py $work/score.wav
 swiftc -O $here/film/*.swift -o $work/film
 $work/film $work/shots | ffmpeg -v error -y -f rawvideo -pix_fmt bgra -s 1080x1920 -r 30 -i - -i $work/score.wav \
   -map 0:v -map 1:a -vf "format=yuv420p,noise=alls=1:allf=u" -c:v libx264 -preset slow -crf 17 -profile:v high \
-  -c:a aac -b:a 256k -shortest -movflags +faststart $root/docs/app-store/video/covera-ad.mp4
-echo "wrote docs/app-store/video/covera-ad.mp4"
+  -c:a aac -b:a 256k -shortest -movflags +faststart $root/docs/app-store/video/clausa-ad.mp4
+echo "wrote docs/app-store/video/clausa-ad.mp4"

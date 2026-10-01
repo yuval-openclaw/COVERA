@@ -5,7 +5,7 @@ import AppKit
 //   2.55  "Nobody reads it."  — the pile blows away
 //   3.62  "Until the day" / "you need it."
 //   4.80  a heartbeat line; one word per beat: surgery, diagnosis, accident, baby
-//   7.20  the pulse becomes the full stop of "Covera." and the paper floods in
+//   7.20  the pulse becomes the full stop of "Clausa." and the paper floods in
 
 let revealMark = Wordmark(size: 190)
 let revealBase: CGFloat = 1010

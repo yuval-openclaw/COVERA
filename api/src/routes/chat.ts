@@ -17,7 +17,7 @@ export async function chatRoutes(app: FastifyInstance): Promise<void> {
     // Each request here is paid for at the AI provider; a daily cap per
     // account keeps one account from running up the bill.
     if (!(await allow(`chat:${userId}`, 150, DAY))) {
-      return reply.status(429).send({ error: 'You have asked the most questions Covera can answer in one day. Try again tomorrow.' });
+      return reply.status(429).send({ error: 'You have asked the most questions Clausa can answer in one day. Try again tomorrow.' });
     }
     const parsed = requestSchema.safeParse(request.body);
     if (!parsed.success) return reply.status(400).send({ error: 'Ask a question about your policies.' });

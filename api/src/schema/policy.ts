@@ -53,7 +53,7 @@ const ambiguousSchema = z.object({
 
 /**
  * The document does address this, but the figure read from it could not be
- * proved against the page, so none is kept. Set only by Covera after the
+ * proved against the page, so none is kept. Set only by Clausa after the
  * extractor's last attempt, never by the extractor itself: it exists so that
  * one misread field does not throw away a whole policy, without pretending the
  * document is silent (that is not_stated) and without keeping an unproven

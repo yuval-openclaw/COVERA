@@ -1,4 +1,4 @@
-"""Instruments for the Covera ad score. Everything is synthesised here, so the
+"""Instruments for the Clausa ad score. Everything is synthesised here, so the
 track has no licence attached to it. Mono unless noted; 48 kHz float."""
 import numpy as np
 

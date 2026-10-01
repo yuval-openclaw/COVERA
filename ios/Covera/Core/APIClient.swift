@@ -13,16 +13,16 @@ enum APIError: LocalizedError {
         case let .http(_, message):
             return message
         case .transport:
-            return String(localized: "Could not reach Covera. Check your connection and try again.")
+            return String(localized: "Could not reach Clausa. Check your connection and try again.")
         case .decoding:
             // Never paper over a shape mismatch: a response we cannot fully
             // decode may be a plan whose citations we would drop on the floor.
-            return String(localized: "Covera received a reply it could not read safely, so nothing is shown.")
+            return String(localized: "Clausa received a reply it could not read safely, so nothing is shown.")
         }
     }
 }
 
-/// Talks to the Covera API.
+/// Talks to the Clausa API.
 ///
 /// Deliberately thin. No caching of plans and no local persistence of policy
 /// figures: every screen re-asks the server, which re-reads the documents. A
@@ -263,7 +263,7 @@ actor APIClient {
             let message = (object?["message"] as? String) ?? (object?["error"] as? String)
             throw APIError.http(
                 status: http.statusCode,
-                message: message ?? String(localized: "Covera could not complete that request.")
+                message: message ?? String(localized: "Clausa could not complete that request.")
             )
         }
         return (data, http)

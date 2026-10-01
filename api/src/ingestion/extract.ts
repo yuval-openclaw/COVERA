@@ -55,7 +55,7 @@ export async function extractPolicy(params: {
     [documentId, new Map(pages.map((p) => [p.page, p.text]))],
   ]);
 
-  // "unverified" is Covera's verdict on a field, never the extractor's to give,
+  // "unverified" is Clausa's verdict on a field, never the extractor's to give,
   // so it is removed from the structure the model is shown.
   const schema = withoutUnverified(jsonSchemaFor(outputSchema));
   const contents: Content[] = [

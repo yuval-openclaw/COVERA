@@ -6,7 +6,7 @@ so the list is exactly what the app asks for, interpolations included
 ("%lld of %lld done"). Existing translations are never overwritten.
 
 A translation is rejected — and that string stays in English — if it changes
-the format specifiers, drops the "Covera" name, or translates the "DELETE"
+the format specifiers, drops the "Clausa" name, or translates the "DELETE"
 confirmation word the app checks for literally.
 
 Usage: python3 ios/scripts/translate_strings.py <DerivedData path>
@@ -57,18 +57,18 @@ def acceptable(source: str, translated: str) -> bool:
     # which produced buttons reading "DELETE וצא/י" in Hebrew.
     if ("DELETE" in source) != ("DELETE" in translated):
         return False
-    return "Covera" not in source or "Covera" in translated
+    return "Clausa" not in source or "Clausa" in translated
 
 
 def translate(key: str, code: str, strings: list[str]) -> dict[str, str]:
     numbered = "\n".join(f"{i}: {json.dumps(s, ensure_ascii=False)}" for i, s in enumerate(strings))
     prompt = f"""Translate these user-interface strings from English to {LANGUAGES[code]}.
 
-Context: Covera, a calm, trustworthy iPhone app that helps people understand their own health insurance policies during a medical event. Use a polite, clear register suitable for a frightened reader. Keep translations about as short as the English, since they appear on buttons and labels.
+Context: Clausa, a calm, trustworthy iPhone app that helps people understand their own health insurance policies during a medical event. Use a polite, clear register suitable for a frightened reader. Keep translations about as short as the English, since they appear on buttons and labels.
 
 Rules:
 - Keep every format specifier exactly (%lld, %@). If word order requires it, use positional forms (%1$lld, %2$lld).
-- Keep the brand name "Covera" untranslated.
+- Keep the brand name "Clausa" untranslated.
 - "DELETE" written in Latin capitals is a literal word the user has to type to confirm; keep it exactly as written. An ordinary "Delete" or "delete" is just the verb — translate it normally, and never leave it in English.
 - Do not add or remove information.
 

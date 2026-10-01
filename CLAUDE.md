@@ -1,4 +1,12 @@
-# Covera
+# Clausa
+
+> **Name.** The product is **Clausa** (renamed from Covera on 2026-10-01: Covera Health Inc. holds a US
+> trademark in health data). Users see only Clausa. The code keeps the old name where renaming would
+> break things or sign people out: the `ios/Covera/` folder, the Xcode target and scheme, type names
+> like `CoveraApp`, the bundle id `com.covera.app` (Google sign-in is registered to it), Keychain and
+> UserDefaults keys (`covera.*`), launch flags (`-CoveraDemo`) and `COVERA_GEMINI_API_KEY`. Logos and
+> marketing use Newsreader (`ios/scripts/fonts`, SIL OFL), never Apple's New York or SF, whose licence
+> forbids logos and marketing.
 
 Users upload their health insurance policies. The app remembers them accurately and, during
 a medical event, guides the user step by step based strictly on what their policies say.
@@ -178,7 +186,7 @@ content of any new one. Format
 dates with `.formatted(.coveraDate…)`, never `.dateTime`, or they ignore the setting. **After
 adding or changing any user-facing string**, build, then run
 `python3 ios/scripts/translate_strings.py <DerivedData>`: it fills only missing translations via
-Gemini and rejects any that alter format specifiers, "Covera" or "DELETE". Server-sent error
+Gemini and rejects any that alter format specifiers, "Clausa" or "DELETE". Server-sent error
 messages are still English only. Guidance is deliberately *not* a tab — it is
 a task, so it runs as a full-screen flow (`GuidanceFlow.swift`: one-tap intake → wait → plan)
 presented from Home or a policy. `GuidanceModel` lives in `RootView`, so a closed plan can be

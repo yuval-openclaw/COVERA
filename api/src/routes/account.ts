@@ -80,7 +80,7 @@ export async function accountRoutes(app: FastifyInstance): Promise<void> {
 
   // Records the three agreements the app asks for after sign-in: the Terms of
   // Use (with the 18+ confirmation), consent to processing health information,
-  // and the acknowledgment that Covera is not advice. All three must be true;
+  // and the acknowledgment that Clausa is not advice. All three must be true;
   // each is stored with its own time as evidence. Repeating it is harmless, and
   // a new version overwrites the old record.
   app.post('/account/consent', async (request, reply) => {

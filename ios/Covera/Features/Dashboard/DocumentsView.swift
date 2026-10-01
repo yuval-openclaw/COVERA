@@ -223,7 +223,7 @@ private struct EmptyLibraryCard: View {
                 Text(String(localized: "No policies yet"))
                     .font(Theme.Typeface.display(.title2))
                     .foregroundStyle(Theme.Palette.ink)
-                Text(String(localized: "Add the full policy wording your insurer sent you, not the summary page. Covera reads it page by page and keeps the page number for every figure."))
+                Text(String(localized: "Add the full policy wording your insurer sent you, not the summary page. Clausa reads it page by page and keeps the page number for every figure."))
                     .font(.subheadline)
                     .foregroundStyle(Theme.Palette.secondaryInk)
                     .multilineTextAlignment(.center)
@@ -439,9 +439,9 @@ private struct DocumentDetailSheet: View {
         case "failed":
             String(localized: "This document could not be read with enough confidence to quote it accurately, so nothing from it is used. A clearer scan, or the original PDF from your insurer, usually works.")
         case "extracting", "uploaded":
-            String(localized: "Covera is still reading this document. Nothing from it is used until every figure has been checked against its page.")
+            String(localized: "Clausa is still reading this document. Nothing from it is used until every figure has been checked against its page.")
         default:
-            String(localized: "Read and stored. Every figure Covera quotes from this policy links back to its page, so you can always check the wording yourself.")
+            String(localized: "Read and stored. Every figure Clausa quotes from this policy links back to its page, so you can always check the wording yourself.")
         }
     }
 
@@ -464,7 +464,7 @@ private struct UploadOutcomeCard: View {
 
     private var headline: String {
         if outcome.alreadyIngested {
-            return String(localized: "Covera already had this document, so nothing was duplicated.")
+            return String(localized: "Clausa already had this document, so nothing was duplicated.")
         }
         if outcome.supersedes != nil {
             return String(localized: "Stored as a renewal of a policy you already had.")
@@ -580,7 +580,7 @@ final class DocumentsModel {
         }
     }
 
-    /// - Parameter isTemporary: the file is a scan Covera made itself, and is
+    /// - Parameter isTemporary: the file is a scan Clausa made itself, and is
     ///   deleted once the upload has been attempted.
     func upload(url: URL, isTemporary: Bool) async {
         isUploading = true

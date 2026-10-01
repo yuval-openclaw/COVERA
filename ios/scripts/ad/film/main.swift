@@ -2,7 +2,7 @@ import AppKit
 import ImageIO
 import UniformTypeIdentifiers
 
-// The Covera ad: 29.6 s, 1080×1920, 30 fps, with motion blur (four exposures
+// The Clausa ad: 29.6 s, 1080×1920, 30 fps, with motion blur (four exposures
 // per frame across half a frame, like a 180° shutter).
 //
 //   film <shots dir>                    raw BGRA frames on stdout, for ffmpeg

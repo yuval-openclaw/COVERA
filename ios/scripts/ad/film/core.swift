@@ -1,7 +1,7 @@
 import AppKit
 import CoreText
 
-// Canvas, palette, type and motion for the Covera ad. Colours are the app's own
+// Canvas, palette, type and motion for the Clausa ad. Colours are the app's own
 // (Theme.Palette, light appearance), so the film and the product are one thing.
 
 let W = 1080, H = 1920
@@ -22,11 +22,28 @@ enum C {
 
 // MARK: - Type
 
+/// Newsreader (SIL Open Font License, ios/scripts/fonts): the film is marketing,
+/// and Apple's New York may only be used inside an app's interface.
+let newsreader: Void = {
+    let fonts = URL(fileURLWithPath: #filePath).deletingLastPathComponent()
+        .appendingPathComponent("../../fonts").standardized
+    for name in ["Newsreader.ttf", "Newsreader-Italic.ttf"] {
+        CTFontManagerRegisterFontsForURL(fonts.appendingPathComponent(name) as CFURL, .process, nil)
+    }
+}()
+
 func serif(_ size: CGFloat, _ weight: NSFont.Weight = .medium, italic: Bool = false) -> CTFont {
-    var d = NSFont.systemFont(ofSize: size, weight: weight).fontDescriptor
-    if let s = d.withDesign(.serif) { d = s }
-    if italic { d = d.withSymbolicTraits(.italic) }
-    return (NSFont(descriptor: d, size: size) ?? NSFont(name: "Georgia", size: size)!) as CTFont
+    _ = newsreader
+    let wght: Double = weight == .regular ? 400 : weight == .medium ? 520 : weight == .semibold ? 620 : 700
+    var attributes: [NSFontDescriptor.AttributeName: Any] = [
+        .family: "Newsreader",
+        NSFontDescriptor.AttributeName(kCTFontVariationAttribute as String):
+            [NSNumber(value: 0x7767_6874): NSNumber(value: wght), NSNumber(value: 0x6F70_737A): NSNumber(value: Double(min(72, max(6, size))))],
+    ]
+    if italic { attributes[.traits] = [NSFontDescriptor.TraitKey.symbolic: NSFontDescriptor.SymbolicTraits.italic.rawValue] }
+    let font = NSFont(descriptor: NSFontDescriptor(fontAttributes: attributes), size: size)
+    guard let font, font.familyName == "Newsreader" else { fatalError("Newsreader is not in ios/scripts/fonts") }
+    return font as CTFont
 }
 
 func sans(_ size: CGFloat, _ weight: NSFont.Weight = .regular) -> CTFont {
@@ -298,14 +315,14 @@ func kinetic(_ w: Words, cx: CGFloat = CGFloat(W) / 2, left: CGFloat? = nil, bas
     ctx.restoreGState()
 }
 
-// MARK: - The wordmark: "Covera" and its blue full stop, drawn as a dot so it can move
+// MARK: - The wordmark: "Clausa" and its blue full stop, drawn as a dot so it can move
 
 struct Wordmark {
     let name: TextImage
     let dotR, gap: CGFloat
 
     init(size: CGFloat) {
-        name = text("Covera", serif(size, .semibold), C.ink)
+        name = text("Clausa", serif(size, .semibold), C.ink)
         dotR = size * 0.078
         gap = size * 0.035
     }

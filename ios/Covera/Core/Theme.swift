@@ -3,7 +3,7 @@ import UIKit
 
 /// The visual language.
 ///
-/// Black, deliberately. Covera is opened at night in a hospital corridor as
+/// Black, deliberately. Clausa is opened at night in a hospital corridor as
 /// often as at a desk, and a true-black OLED ground is the calmest thing a
 /// phone can show. The register is quiet luxury — a private bank's letter, not
 /// a fintech dashboard: serif headlines, generous spacing, fine lit edges, and
@@ -466,14 +466,14 @@ struct Wordmark: View {
     var size: Font.TextStyle = .title3
 
     var body: some View {
-        let name = Text(verbatim: "Covera").foregroundStyle(Theme.Palette.ink)
+        let name = Text(verbatim: "Clausa").foregroundStyle(Theme.Palette.ink)
         let stop = Text(verbatim: ".").foregroundStyle(Theme.Palette.cited)
         Text("\(name)\(stop)")
             .font(Theme.Typeface.display(size).weight(.semibold))
             // A name is never broken across lines ("Cov-era.").
             .lineLimit(1)
             .fixedSize()
-            .accessibilityLabel("Covera")
+            .accessibilityLabel("Clausa")
     }
 }
 

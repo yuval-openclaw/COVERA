@@ -115,7 +115,7 @@ struct LoginView: View {
                 } label: {
                     Text(model.creatingAccount
                          ? String(localized: "Already have an account? Sign in")
-                         : String(localized: "New to Covera? Create an account"))
+                         : String(localized: "New to Clausa? Create an account"))
                         .font(.subheadline.weight(.semibold))
                         .foregroundStyle(Theme.Palette.ink)
                         .frame(maxWidth: .infinity, minHeight: 44)

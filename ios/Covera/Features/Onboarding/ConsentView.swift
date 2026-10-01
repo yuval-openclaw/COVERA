@@ -7,7 +7,7 @@ import SwiftUI
 /// accepting the Terms of Use (which is what makes their limits on liability
 /// enforceable), consenting to the processing of health information (which the
 /// GDPR does not allow to be bundled into accepting terms), and acknowledging
-/// that Covera is not advice. The server records each, and refuses to process
+/// that Clausa is not advice. The server records each, and refuses to process
 /// any document or question until all three are on record.
 struct ConsentView: View {
     let onAgreed: () -> Void
@@ -71,7 +71,7 @@ struct ConsentView: View {
                 agreement(
                     isOn: $consentsToHealthData,
                     icon: "heart.text.square",
-                    text: String(localized: "I agree that Covera may process the health information in my documents to provide the service, as described in the Privacy Policy. I can withdraw this at any time by deleting my account."),
+                    text: String(localized: "I agree that Clausa may process the health information in my documents to provide the service, as described in the Privacy Policy. I can withdraw this at any time by deleting my account."),
                     link: (String(localized: "Read the Privacy Policy"), Legal.privacy)
                 )
                 .appearIn(3)
@@ -79,7 +79,7 @@ struct ConsentView: View {
                 agreement(
                     isOn: $understandsNotAdvice,
                     icon: "exclamationmark.bubble",
-                    text: String(localized: "I understand that Covera is not medical, legal or insurance advice, that it can make mistakes, and that I will confirm anything important with my insurer before relying on it."),
+                    text: String(localized: "I understand that Clausa is not medical, legal or insurance advice, that it can make mistakes, and that I will confirm anything important with my insurer before relying on it."),
                     link: nil
                 )
                 .appearIn(4)
@@ -141,14 +141,14 @@ struct ConsentView: View {
                 .opacity(birthDate == nil ? 0.55 : 1)
             }
 
-            Text(String(localized: "Covera is for people aged 18 and over."))
+            Text(String(localized: "Clausa is for people aged 18 and over."))
                 .font(.caption)
                 .foregroundStyle(Theme.Palette.tertiaryInk)
                 .fixedSize(horizontal: false, vertical: true)
 
             if birthDate != nil && !isOldEnough {
                 Label(
-                    String(localized: "You need to be 18 or over to use Covera."),
+                    String(localized: "You need to be 18 or over to use Clausa."),
                     systemImage: "exclamationmark.circle"
                 )
                 .font(.footnote)

@@ -24,7 +24,7 @@ struct ChatView: View {
                 VStack(alignment: .leading, spacing: Theme.Spacing.block) {
                     ScreenHeader(
                         eyebrow: String(localized: "Assistant"),
-                        title: String(localized: "Ask Covera"),
+                        title: String(localized: "Ask Clausa"),
                         subtitle: String(localized: "Answers come only from your own policies, with the page they came from.")
                     )
                     .appearIn(0)

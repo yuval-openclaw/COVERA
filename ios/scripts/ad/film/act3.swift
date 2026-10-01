@@ -1,13 +1,13 @@
 import AppKit
 
 // Act three, 16.8–24.0 s: honesty, the plan, the chat.
-//  16.80  "Not in your policy?" — an amber card; 18.0 "Covera says so."
+//  16.80  "Not in your policy?" — an amber card; 18.0 "Clausa says so."
 //  19.20  "When something happens, a plan, step by step." — four steps on the beat
 //  21.60  "Ask anything." — question, typing, cited answer; 23.35 "Every answer shows its page."
 // Colours keep their meaning from the app: blue cited, amber not stated, coral deadline.
 
 let notIn = Words("Not in your policy?", fitted("Not in your policy?", 104) { serif($0, .medium) }, C.ink)
-let saysSo = Words("Covera says so.", fitted("Covera says so.", 104) { serif($0, .medium) }, C.ink)
+let saysSo = Words("Clausa says so.", fitted("Clausa says so.", 104) { serif($0, .medium) }, C.ink)
 let whenA = Words("When something happens,", fitted("When something happens,", 88) { serif($0, .medium) }, C.ink)
 let whenB = Words("a plan, step by step.", fitted("a plan, step by step.", 88) { serif($0, .medium) }, C.ink)
 let askHead = Words("Ask anything.", fitted("Ask anything.", 124) { serif($0, .medium) }, C.ink)

@@ -1,4 +1,4 @@
-# Covera API — production image.
+# Clausa API — production image.
 #
 # Build:   docker build -t covera-api api/
 # Migrate: docker run --env-file prod.env covera-api node dist/db/migrate.js

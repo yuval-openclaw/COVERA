@@ -7,7 +7,7 @@ struct CoveraApp: App {
     /// The signed-in account's plan, library and call log, replaced on
     /// sign-out because they belong to that account.
     @State private var workspace = Workspace()
-    // The first-launch explanation of what Covera is. Agreement to the terms is
+    // The first-launch explanation of what Clausa is. Agreement to the terms is
     // separate and per account (ConsentView, after sign-in).
     @AppStorage("covera.onboardingSeen") private var disclaimerAccepted = false
     @Environment(\.scenePhase) private var scenePhase
