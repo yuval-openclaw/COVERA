@@ -7,7 +7,6 @@ import SwiftUI
 /// behind a typed confirmation because it is irreversible, not behind a support
 /// email because that would be a dark pattern.
 struct AccountView: View {
-    let lock: AppLock
     @State private var model = AccountModel()
     @State private var showingDeleteConfirmation = false
     @State private var confirmationText = ""
@@ -60,7 +59,6 @@ struct AccountView: View {
                     Task {
                         await model.deleteAccount()
                         confirmationText = ""
-                        lock.lock()
                     }
                 }
             } message: {
@@ -369,7 +367,7 @@ final class AccountModel {
 
 #if DEBUG
 #Preview {
-    AccountView(lock: AppLock())
+    AccountView()
         .preferredColorScheme(.dark)
 }
 #endif

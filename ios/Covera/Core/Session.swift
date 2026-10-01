@@ -1,5 +1,4 @@
 import Foundation
-import LocalAuthentication
 import Security
 
 /// The signed-in session.
@@ -94,99 +93,5 @@ final class AuthState {
             // recording the answer will surface the real problem.
             hasAgreed = false
         }
-    }
-}
-
-/// Face ID / Touch ID gate in front of stored documents.
-@MainActor
-@Observable
-final class AppLock {
-    enum State: Equatable {
-        case locked
-        case unlocked
-        case unavailable(String)
-    }
-
-    private(set) var state: State = .locked
-    /// Ask on the next return to the foreground. Set whenever the lock closes
-    /// and cleared by any attempt, so cancelling the prompt — which itself
-    /// makes the app inactive and active again — cannot summon it in a loop.
-    private(set) var promptOnActive = true
-    private var evaluating = false
-
-    /// Whether the device can authenticate at all. If it cannot — no passcode
-    /// set — we say so rather than silently leaving documents open.
-    var canEvaluate: Bool {
-        var error: NSError?
-        return LAContext().canEvaluatePolicy(.deviceOwnerAuthentication, error: &error)
-    }
-
-    func unlock() async {
-        promptOnActive = false
-        guard !evaluating else { return }
-        evaluating = true
-        defer { evaluating = false }
-        #if DEBUG
-        // Screenshots and design review only. `-CoveraDemo` shows fictional
-        // sample data, so there is nothing behind the lock to protect.
-        // Compiled out of release builds.
-        // `-CoveraDemoLocked` keeps the real lock over the sample data, so the
-        // gate itself can be exercised on the simulator without an account.
-        if PreviewData.isDemo && !ProcessInfo.processInfo.arguments.contains("-CoveraDemoLocked") {
-            state = .unlocked
-            return
-        }
-        #endif
-
-        let context = LAContext()
-        context.localizedFallbackTitle = String(localized: "Use passcode")
-
-        var error: NSError?
-        var available = context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error)
-        #if DEBUG
-        // A device with neither passcode nor biometrics, which a simulator with
-        // a passcode set cannot otherwise show.
-        if ProcessInfo.processInfo.arguments.contains("-CoveraNoDeviceLock") { available = false }
-        #endif
-        guard available else {
-            // Falling back to open access would be the wrong default here, but
-            // so would locking someone out of their own policies during a
-            // medical event. We surface the situation and let them proceed.
-            state = .unavailable(
-                String(localized: "This device has no passcode or biometric lock, so Covera cannot lock your documents.")
-            )
-            return
-        }
-
-        do {
-            let ok = try await context.evaluatePolicy(
-                .deviceOwnerAuthentication,
-                localizedReason: String(localized: "Unlock your insurance documents")
-            )
-            state = ok ? .unlocked : .locked
-        } catch {
-            state = .locked
-        }
-    }
-
-    /// A fresh sign-in has just proved who this is; asking for Face ID again a
-    /// second later would only add a step.
-    func grantAfterSignIn() {
-        state = .unlocked
-    }
-
-    /// The device has no passcode and no biometrics, so nothing on it can prove
-    /// who is holding it. The lock screen says so every time the app comes to
-    /// the foreground, and the person may continue: refusing would shut someone
-    /// out of their own policies during a medical event, while protecting
-    /// nothing the unlocked phone itself does not already expose.
-    func continueWithoutLock() {
-        guard case .unavailable = state else { return }
-        state = .unlocked
-    }
-
-    func lock() {
-        state = .locked
-        promptOnActive = true
     }
 }

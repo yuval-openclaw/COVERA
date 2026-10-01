@@ -98,11 +98,8 @@ entitlements the Keychain keeps nothing: the saved account id disappears and eve
 "not connected", which looks like a server problem and is not one.
 
 Live API on the simulator: start the API (`covera-api` in `.claude/launch.json`), launch without
-`-CoveraDemo`, and sign in with email and password. A fresh sign-in skips the Face ID prompt; on
-later launches the lock is real. Enrol simulated Face ID once with
-`xcrun simctl spawn booted notifyutil -s com.apple.BiometricKit.enrollmentChanged 1` followed by
-`... notifyutil -p com.apple.BiometricKit.enrollmentChanged`, then pass each prompt with
-`... notifyutil -p com.apple.BiometricKit_Sim.pearl.match`.
+`-CoveraDemo`, and sign in with email and password. The Policies tab asks for its code the first
+time and after every return from the background.
 
 ## Authentication
 
@@ -127,14 +124,16 @@ audience, issuer, expiry and verified email with Google.
 
 `-CoveraDemo` (Debug builds only) loads the fictional sample plan and library from
 `Core/PreviewData.swift` and skips the device lock, for screenshots and design review.
-Add `-CoveraDemoLocked` to keep the real lock over the sample data, and `-CoveraNoDeviceLock`
-to see what a device with neither passcode nor biometrics gets.
+Add `-CoveraDemoLocked` to keep the real policy code over the sample data.
 
-The lock is structural (`CoveraApp.gated`): until `AppLock` is unlocked, nothing that shows
-policy data is in the view tree — no tabs, sheets or resumed plan. The account's plan, library
-and call log live in `Workspace`, above the lock, so locking loses nothing; it is replaced on
-sign-out. The prompt is asked for when the app becomes active, never from the background. A
-device with no passcode or biometrics is told so on every return and may continue.
+There is no Face ID. By the owner's decision (2026-10-01) the only lock is a 6-digit code the
+person chooses, in front of the Policies tab alone (`Core/PolicyLock.swift`,
+`Features/Dashboard/PolicyLockView.swift`); Home, Ask, plans and the call log open without it.
+While locked, the library is not in the view tree, so a sheet open over it goes too. Only a
+salted PBKDF2 hash is stored, in the Keychain, this device only. It locks again on every trip to
+the background. Signing out clears it, which is also how a forgotten code is replaced; ten wrong
+tries in a row sign the account out. After choosing it the person is asked to save it, and
+skipping asks once more.
 Sample data must obey the citation rule like real data does. `#if DEBUG` keeps all of it
 out of release builds — keep it that way.
 

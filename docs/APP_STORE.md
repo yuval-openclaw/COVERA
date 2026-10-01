@@ -8,11 +8,11 @@ account, legal and asset work.
 
 | Requirement | Where |
 | --- | --- |
-| Camera / Photos / Face ID / Calendar usage strings | `ios/Covera/Info.plist` |
+| Camera / Photos / Calendar usage strings | `ios/Covera/Info.plist` |
 | Privacy manifest (`PrivacyInfo.xcprivacy`) | `ios/Covera/PrivacyInfo.xcprivacy` |
 | Keychain + Associated Domains entitlements | `ios/Covera/Covera.entitlements` |
 | App icon slot (1024, no alpha) | `ios/Covera/Resources/Assets.xcassets/AppIcon.appiconset` — **placeholder art** |
-| Face ID / passcode lock on documents, re-locks on backgrounding | `ios/Covera/Core/Session.swift`, `App/CoveraApp.swift` |
+| 6-digit code on the Policies tab, re-locks on backgrounding | `ios/Covera/Core/PolicyLock.swift`, `Features/Dashboard/PolicyLockView.swift` |
 | Mandatory onboarding disclaimer, no skip (1.4.1 / 5.1.1) | `ios/Covera/Features/Onboarding/OnboardingDisclaimerView.swift` |
 | In-app account deletion (5.1.1(v)) | `ios/Covera/Features/Account/AccountView.swift` → `DELETE /account` |
 | Full data export | `AccountView` → `GET /account/export` |
