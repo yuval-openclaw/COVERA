@@ -18,7 +18,26 @@ struct ConsentView: View {
     @State private var isSaving = false
     @State private var errorMessage: String?
 
-    private var allAgreed: Bool { acceptsTerms && consentsToHealthData && understandsNotAdvice }
+    /// Asked, checked, and never sent anywhere. The Terms require 18, and a
+    /// date is a better gate than a switch someone flips without reading — but
+    /// storing it would mean collecting a new piece of personal information
+    /// about every user, which the Privacy Policy would then have to declare.
+    /// The server keeps what it already kept: that the terms were accepted.
+    @State private var birthDate: Date?
+
+    private static let minimumAge = 18
+
+    /// Old enough by the calendar, not by the year alone — a birthday later
+    /// this year still makes someone 17.
+    private var isOldEnough: Bool {
+        guard let birthDate else { return false }
+        let years = Calendar.current.dateComponents([.year], from: birthDate, to: .now).year ?? 0
+        return years >= Self.minimumAge
+    }
+
+    private var allAgreed: Bool {
+        isOldEnough && acceptsTerms && consentsToHealthData && understandsNotAdvice
+    }
 
     var body: some View {
         ScrollView {
@@ -38,13 +57,16 @@ struct ConsentView: View {
                 }
                 .padding(.top, Theme.Spacing.block)
 
+                birthDateCard
+                    .appearIn(1)
+
                 agreement(
                     isOn: $acceptsTerms,
                     icon: "doc.plaintext",
-                    text: String(localized: "I am 18 or older, and I agree to the Terms of Use."),
+                    text: String(localized: "I agree to the Terms of Use."),
                     link: (String(localized: "Read the Terms of Use"), Legal.terms)
                 )
-                .appearIn(1)
+                .appearIn(2)
 
                 agreement(
                     isOn: $consentsToHealthData,
@@ -52,7 +74,7 @@ struct ConsentView: View {
                     text: String(localized: "I agree that Covera may process the health information in my documents to provide the service, as described in the Privacy Policy. I can withdraw this at any time by deleting my account."),
                     link: (String(localized: "Read the Privacy Policy"), Legal.privacy)
                 )
-                .appearIn(2)
+                .appearIn(3)
 
                 agreement(
                     isOn: $understandsNotAdvice,
@@ -60,7 +82,7 @@ struct ConsentView: View {
                     text: String(localized: "I understand that Covera is not medical, legal or insurance advice, that it can make mistakes, and that I will confirm anything important with my insurer before relying on it."),
                     link: nil
                 )
-                .appearIn(3)
+                .appearIn(4)
 
                 if let errorMessage {
                     Label(errorMessage, systemImage: "exclamationmark.circle")
@@ -91,6 +113,57 @@ struct ConsentView: View {
             .accessibilityHint(Text(verbatim: allAgreed ? "" : String(localized: "Turn on all three to continue")))
         }
     }
+
+    /// Date of birth, with the rule stated under it rather than buried in the
+    /// terms. Nothing is preselected: a picker that opens on a plausible adult
+    /// birthday answers the question for the user.
+    private var birthDateCard: some View {
+        VStack(alignment: .leading, spacing: Theme.Spacing.step) {
+            HStack(spacing: Theme.Spacing.step) {
+                IconTile(systemName: "calendar", tint: Theme.Palette.cited, size: 36)
+                Text(String(localized: "Your date of birth"))
+                    .font(.headline)
+                    .foregroundStyle(Theme.Palette.ink)
+                Spacer(minLength: Theme.Spacing.step)
+                DatePicker(
+                    String(localized: "Your date of birth"),
+                    selection: Binding(
+                        get: { birthDate ?? Self.pickerStart },
+                        // Named, not `$0`: inside withAnimation that would bind
+                        // to the animation's closure instead of the new date.
+                        set: { picked in withAnimation(Theme.Motion.press) { birthDate = picked } }
+                    ),
+                    in: ...Date.now,
+                    displayedComponents: .date
+                )
+                .labelsHidden()
+                .datePickerStyle(.compact)
+                .opacity(birthDate == nil ? 0.55 : 1)
+            }
+
+            Text(String(localized: "Covera is for people aged 18 and over."))
+                .font(.caption)
+                .foregroundStyle(Theme.Palette.tertiaryInk)
+                .fixedSize(horizontal: false, vertical: true)
+
+            if birthDate != nil && !isOldEnough {
+                Label(
+                    String(localized: "You need to be 18 or over to use Covera."),
+                    systemImage: "exclamationmark.circle"
+                )
+                .font(.footnote)
+                .foregroundStyle(Theme.Palette.caution)
+                .fixedSize(horizontal: false, vertical: true)
+                .transition(Theme.Motion.unfold)
+            }
+        }
+        .coveraCard()
+    }
+
+    /// Where the wheel opens before a choice is made. Far enough back that it
+    /// is obviously a starting point and not an answer.
+    private static let pickerStart: Date =
+        Calendar.current.date(byAdding: .year, value: -30, to: .now) ?? .now
 
     private func agreement(
         isOn: Binding<Bool>,
