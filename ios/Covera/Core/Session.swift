@@ -16,15 +16,25 @@ actor Session {
 
     var token: String? { readKeychain() }
 
-    /// Readable without awaiting, so the app can choose its first screen at launch.
-    nonisolated var hasToken: Bool { readKeychain() != nil }
+    /// Readable without awaiting, so the app can choose its first screen at
+    /// launch. A session saved before accounts were recorded with it counts as
+    /// none: everything kept on the device is filed under the account.
+    nonisolated var hasToken: Bool { readKeychain() != nil && accountID != nil }
 
-    func signIn(token: String) throws {
+    /// The signed-in account's id, which the server sends with every sign-in.
+    /// Device-local data (the call log) is filed under it, so a second account
+    /// on the same phone never sees the first one's notes.
+    nonisolated var accountID: String? { UserDefaults.standard.string(forKey: Self.accountKey) }
+    private static let accountKey = "covera.accountID"
+
+    func signIn(token: String, accountID: String) throws {
         try writeKeychain(token)
+        UserDefaults.standard.set(accountID, forKey: Self.accountKey)
     }
 
     func signOut() {
         SecItemDelete(baseQuery() as CFDictionary)
+        UserDefaults.standard.removeObject(forKey: Self.accountKey)
     }
 
     // MARK: - Keychain

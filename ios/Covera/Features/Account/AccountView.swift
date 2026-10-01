@@ -328,9 +328,18 @@ final class AccountModel {
     }
 
     func signOut() async {
+        // An export or a downloaded policy left in tmp must not outlive the session.
+        Self.clearTemporaryFiles()
         await APIClient.shared.signOut()
         await Session.shared.signOut()
         AuthState.shared.didSignOut()
+    }
+
+    static func clearTemporaryFiles() {
+        let tmp = FileManager.default.temporaryDirectory
+        for url in (try? FileManager.default.contentsOfDirectory(at: tmp, includingPropertiesForKeys: nil)) ?? [] {
+            try? FileManager.default.removeItem(at: url)
+        }
     }
 
     func export() async -> URL? {
@@ -356,7 +365,12 @@ final class AccountModel {
         defer { isWorking = false }
 
         do {
+            let accountID = Session.shared.accountID
             try await APIClient.shared.deleteAccount()
+            // What the deleted account left on this phone goes with it: its
+            // call log, and any export or downloaded document still in tmp.
+            if let accountID { CallLogStore.erase(accountID: accountID) }
+            Self.clearTemporaryFiles()
             await Session.shared.signOut()
             AuthState.shared.didSignOut()
         } catch {

@@ -55,20 +55,50 @@ struct CallLogEntry: Identifiable, Codable, Equatable {
 @Observable
 final class CallLogStore {
     private(set) var entries: [CallLogEntry] = []
+    /// Set when the log could not be read or saved, so an edit is never lost
+    /// silently. Shown by the call log screen.
+    private(set) var problem: String?
 
-    private let fileURL: URL
+    private let fileURL: URL?
 
-    init(filename: String = "call-log.json") {
-        let directory = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
-        try? FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
-        fileURL = directory.appendingPathComponent(filename)
+    /// One file per account. Without an account there is nothing to show and
+    /// nothing is written.
+    init(accountID: String?) {
+        Self.discardUnownedLog()
+        guard let accountID, let url = Self.url(for: accountID) else {
+            fileURL = nil
+            return
+        }
+        fileURL = url
         load()
+    }
+
+    private static var directory: URL {
+        FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
+    }
+
+    private static func url(for accountID: String) -> URL? {
+        // The id is a server UUID; anything else is refused rather than used in a path.
+        guard UUID(uuidString: accountID) != nil else { return nil }
+        return directory.appendingPathComponent("call-log-\(accountID.lowercased()).json")
+    }
+
+    /// Before logs were filed by account there was one shared `call-log.json`.
+    /// Its owner cannot be known, so it is given to no one. (Covera had not
+    /// launched; the only notes in it were test data.)
+    private static func discardUnownedLog() {
+        try? FileManager.default.removeItem(at: directory.appendingPathComponent("call-log.json"))
+    }
+
+    /// Removes an account's log from this device, after the account is deleted.
+    static func erase(accountID: String) {
+        if let url = url(for: accountID) { try? FileManager.default.removeItem(at: url) }
     }
 
     #if DEBUG
     /// Sample entries for the demo build; never written to disk.
     init(sample: [CallLogEntry]) {
-        fileURL = URL(fileURLWithPath: "/dev/null")
+        fileURL = nil
         entries = sample
     }
     #endif
@@ -95,14 +125,23 @@ final class CallLogStore {
     }
 
     private func load() {
-        guard let data = try? Data(contentsOf: fileURL) else { return }
-        entries = (try? JSONDecoder().decode([CallLogEntry].self, from: data)) ?? []
+        guard let fileURL, FileManager.default.fileExists(atPath: fileURL.path) else { return }
+        do {
+            entries = try JSONDecoder().decode([CallLogEntry].self, from: Data(contentsOf: fileURL))
+        } catch {
+            problem = String(localized: "Your call log could not be read on this device.")
+        }
     }
 
     private func write() {
-        guard let data = try? JSONEncoder().encode(entries) else { return }
-        // Written with file protection, like everything else the app keeps.
-        try? data.write(to: fileURL, options: [.atomic, .completeFileProtection])
+        guard let fileURL else { return }
+        do {
+            // Written with file protection, like everything else the app keeps.
+            try JSONEncoder().encode(entries).write(to: fileURL, options: [.atomic, .completeFileProtection])
+            problem = nil
+        } catch {
+            problem = String(localized: "This change could not be saved on this device.")
+        }
     }
 
     /// The whole log as one page of plain text, for sending to an insurer,

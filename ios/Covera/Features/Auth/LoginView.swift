@@ -229,7 +229,7 @@ final class LoginModel {
                 password: password,
                 createAccount: creatingAccount
             )
-            try await Session.shared.signIn(token: response.token)
+            try await Session.shared.signIn(token: response.token, accountID: response.user.id)
             password = ""
             return true
         } catch {
@@ -254,7 +254,7 @@ final class LoginModel {
         do {
             let token = try AppleAuth.identityToken(from: result)
             let response = try await APIClient.shared.signInWithApple(identityToken: token, nonce: appleNonce)
-            try await Session.shared.signIn(token: response.token)
+            try await Session.shared.signIn(token: response.token, accountID: response.user.id)
             return true
         } catch AppleAuthError.cancelled {
             return false
@@ -271,7 +271,7 @@ final class LoginModel {
         do {
             let idToken = try await GoogleAuth().signIn()
             let response = try await APIClient.shared.signInWithGoogle(idToken: idToken)
-            try await Session.shared.signIn(token: response.token)
+            try await Session.shared.signIn(token: response.token, accountID: response.user.id)
             return true
         } catch GoogleAuthError.cancelled {
             return false

@@ -66,12 +66,12 @@ struct CoveraApp: App {
             if phase == .background { policyLock.lock() }
         }
         .onChange(of: auth.isSignedIn) { _, signedIn in
-            // Sign-out, or a session the server rejected: nothing of this
-            // account's may carry over to the next one, including its code.
-            if !signedIn {
-                workspace = Workspace()
-                policyLock.reset()
-            }
+            // A new workspace on every change of account: after sign-in it
+            // opens that account's call log; after sign-out, or a session the
+            // server rejected, nothing of the last account's carries over,
+            // including its code.
+            workspace = Workspace()
+            if !signedIn { policyLock.reset() }
         }
     }
 }
@@ -98,7 +98,7 @@ final class Workspace {
         #endif
         guidance = GuidanceModel()
         documents = DocumentsModel()
-        callLog = CallLogStore()
+        callLog = CallLogStore(accountID: Session.shared.accountID)
     }
 }
 
