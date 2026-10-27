@@ -87,6 +87,27 @@ func text(_ s: String, _ font: CTFont, _ color: CGColor, kern: CGFloat = 0) -> T
     return made
 }
 
+/// A word whose closing punctuation is set in the logo's blue — every headline
+/// ends the way "Clausa." does. Falls back to one colour for anything else.
+func brandedWord(_ s: String, _ font: CTFont, _ color: CGColor) -> TextImage {
+    guard let last = s.last, ".,?!".contains(last), s.count > 1 else { return text(s, font, color) }
+    let key = "brand|\(s)|\(CTFontCopyPostScriptName(font))|\(CTFontGetSize(font))|\(color.components ?? [])"
+    if let hit = textCache[key] { return hit }
+    let a = NSMutableAttributedString(string: String(s.dropLast()), attributes: attrs(font, color))
+    a.append(NSAttributedString(string: String(last), attributes: attrs(font, C.cited)))
+    let line = CTLineCreateWithAttributedString(a)
+    var asc: CGFloat = 0, desc: CGFloat = 0, l: CGFloat = 0
+    let w = CGFloat(CTLineGetTypographicBounds(line, &asc, &desc, &l))
+    let pad: CGFloat = 10
+    let c = CGContext(data: nil, width: Int(ceil(w + 2 * pad)), height: Int(ceil(asc + desc + 2 * pad)), bitsPerComponent: 8,
+                      bytesPerRow: 0, space: space, bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
+    c.textPosition = CGPoint(x: pad, y: pad + desc)
+    CTLineDraw(line, c)
+    let made = TextImage(image: c.makeImage()!, width: w, ascent: asc, descent: desc, pad: pad)
+    textCache[key] = made
+    return made
+}
+
 /// Wrapped text as an image; returns the image and its drawn size.
 func paragraph(_ s: String, _ font: CTFont, _ color: CGColor, width: CGFloat,
                align: CTTextAlignment = .left, spacing: CGFloat = 6) -> (image: CGImage, size: CGSize) {
@@ -118,7 +139,8 @@ struct Words {
     let top: CGFloat
 
     init(_ s: String, _ font: CTFont, _ color: CGColor) {
-        parts = s.split(separator: " ").map { text(String($0), font, color) }
+        let branded = color == C.ink || color == C.onNight
+        parts = s.split(separator: " ").map { branded ? brandedWord(String($0), font, color) : text(String($0), font, color) }
         let gap = text("a a", font, color).width - 2 * text("a", font, color).width
         var x: CGFloat = 0, xs: [CGFloat] = []
         for p in parts { xs.append(x); x += p.width + gap }

@@ -89,6 +89,24 @@ for bar, chord, beats in CHORDS:
 music.add(bass(ROOT['A'], BAR, 0.5), at(8))           # the breakdown holds one note
 music.add(bass(ROOT['Dmaj9'], 3.0, 0.6), at(12))     # and the ending rings
 
+# --- The hook -------------------------------------------------------------------
+# A short melody on chord tones, so the film has a tune to remember. It enters
+# with the beat, rests in the breakdown, and comes back for the last run.
+HOOK = {
+    5: [(0, 78, 0.9), (1, 74, 0.45), (1.5, 76, 0.45), (2, 78, 0.9), (3, 81, 0.9)],
+    6: [(0, 79, 0.9), (1, 78, 0.9), (2, 74, 0.9), (3, 71, 0.9)],
+    7: [(0, 78, 0.9), (1, 81, 0.9), (2, 86, 1.2), (3.5, 85, 0.5)],
+    9: [(0, 78, 0.9), (1, 74, 0.45), (1.5, 76, 0.45), (2, 78, 0.9), (3, 81, 0.9)],
+    10: [(0, 79, 0.9), (1, 78, 0.9), (2, 74, 0.9), (3, 71, 0.9)],
+    11: [(0, 81, 0.6), (0.5, 79, 0.6), (1, 78, 0.6), (2, 76, 0.6), (3, 73, 0.9)],
+}
+for bar, notes in HOOK.items():
+    for beat, m, d in notes:
+        music.add(lead(m, d * BEAT * 1.6, 0.5), at(bar, beat), pan=0.15, verb=0.4)
+for i, m in enumerate((69, 74, 78)):            # the logo's three notes: A, D, F#
+    music.add(lead(m, 1.2, 0.42), at(4) + 0.42 + i * 0.16, pan=-0.2 + 0.2 * i, verb=0.5)
+    music.add(lead(m, 1.6, 0.4), at(12) + 0.42 + i * 0.16, pan=-0.2 + 0.2 * i, verb=0.55)
+
 # --- Drums -------------------------------------------------------------------
 kicks = []
 for b in DRUM_BARS:
@@ -99,7 +117,8 @@ for b in DRUM_BARS:
     for k in range(16 if b == 11 else 8):
         step = 0.25 if b == 11 else 0.5
         vel = 0.3 if (k * step) % 1 == 0.5 else 0.18
-        beat_bus.add(hat(vel), at(b, k * step), gain=0.5, pan=0.25)
+        beat_bus.add(hat(vel * (0.85 + 0.3 * rng.random())), at(b, k * step) + rng.uniform(-0.004, 0.004),
+                     gain=0.45, pan=0.25)
     beat_bus.add(hat(0.22, open_=True), at(b, 3.5), gain=0.45, pan=-0.2)
 for t in kicks:
     beat_bus.add(kick(), t, gain=0.85)
@@ -158,8 +177,7 @@ send = music.send * duck + beat_bus.send + sfx.send
 wet = np.stack([convolve(send, make_ir(seed=1)), convolve(send, make_ir(seed=2))], 1)
 mix = music.dry * duck[:, None] + beat_bus.dry + sfx.dry + wet * 0.8
 
-mix /= np.max(np.abs(mix)) / 1.1
-mix = np.tanh(mix) / np.tanh(1.1)
+mix = master(mix)
 mix[: int(0.01 * SR)] *= np.linspace(0, 1, int(0.01 * SR))[:, None]
 tail = int(0.9 * SR)
 mix[-tail:] *= np.linspace(1, 0, tail)[:, None] ** 1.5

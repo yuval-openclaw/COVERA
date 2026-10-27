@@ -42,19 +42,24 @@ def fade_out(x, seconds=0.05):
 
 
 def piano(m, dur=3.0, vel=0.8):
+    """Two strings a hair apart per note, as a piano has, so it beats and blooms
+    instead of sounding like a sine organ; partials decay faster as they rise."""
     f0, n = mtof(m), int(dur * SR)
     t = times(n)
     out = np.zeros(n)
-    for k in range(1, 14):
-        fk = k * f0 * np.sqrt(1 + 0.00035 * k * k)
-        if fk > 15000:
-            break
-        tau = 1.9 * (220 / f0) ** 0.3 / (1 + 0.4 * (k - 1))
-        out += np.sin(2 * np.pi * fk * t + rng.uniform(0, 6.28)) * np.exp(-t / tau) / k ** 1.3
-    out *= np.minimum(1, t / 0.003)
-    h = int(0.02 * SR)
-    out[:h] += 0.04 * noise(h, 300, 3000) * np.exp(-times(h) / 0.004)
-    return fade_out(out, 0.1) * vel / 2.4
+    for detune in (-0.9, 0.9):                      # cents
+        f = f0 * 2 ** (detune / 1200)
+        for k in range(1, 16):
+            fk = k * f * np.sqrt(1 + 0.00032 * k * k)
+            if fk > 15000:
+                break
+            tau = 2.2 * (220 / f0) ** 0.3 / (1 + 0.45 * (k - 1))
+            amp = vel ** (0.6 + 0.15 * k) / k ** 1.25        # harder = brighter
+            out += amp * np.sin(2 * np.pi * fk * t + rng.uniform(0, 6.28)) * np.exp(-t / tau)
+    out *= np.minimum(1, t / 0.004)
+    h = int(0.03 * SR)
+    out[:h] += 0.025 * noise(h, 200, 2500) * np.exp(-times(h) / 0.006)
+    return fade_out(out, 0.15) * vel / 4.2
 
 
 def pluck(m, vel=0.6, dur=0.8):
@@ -69,23 +74,38 @@ def pluck(m, vel=0.6, dur=0.8):
 
 
 def pad(notes, dur, level=1.0, bright=0.5, atk=0.9, rel=1.0):
-    """Stereo: three detuned voices per note, spread left, centre, right."""
+    """Stereo: five detuned voices per note with saw-like harmonics, through a
+    gentle low-pass that opens slowly, so it breathes rather than sits still."""
     n = int((dur + rel) * SR)
     t = times(n)
     out = np.zeros((n, 2))
+    cutoff_lo, cutoff_hi = 700 + 1800 * bright, 1600 + 4200 * bright
     for m in notes:
-        for detune, pan in ((-0.08, -0.7), (0.0, 0.0), (0.08, 0.7)):
+        for detune, pan in ((-0.12, -0.85), (-0.05, -0.35), (0.0, 0.0), (0.05, 0.35), (0.12, 0.85)):
             f = mtof(m) * 2 ** (detune / 12)
             v = np.zeros(n)
-            for k in range(1, 9):
-                if k * f > 9000:
+            for k in range(1, 22):
+                if k * f > 12000:
                     break
-                v += bright ** (k - 1) / k * np.sin(2 * np.pi * k * f * t + rng.uniform(0, 6.28))
+                v += np.sin(2 * np.pi * k * f * t + rng.uniform(0, 6.28)) / k
+            dark, open_ = fft_filter(v, 60, cutoff_lo), fft_filter(v, 60, cutoff_hi)
+            sweep = 0.5 - 0.5 * np.cos(np.pi * np.clip(t / max(dur, 0.1), 0, 1))
+            v = dark * (1 - sweep) + open_ * sweep
             out[:, 0] += v * np.cos((pan + 1) * np.pi / 4)
             out[:, 1] += v * np.sin((pan + 1) * np.pi / 4)
-    env = np.minimum(1, t / atk) * np.clip((dur + rel - t) / rel, 0, 1)
-    env *= 1 + 0.07 * np.sin(2 * np.pi * 0.21 * t)
-    return out * env[:, None] * level / (len(notes) * 2.2)
+    env = np.minimum(1, t / atk) ** 1.5 * np.clip((dur + rel - t) / rel, 0, 1)
+    env *= 1 + 0.05 * np.sin(2 * np.pi * 0.18 * t)
+    return out * env[:, None] * level / (len(notes) * 4.5)
+
+
+def lead(m, dur=0.55, vel=0.5):
+    """The hook: a soft bell-like voice (sine with a little FM shimmer)."""
+    f, n = mtof(m), int(dur * SR)
+    t = times(n)
+    mod = 0.6 * np.exp(-t / 0.25) * np.sin(2 * np.pi * f * 2 * t)
+    x = np.sin(2 * np.pi * f * t + mod) * np.exp(-t / (dur * 0.7))
+    x += 0.25 * np.sin(2 * np.pi * 2 * f * t) * np.exp(-t / 0.3)
+    return fade_out(x * np.minimum(1, t / 0.006), 0.08) * vel * 0.6
 
 
 def bass(m, dur, vel=1.0):
@@ -116,7 +136,7 @@ def clap(vel=0.8):
 
 def hat(vel=0.3, open_=False):
     n = int((0.35 if open_ else 0.08) * SR)
-    return norm(noise(n, 7000, 16000) * np.exp(-times(n) / (0.09 if open_ else 0.018)), vel)
+    return norm(noise(n, 6500, 12500) * np.exp(-times(n) / (0.09 if open_ else 0.016)), vel)
 
 
 def thump(vel=1.0):
@@ -214,14 +234,49 @@ def shutter(vel=0.18):
     return (a + 0.7 * b) * vel
 
 
-def make_ir(seconds=2.4, tau=0.42, seed=1):
+def make_ir(seconds=3.0, tau=0.55, seed=1):
     n = int(seconds * SR)
     t = times(n)
-    x = np.random.default_rng(seed).standard_normal(n) * np.exp(-t / tau)
-    cf = np.clip(t / 1.0, 0, 1)
-    x = fft_filter(x, None, 9000) * (1 - cf) + fft_filter(x, None, 3200) * cf
-    x = np.concatenate([np.zeros(int(0.022 * SR)), x])
+    g = np.random.default_rng(seed)
+    x = g.standard_normal(n) * np.exp(-t / tau) * np.minimum(1, t / 0.03)
+    cf = np.clip(t / 1.4, 0, 1)
+    x = fft_filter(x, 120, 8000) * (1 - cf) + fft_filter(x, 120, 2600) * cf
+    for d, a in ((0.011, 0.5), (0.019, 0.35), (0.027, 0.3), (0.041, 0.2)):   # early reflections
+        i = int(d * SR)
+        x[i] += a * (1 if g.random() > 0.5 else -1) * np.max(np.abs(x))
+    x = np.concatenate([np.zeros(int(0.028 * SR)), x])
     return x / np.sqrt(np.sum(x ** 2))
+
+
+def master(mix, kick_times=()):
+    """EQ, bus compression and a soft limit, so the parts sit together."""
+    out = np.zeros_like(mix)
+    for c in range(mix.shape[1]):
+        x = mix[:, c]
+        f = np.fft.rfftfreq(len(x), 1 / SR)
+        X = np.fft.rfft(x)
+        # Tuned by measured band balance, for phones first: they cannot play
+        # deep bass, so sub energy only makes the rest quieter.
+        X *= 1 / np.sqrt(1 + (32 / np.maximum(f, 1e-3)) ** 4)                       # rumble out
+        X *= 1 - 0.42 / (1 + (np.maximum(f, 1) / 85) ** 2)                           # less sub
+        X *= 1 - 0.25 * np.exp(-((np.log2(np.maximum(f, 1) / 320)) ** 2) / 0.5)      # less mud
+        X *= 1 + 1.4 * np.exp(-((np.log2(np.maximum(f, 1) / 3000)) ** 2) / 0.9)      # presence
+        X *= 1 + 1.6 / (1 + (8000 / np.maximum(f, 1)) ** 2)                          # air
+        out[:, c] = np.fft.irfft(X, len(x))
+    # Bus compressor: 2.5:1 above -18 dB, 10 ms attack, 180 ms release, on the summed level.
+    level = np.abs(out).max(axis=1)
+    env = np.zeros_like(level)
+    a_att, a_rel = np.exp(-1 / (0.010 * SR)), np.exp(-1 / (0.180 * SR))
+    e = 0.0
+    for i in range(0, len(level), 32):                  # block-rate is plenty for glue
+        v = level[i:i + 32].max()
+        e = a_att * e + (1 - a_att) * v if v > e else a_rel * e + (1 - a_rel) * v
+        env[i:i + 32] = e
+    thr = 10 ** (-18 / 20) * np.max(np.abs(out))
+    gain = np.where(env > thr, (thr / np.maximum(env, 1e-9)) ** (1 - 1 / 2.5), 1.0)
+    out *= gain[:, None]
+    out /= np.max(np.abs(out)) / 1.15
+    return np.tanh(out) / np.tanh(1.15)
 
 
 def convolve(sig, ir):

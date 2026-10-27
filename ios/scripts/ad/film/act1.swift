@@ -27,6 +27,11 @@ func paperGlow(_ t: Double) {
     ctx.saveGState(); ctx.setAlpha(0.55)
     ctx.drawRadialGradient(g, startCenter: low, startRadius: 0, endCenter: low, endRadius: 950, options: [])
     ctx.restoreGState()
+    // The logo's blue, as a faint light from the lower left, drifting opposite the apricot.
+    let blue = CGGradient(colorsSpace: space, colors: [C.cited.copy(alpha: 0.10)!, C.cited.copy(alpha: 0)!] as CFArray,
+                          locations: [0, 1])!
+    let cool = CGPoint(x: 80 + 140 * CGFloat(sin(t * 0.27 + 1.3)), y: 1700)
+    ctx.drawRadialGradient(blue, startCenter: cool, startRadius: 0, endCenter: cool, endRadius: 1000, options: [])
 }
 
 func background(_ t: Double) {
