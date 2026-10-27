@@ -14,7 +14,7 @@ import {
 } from '../auth/passwords.js';
 import { env } from '../config/env.js';
 import { pool } from '../db/pool.js';
-import { allow, MINUTE } from '../auth/rate-limit.js';
+import { allow, HOUR, MINUTE } from '../auth/rate-limit.js';
 
 const SESSION_DAYS = 30;
 
@@ -215,6 +215,21 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
       return reply.status(409).send({ error: 'This email is already linked to a different Apple account.' });
     }
     return reply.send(await startSession(linked.userId, linked.email));
+  });
+
+  // TEMPORARY GUEST MODE (owner's request, 2026-10-27; remove when he says so).
+  // A guest is a real account with no way back in once signed out: no email,
+  // no password, only the session on the device that made it. It still passes
+  // the age gate and the three agreements, and the daily caps on the paid
+  // routes. Deleting it works like any account; the hourly sweep removes guests
+  // nobody can reach any more (deleteUnreachableGuests).
+  app.post('/auth/guest', async (request, reply) => {
+    if (!(await allow(`guest:${request.ip}`, 5, HOUR))) {
+      return reply.status(429).send({ error: 'Too many attempts. Try again in a few minutes.' });
+    }
+    const email = `guest-${randomBytes(9).toString('hex')}@guest.clausa.invalid`;
+    const { rows } = await pool.query<{ id: string }>(`INSERT INTO users (email) VALUES ($1) RETURNING id`, [email]);
+    return reply.status(201).send(await startSession(rows[0]!.id, email));
   });
 
   app.post('/auth/logout', async (request, reply) => {

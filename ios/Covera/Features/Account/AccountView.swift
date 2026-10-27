@@ -9,6 +9,7 @@ import SwiftUI
 struct AccountView: View {
     @State private var model = AccountModel()
     @State private var showingDeleteConfirmation = false
+    @State private var showingGuestSignOut = false   // TEMPORARY GUEST MODE.
     @State private var confirmationText = ""
     @State private var exportFile: ExportFile?
     @AppStorage(AppLanguage.storageKey) private var language = AppLanguage.en.rawValue
@@ -48,6 +49,16 @@ struct AccountView: View {
             .scrollDismissesKeyboard(.interactively)
             .coveraScreen()
             .toolbar(.hidden, for: .navigationBar)
+            // TEMPORARY GUEST MODE: nobody could open a guest account again,
+            // so signing out deletes it now, after saying so.
+            .alert(String(localized: "Sign out of a guest account?"), isPresented: $showingGuestSignOut) {
+                Button(String(localized: "Cancel"), role: .cancel) {}
+                Button(String(localized: "Delete and sign out"), role: .destructive) {
+                    Task { await model.deleteAccount() }
+                }
+            } message: {
+                Text(String(localized: "A guest account has no password, so signing out deletes it, with every policy in it. To keep your policies, export them first or create an account."))
+            }
             .alert(String(localized: "Delete everything?"), isPresented: $showingDeleteConfirmation) {
                 TextField(String(localized: "Type DELETE"), text: $confirmationText)
                     .textInputAutocapitalization(.characters)
@@ -99,7 +110,7 @@ struct AccountView: View {
                 Text(String(localized: "Signed in"))
                     .font(.headline)
                     .foregroundStyle(Theme.Palette.ink)
-                Text(model.email ?? "placeholder@example.com")
+                Text(model.isGuest ? String(localized: "Guest account") : (model.email ?? "placeholder@example.com"))
                     .font(.footnote)
                     .foregroundStyle(Theme.Palette.tertiaryInk)
                     .lineLimit(1)
@@ -111,7 +122,7 @@ struct AccountView: View {
 
     private var signOutButton: some View {
         Button(String(localized: "Sign out")) {
-            Task { await model.signOut() }
+            if model.isGuest { showingGuestSignOut = true } else { Task { await model.signOut() } }
         }
         .buttonStyle(SecondaryButtonStyle())
         // Without this the label is allowed to wrap inside the capsule.
@@ -319,6 +330,8 @@ final class AccountModel {
     let disclaimer = String(localized: "Clausa is not a doctor and not a licensed insurance agent. This is a reading of your own documents, not medical advice and not a coverage decision. Your insurer decides what is covered.")
 
     private(set) var email: String?
+    /// TEMPORARY GUEST MODE: guests get an address on a reserved domain that can never receive mail.
+    var isGuest: Bool { email?.hasSuffix("@guest.clausa.invalid") ?? false }
 
     private(set) var isWorking = false
     private(set) var errorMessage: String?

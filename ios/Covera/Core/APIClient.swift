@@ -164,6 +164,11 @@ actor APIClient {
         return try await send(path: "/auth/apple", method: "POST", body: body, as: AuthResponse.self, authenticated: false)
     }
 
+    /// TEMPORARY GUEST MODE.
+    func signInAsGuest() async throws -> AuthResponse {
+        try await send(path: "/auth/guest", method: "POST", body: nil, as: AuthResponse.self, authenticated: false)
+    }
+
     func signInWithGoogle(idToken: String) async throws -> AuthResponse {
         let body = try JSONSerialization.data(withJSONObject: ["idToken": idToken])
         return try await send(path: "/auth/google", method: "POST", body: body, as: AuthResponse.self, authenticated: false)

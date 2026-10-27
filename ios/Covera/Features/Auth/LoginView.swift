@@ -123,6 +123,26 @@ struct LoginView: View {
                 .buttonStyle(PressableStyle())
                 .appearIn(6)
 
+                // TEMPORARY GUEST MODE.
+                VStack(spacing: 2) {
+                    Button {
+                        focus = nil
+                        Task { if await model.continueAsGuest() { onSignedIn() } }
+                    } label: {
+                        Text(String(localized: "Continue as guest"))
+                            .font(.subheadline.weight(.medium))
+                            .foregroundStyle(Theme.Palette.secondaryInk)
+                            .frame(maxWidth: .infinity, minHeight: 44)
+                    }
+                    .buttonStyle(PressableStyle())
+                    .disabled(model.isWorking)
+                    Text(String(localized: "A guest can't sign back in after signing out."))
+                        .font(.caption)
+                        .foregroundStyle(Theme.Palette.tertiaryInk)
+                        .frame(maxWidth: .infinity)
+                }
+                .appearIn(7)
+
             }
             .padding(.horizontal, Theme.Spacing.screen + 4)
             .padding(.bottom, Theme.Spacing.section)
@@ -258,6 +278,21 @@ final class LoginModel {
             return true
         } catch AppleAuthError.cancelled {
             return false
+        } catch {
+            errorMessage = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
+            return false
+        }
+    }
+
+    /// TEMPORARY GUEST MODE.
+    func continueAsGuest() async -> Bool {
+        isWorking = true
+        errorMessage = nil
+        defer { isWorking = false }
+        do {
+            let response = try await APIClient.shared.signInAsGuest()
+            try await Session.shared.signIn(token: response.token, accountID: response.user.id)
+            return true
         } catch {
             errorMessage = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
             return false
