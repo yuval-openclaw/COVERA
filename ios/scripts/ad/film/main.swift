@@ -8,8 +8,26 @@ import UniformTypeIdentifiers
 //   film <shots dir>                    raw BGRA frames on stdout, for ffmpeg
 //   film <shots dir> preview <out dir> 1.2,7.5,13.9   stills of chosen moments
 
-let total = 29.6
 let exposures = 4
+
+/// The narrated cut stretches each scene to the length of its line of
+/// narration (CLAUSA_NARRATED=1). Each knot is (output time, film time): the
+/// film's own clock runs piecewise-linearly between them, so every animation in
+/// a scene slows or quickens together and the heartbeat scene keeps its tempo.
+let narrated = ProcessInfo.processInfo.environment["CLAUSA_NARRATED"] == "1"
+let knots: [(out: Double, film: Double)] = narrated
+    ? [(0, 0), (3.9, 2.4), (5.3, 3.6), (6.8, 4.8), (9.2, 7.2), (11.6, 9.6), (15.6, 12.0),
+       (21.4, 16.8), (26.0, 19.2), (31.0, 21.6), (33.6, 24.0), (35.6, 26.4), (40.5, 29.6)]
+    : [(0, 0), (29.6, 29.6)]
+let total = knots.last!.out
+
+func filmTime(_ t: Double) -> Double {
+    for (a, b) in zip(knots, knots.dropFirst()) where t <= b.out {
+        let p = (t - a.out) / (b.out - a.out)
+        return a.film + (b.film - a.film) * max(0, min(1, p))
+    }
+    return knots.last!.film
+}
 let args = CommandLine.arguments
 setupCanvas()
 loadScreens(args[1])
@@ -31,7 +49,7 @@ func exposed(_ t: Double) {
     for i in 0..<count { acc[i] = 0 }
     for e in 0..<exposures {
         let at = max(0, t + (Double(e) + 0.5) / Double(exposures) * 0.5 / FPS - 0.25 / FPS)
-        render(at)
+        render(filmTime(at))
         acc.withUnsafeMutableBufferPointer { a in
             for i in 0..<count { a[i] &+= UInt32(pixels[i]) }
         }
