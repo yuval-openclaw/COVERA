@@ -39,28 +39,3 @@ export async function deleteAccountData(
   await pool.query(`DELETE FROM users WHERE id = $1`, [userId]);
   return { deleted: true, documentsRemoved: documents.length };
 }
-
-/**
- * TEMPORARY GUEST MODE. A guest has no password: the session on the device is
- * the only key. Once every session has expired no one can open the account
- * again, and keeping its health documents would be storage with no purpose and
- * no owner able to delete them, so it is deleted. Sessions slide while an
- * account is used, so this reaches only guests unused for the full lifetime.
- */
-export async function deleteUnreachableGuests(
-  log: (message: string, detail: object) => void,
-): Promise<number> {
-  const { rows } = await pool.query<{ id: string }>(
-    `SELECT u.id FROM users u
-     WHERE u.email LIKE 'guest-%@guest.clausa.invalid'
-       AND u.password_hash IS NULL AND u.google_sub IS NULL AND u.apple_sub IS NULL
-       AND u.created_at < now() - interval '1 day'
-       AND NOT EXISTS (SELECT 1 FROM sessions s WHERE s.user_id = u.id AND s.expires_at > now())`,
-  );
-  let removed = 0;
-  for (const { id } of rows) {
-    const result = await deleteAccountData(id, (documentId) => log('guest blob delete failed', { documentId }));
-    if (result.deleted) removed += 1;
-  }
-  return removed;
-}
