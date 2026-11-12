@@ -18,7 +18,7 @@ export async function documentRoutes(app: FastifyInstance): Promise<void> {
     await requireConsent(userId);
     // Each request here is paid for at the AI provider; a daily cap per
     // account keeps one account from running up the bill.
-    if (!(await allow(`upload:${userId}`, 20, DAY))) {
+    if (!(await allow(`upload:${userId}`, 10, DAY))) {
       return reply.status(429).send({ error: 'You have added the most documents Clausa accepts in one day. Try again tomorrow.' });
     }
     const upload = await request.file();

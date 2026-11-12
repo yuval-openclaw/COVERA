@@ -16,7 +16,7 @@ export async function chatRoutes(app: FastifyInstance): Promise<void> {
     await requireConsent(userId);
     // Each request here is paid for at the AI provider; a daily cap per
     // account keeps one account from running up the bill.
-    if (!(await allow(`chat:${userId}`, 150, DAY))) {
+    if (!(await allow(`chat:${userId}`, 30, DAY))) {
       return reply.status(429).send({ error: 'You have asked the most questions Clausa can answer in one day. Try again tomorrow.' });
     }
     const parsed = requestSchema.safeParse(request.body);

@@ -27,7 +27,7 @@ publishing and `site/check.sh --launch` gates release.
   region's number (101 in Israel) above any insurance step, and on the plan.
 - Abuse and cost limits kept in Postgres (survive restarts): sign-in attempts
   (per address, and per address and email), and daily caps per account on
-  uploads (20), plans (30) and chat (150). Keys are hashed, so no emails or IPs
+  uploads (10), plans (15) and chat (30), lowered for the free launch period. Keys are hashed, so no emails or IPs
   stored.
 - Uploads must really be PDFs (checked by content, not the declared type).
 - Retention matches the policy: expired sessions and rate-limit rows are swept

@@ -17,7 +17,7 @@ export async function guidanceRoutes(app: FastifyInstance): Promise<void> {
     await requireConsent(userId);
     // Each request here is paid for at the AI provider; a daily cap per
     // account keeps one account from running up the bill.
-    if (!(await allow(`guidance:${userId}`, 30, DAY))) {
+    if (!(await allow(`guidance:${userId}`, 15, DAY))) {
       return reply.status(429).send({ error: 'You have asked for the most plans Clausa can make in one day. Try again tomorrow.' });
     }
     const parsed = requestSchema.safeParse(request.body);
